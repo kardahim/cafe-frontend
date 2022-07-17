@@ -8,3 +8,6 @@ The White-Gold Gradient Color Scheme palette has 5 colors which are **Floral Whi
 
 This color combination was created by user Manish from [schemacolor.com](https://www.schemecolor.com/white-gold-gradient.php#download). 
 
+## Icons
+
+Icons such as *bars* come from [fontawesome](https://fontawesome.com/search?q=bars&s=solid%2Cbrands)
