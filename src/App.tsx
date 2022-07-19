@@ -5,15 +5,19 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import components
 import Navbar from './components/navbar/Navbar'
 
+// import pages
+import Login from './pages/login/Login'
+
 function App() {
   return (
     <div className="App">
       <Router>
         <Navbar />
         <Routes>
-          {/* pages */}
+          <Route path='/login' element={<Login />} />
         </Routes>
         {/* footer */}
+        <Navbar />
       </Router>
     </div>
   );
