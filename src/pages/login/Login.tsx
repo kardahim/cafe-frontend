@@ -11,7 +11,6 @@ import { useFormik } from "formik"
 import { LoginValidationSchema } from "../../validations/LoginValidationSchema";
 import './Login.scss'
 
-
 function Login() {
 
     const formik = useFormik({
@@ -24,8 +23,6 @@ function Login() {
             alert('Do something')
         }
     });
-
-    console.log(LoginValidationSchema)
 
     return (
         <Container maxWidth="sm" className='login'>
