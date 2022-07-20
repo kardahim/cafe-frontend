@@ -8,19 +8,9 @@ import {
 } from "@mui/material";
 
 import { useFormik } from "formik"
-import * as Yup from 'yup'
-
-import React, { useState } from "react";
+import { LoginValidationSchema } from "../../validations/LoginValidationSchema";
 import './Login.scss'
 
-const validationSchema = Yup.object({
-    email: Yup
-        .string()
-        .required("Email jest wymagany").min(1, 'KURWA'),
-    password: Yup
-        .string()
-        .required("Hasło jest wymagane")
-});
 
 function Login() {
 
@@ -29,11 +19,13 @@ function Login() {
             email: '',
             password: ''
         },
-        validationSchema: validationSchema,
+        validationSchema: LoginValidationSchema,
         onSubmit: (values) => {
             alert('Do something')
         }
     });
+
+    console.log(LoginValidationSchema)
 
     return (
         <Container maxWidth="sm" className='login'>
