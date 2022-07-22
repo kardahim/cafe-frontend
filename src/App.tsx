@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 // import components
 import Navbar from './components/navbar/Navbar'
+import Footer from './components/footer/Footer';
 
 // import pages
 import Login from './pages/login/Login'
@@ -18,8 +19,7 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
         </Routes>
-        {/* footer */}
-        <Navbar />
+        <Footer />
       </Router>
     </div>
   );
