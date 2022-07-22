@@ -1,4 +1,4 @@
-# Environment
+# Assets
 
 ## Color schema
 
@@ -10,4 +10,4 @@ This color combination was created by user Manish from [schemacolor.com](https:/
 
 ## Icons
 
-Icons such as *bars* come from [fontawesome](https://fontawesome.com/search?q=bars&s=solid%2Cbrands)
+Icons such as *facebook icon* come from [fontawesome](https://fontawesome.com/search?q=bars&s=solid%2Cbrands) or [material icons](https://mui.com/material-ui/material-icons/).
