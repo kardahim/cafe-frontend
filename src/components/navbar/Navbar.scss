@@ -2,7 +2,7 @@
 
 .navbar {
     background-color: $floral-white  !important;
-    margin-bottom: 10rem;
+    margin-bottom: $navbar-footer-margin;
 
     .navbar__content {
         color: black;
