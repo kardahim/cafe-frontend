@@ -1,0 +1,25 @@
+@import '../../assets/scss/variables.scss';
+
+.carousel__item {
+    padding: 20px;
+
+    .carousel__item__body {
+        .carousel__item__body__link {
+            color: black;
+            display: flex;
+            align-items: center;
+
+            margin: 20px 0;
+        }
+    }
+}
+
+.carousel {
+    width: auto;
+    margin: 0;
+}
+
+.carousel--padding {
+    width: 85%;
+    margin: 0 auto;
+}
