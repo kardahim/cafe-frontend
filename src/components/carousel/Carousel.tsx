@@ -21,14 +21,14 @@ function CarouselComponent(props: CarouselInterface) {
     return (
         // also carousel with carousel--padding
         <Carousel className='carousel' animation='slide' duration={1000}>
-            {props.items.map((value, key) => item(value))}
+            {props.items.map((value, key) => item(value, key))}
         </Carousel>
     )
 }
 // If you change the resolution and carousels is changing slide, a graphic bug is crated (sometimes indicators are missing)
-function item(item: any) {
+function item(item: any, key: any) {
     return (
-        <Paper elevation={3} sx={{ display: { md: 'flex' } }} className='carousel__item'>
+        <Paper elevation={3} sx={{ display: { md: 'flex' } }} className='carousel__item' key={key}>
             <CardMedia className='carousel__item__image'
                 component='img'
                 height='300'

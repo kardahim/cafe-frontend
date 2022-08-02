@@ -6,6 +6,7 @@ import new1 from '../../assets/images/placeholder.png'
 
 // components
 import Carousel from '../../components/carousel/Carousel'
+import MiniGallery from '../../components/miniGallery/MiniGallery'
 
 // for test only
 const items = [
@@ -32,7 +33,9 @@ function Home() {
             <div className='home__carousel'>
                 <Carousel items={items} />
             </div>
-            <div className='home__top'></div>
+            <div className='home__popular'>
+                <MiniGallery />
+            </div>
             <div className='home__loyalty'></div>
         </main>
     )
