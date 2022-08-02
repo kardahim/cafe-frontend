@@ -12,6 +12,8 @@ $background-image: '../images/body.jpg';
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background: url($background-image) no-repeat;
-    background-size: cover;
+
+    // background
+    // background: url($background-image) no-repeat;
+    // background-size: cover;
 }
