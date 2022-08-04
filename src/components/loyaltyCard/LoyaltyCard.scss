@@ -1,0 +1,29 @@
+.loyalty-card {
+    background: white;
+    display: flex;
+    min-height: 300px;
+    padding: 30px;
+
+    .loyalty-card__article {
+
+        .loyalty-card__article__text {
+            margin: 20px 0;
+            text-align: justify;
+        }
+
+        .loyalty-card__article__link {
+            color: black;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .loyalty-card__image-container {
+        height: 100%;
+
+        img {
+            height: 300px;
+            object-fit: contain;
+        }
+    }
+}

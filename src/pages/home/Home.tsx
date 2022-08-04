@@ -1,12 +1,10 @@
 import React from 'react'
 import './Home.scss'
 
-// import assets
-import new1 from '../../assets/images/placeholder.png'
-
 // components
 import Carousel from '../../components/carousel/Carousel'
 import MiniGallery from '../../components/miniGallery/MiniGallery'
+import LoyaltyCard from '../../components/loyaltyCard/LoyaltyCard'
 
 // for test only
 const items = [
@@ -36,7 +34,9 @@ function Home() {
             <div className='home__popular'>
                 <MiniGallery />
             </div>
-            <div className='home__loyalty'></div>
+            <div className='home__loyalty'>
+                <LoyaltyCard />
+            </div>
         </main>
     )
 }
