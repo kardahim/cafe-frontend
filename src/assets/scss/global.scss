@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 // this is example body image from pexels
 $background-image: '../images/body.jpg';
 
@@ -18,5 +20,5 @@ $background-image: '../images/body.jpg';
     // background-size: cover;
 
     // color
-    background-color: #fefefe;
+    background-color: $floral-white;
 }
