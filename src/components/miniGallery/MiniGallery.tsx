@@ -34,7 +34,7 @@ function MiniGallery() {
 
     return (
         // this component also has attribute padding
-        <div className='mini-gallery'>
+        <div className='mini-gallery mini-gallery--padding'>
             <ImageList className='gallery'
                 // variant='masonry'
                 cols={2}

@@ -15,7 +15,7 @@ import { ArrowRight } from '@mui/icons-material'
 
 function LoyaltyCard() {
     return (
-        <Paper className='loyalty-card' elevation={4} sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
+        <Paper className='loyalty-card loyalty-card--padding' elevation={4} sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
             <div className='loyalty-card__article'>
                 <Typography className='loyalty-card__article__title'
                     variant='h5'

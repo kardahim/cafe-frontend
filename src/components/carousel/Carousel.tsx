@@ -20,7 +20,7 @@ import { CarouselInterface } from '../../interfaces/CarouselInterface'
 function CarouselComponent(props: CarouselInterface) {
     return (
         // also carousel with carousel--padding
-        <Carousel className='carousel' animation='slide' duration={1000}>
+        <Carousel className='carousel carousel--padding' animation='slide' duration={1000}>
             {props.items.map((value, key) => item(value, key))}
         </Carousel>
     )
