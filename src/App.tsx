@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './assets/scss/global.scss'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -11,7 +11,22 @@ import Login from './pages/login/Login'
 import Register from './pages/register/Register';
 import Home from './pages/home/Home';
 
+import axios from '../src/api/axios';
+
+axios.defaults.withCredentials = true;
+
+
+
 function App() {
+
+  useEffect(() => {
+    axios.post("/users/auth").then((response) => {
+      // console.log(response)
+
+      // console.log(response.data.user)   // <- dane zalogowanego usera; do wykorzystania np w usestate czy coś
+    })
+  }, [])
+
   return (
     <div className="App">
       <Router>

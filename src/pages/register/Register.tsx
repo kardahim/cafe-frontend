@@ -15,6 +15,7 @@ import {
 import { useFormik } from "formik"
 import { RegisterValidationSchema } from "../../validations/RegisterValidationSchema";
 import './Register.scss'
+import axios from '../../api/axios.js';
 
 function Register() {
     const formik = useFormik({
@@ -29,7 +30,18 @@ function Register() {
         },
         validationSchema: RegisterValidationSchema,
         onSubmit: (values) => {
-            alert('Do something')
+            // alert('Do something')
+
+            axios.get(`/users/email/${values.email}`).then((response: any) => {
+                if (response.data !== null) {
+                    alert("Konto o podanym adresie email już istnieje");
+                }
+                else {
+                    axios.post("/users/register", values).then(() => {
+                        //navigate(`/login`)
+                    })
+                }
+            });
         }
     });
 

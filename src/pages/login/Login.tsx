@@ -10,9 +10,9 @@ import {
 import { useFormik } from "formik"
 import { LoginValidationSchema } from "../../validations/LoginValidationSchema";
 import './Login.scss'
+import axios from '../../api/axios.js';
 
 function Login() {
-
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -20,7 +20,23 @@ function Login() {
         },
         validationSchema: LoginValidationSchema,
         onSubmit: (values) => {
-            alert('Do something')
+            // alert('Do something')
+            axios.post("/users/login", values).then((response) => {
+                if (response.data.error) {
+                    // setError(response.data.error)
+                    console.log(response.data.error)
+                }
+                else {
+                    // localStorage.setItem("accessToken", response.data.token)
+                    // setAuthState({
+                    //     email: response.data.email,
+                    //     id: response.data.id,
+                    //     status: true
+                    // });
+                    // console.log("zalogowano")
+                    window.location.pathname = "/"
+                }
+            }).catch(error => console.error(error))
         }
     });
 
