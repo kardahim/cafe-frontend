@@ -19,13 +19,13 @@ axios.defaults.withCredentials = true;
 
 function App() {
 
-  useEffect(() => {
-    axios.post("/users/auth").then((response) => {
-      // console.log(response)
+  // useEffect(() => {
+  //   axios.post("/users/auth").then((response) => {
+  //     console.log(response)
 
-      // console.log(response.data.user)   // <- dane zalogowanego usera; do wykorzystania np w usestate czy coś
-    })
-  }, [])
+  //     // console.log(response.data.user)   // <- dane zalogowanego usera; do wykorzystania np w usestate czy coś
+  //   })
+  // }, [])
 
   return (
     <div className="App">

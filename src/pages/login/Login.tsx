@@ -34,7 +34,8 @@ function Login() {
                     //     status: true
                     // });
                     // console.log("zalogowano")
-                    window.location.pathname = "/"
+                    console.log(response)
+                    // window.location.pathname = "/"
                 }
             }).catch(error => console.error(error))
         }
