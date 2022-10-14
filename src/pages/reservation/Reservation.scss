@@ -1,18 +1,55 @@
 @import '../../assets/scss/variables.scss';
+$space-between-items: 25px;
 
 .reservation {
-    width: auto;
     margin: 0;
-    padding: 25px 0;
+    padding: $space-between-items 0;
+
+    .reservation__header {
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 2rem;
+        color: $aztec-gold;
+        text-shadow: 1px 1px $dutch-white;
+        margin-bottom: $space-between-items;
+    }
 
     .reservation__data {}
 
-    .reservation__table-list {}
+    .reservation__table-list {
+        margin: $space-between-items $space-between-items 0;
 
-    .reservation__map {}
-}
+        .reservation__table-list__item {
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
 
-.reservation--padding {
-    width: 85%;
-    margin: 0 auto;
+            .reservation__button {
+                color: $floral-white;
+                background-color: $burlywood;
+                height: 50px;
+            }
+        }
+    }
+
+    .reservation__map {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 500px;
+        margin-top: calc(2*#{$space-between-items});
+
+        .map__header {
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 2rem;
+            color: $aztec-gold;
+            text-shadow: 1px 1px $dutch-white;
+        }
+
+        img {
+            object-fit: contain;
+            height: 100%;
+        }
+    }
 }
