@@ -1,0 +1,18 @@
+@import '../../assets/scss/variables.scss';
+
+.reservation {
+    width: auto;
+    margin: 0;
+    padding: 25px 0;
+
+    .reservation__data {}
+
+    .reservation__table-list {}
+
+    .reservation__map {}
+}
+
+.reservation--padding {
+    width: 85%;
+    margin: 0 auto;
+}
