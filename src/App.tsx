@@ -11,6 +11,8 @@ import Login from './pages/login/Login'
 import Register from './pages/register/Register';
 import Home from './pages/home/Home';
 import Reservation from './pages/reservation/Reservation';
+import Reset from './pages/password_reset/Reset';
+import ResetConfirmation from './pages/password_reset/ResetConfirmation';
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
           <Route path='/reservation' element={<Reservation />} />
+          <Route path='/reset-password' element={<Reset />} />
+          <Route path='/confirm-reset-password' element={<ResetConfirmation />} />
         </Routes>
         <Footer />
       </Router>
