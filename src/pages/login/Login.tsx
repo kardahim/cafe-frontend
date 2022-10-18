@@ -1,3 +1,5 @@
+import  useAuth  from '../../hooks/useAuth';
+
 import {
     Container,
     TextField,
@@ -13,6 +15,8 @@ import './Login.scss'
 import axios from '../../api/axios.js';
 
 function Login() {
+    const { setAuth } = useAuth();
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -36,6 +40,10 @@ function Login() {
                     // console.log("zalogowano")
                     console.log(response)
                     // window.location.pathname = "/"
+                    const accessToken = response?.data?.accessToken;
+                    const RoleId = response?.data?.RoleId;
+                    
+                    setAuth({RoleId, accessToken});
                 }
             }).catch(error => console.error(error))
         }
