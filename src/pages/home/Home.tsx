@@ -30,13 +30,13 @@ const items = [
 function Home() {
 
     useEffect(() => {
-        axios.get("/users/validate").then((response) => {
-          console.log(response)
-          console.log("kurwaaa")
-        })
-        axios.get("/users/xd").then((response) => {
-          console.log("padaka")
-        })
+        // axios.get("/users/validate").then((response) => {
+        //   console.log(response)
+        //   console.log("kurwaaa")
+        // })
+        // axios.get("/categories").then((response) => {
+        //   console.log(response)
+        // })
     
       }, [])
 

@@ -27,5 +27,5 @@ export const RegisterValidationSchema = Yup.object({
     sex: Yup
         .string()
         // add 'Inne' if we use third radio
-        .required("Zaznaczenie jest wymagane").oneOf(["Kobieta", "Mężczyzna"])
+        .required("Zaznaczenie jest wymagane").oneOf(["female", "male"])
 });

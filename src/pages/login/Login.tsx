@@ -1,4 +1,4 @@
-import  useAuth  from '../../hooks/useAuth';
+// import  useAuth  from '../../hooks/useAuth';
 
 import {
     Container,
@@ -15,7 +15,7 @@ import './Login.scss'
 import axios from '../../api/axios.js';
 
 function Login() {
-    const { setAuth } = useAuth();
+    // const { setAuth } = useAuth();
 
     const formik = useFormik({
         initialValues: {
@@ -40,10 +40,11 @@ function Login() {
                     // console.log("zalogowano")
                     console.log(response)
                     // window.location.pathname = "/"
-                    const accessToken = response?.data?.accessToken;
-                    const RoleId = response?.data?.RoleId;
-                    
-                    setAuth({RoleId, accessToken});
+                    // const accessToken = response?.data?.accessToken;
+                    // const RoleId = response?.data?.RoleId;
+                    // do saving to context here...
+
+                    // setAuth({RoleId, accessToken});
                 }
             }).catch(error => console.error(error))
         }

@@ -132,8 +132,8 @@ function Register() {
                         // error={formik.touched.sex && Boolean(formik.errors.sex)}
                         // helperText={formik.touched.sex && formik.errors.sex}
                         >
-                            <FormControlLabel value="Kobieta" control={<Radio />} label="Kobieta" />
-                            <FormControlLabel value="Mężczyzna" control={<Radio />} label="Mężczyzna" />
+                            <FormControlLabel value="female" control={<Radio />} label="Kobieta" />
+                            <FormControlLabel value="male" control={<Radio />} label="Mężczyzna" />
                             {/* <FormControlLabel value="Inna" control={<Radio />} label="Inna" /> */}
                         </RadioGroup>
                         {(formik.touched.sex && Boolean(formik.errors.sex)) ?
