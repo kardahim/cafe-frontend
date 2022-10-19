@@ -9,6 +9,10 @@ $background-image: '../images/body.jpg';
     box-sizing: border-box;
 }
 
+body {
+    padding-right: 0 !important;
+}
+
 .App {
     min-height: 100vh;
     display: flex;
