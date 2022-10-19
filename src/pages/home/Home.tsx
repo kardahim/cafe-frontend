@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react';
 import './Home.scss'
 
 // components
 import Carousel from '../../components/carousel/Carousel'
 import MiniGallery from '../../components/miniGallery/MiniGallery'
 import LoyaltyCard from '../../components/loyaltyCard/LoyaltyCard'
+
+import axios from '../../api/axios.js';
 
 // for test only
 const items = [
@@ -26,6 +28,18 @@ const items = [
 ]
 
 function Home() {
+
+    useEffect(() => {
+        // axios.get("/users/validate").then((response) => {
+        //   console.log(response)
+        //   console.log("kurwaaa")
+        // })
+        // axios.get("/categories").then((response) => {
+        //   console.log(response)
+        // })
+    
+      }, [])
+
     return (
         <main className='home'>
             <div className='home__carousel'>

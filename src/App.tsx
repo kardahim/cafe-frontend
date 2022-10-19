@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './assets/scss/global.scss'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
@@ -13,6 +13,10 @@ import Home from './pages/home/Home';
 import Reservation from './pages/reservation/Reservation';
 import Reset from './pages/password_reset/Reset';
 import ResetConfirmation from './pages/password_reset/ResetConfirmation';
+
+import axios from '../src/api/axios';
+
+axios.defaults.withCredentials = true;
 
 function App() {
   return (

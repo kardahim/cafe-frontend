@@ -10,6 +10,7 @@ import {
 import { useFormik } from "formik"
 import { LoginValidationSchema } from "../../validations/LoginValidationSchema";
 import './Login.scss'
+import axios from '../../api/axios.js';
 
 function Login() {
 
@@ -20,7 +21,23 @@ function Login() {
         },
         validationSchema: LoginValidationSchema,
         onSubmit: (values) => {
-            alert('Do something')
+            axios.post("/users/login", values).then((response) => {
+                if (response.data.error) {
+                    // setError(response.data.error)
+                    console.log(response.data.error)
+                }
+                else {
+                    console.log(response)
+
+                    // const accessToken = response?.data?.accessToken;
+                    // const RoleId = response?.data?.RoleId;
+                    // do saving to context here...
+
+
+                    // przekierowanie po zalogowaniu ?
+                    // window.location.pathname = "/"
+                }
+            }).catch(error => console.error(error))
         }
     });
 

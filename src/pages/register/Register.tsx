@@ -15,6 +15,7 @@ import {
 import { useFormik } from "formik"
 import { RegisterValidationSchema } from "../../validations/RegisterValidationSchema";
 import './Register.scss'
+import axios from '../../api/axios.js';
 
 function Register() {
     const formik = useFormik({
@@ -29,7 +30,18 @@ function Register() {
         },
         validationSchema: RegisterValidationSchema,
         onSubmit: (values) => {
-            alert('Do something')
+            // alert('Do something')
+
+            axios.get(`/users/email/${values.email}`).then((response: any) => {
+                if (response.data !== null) {
+                    alert("Konto o podanym adresie email już istnieje");
+                }
+                else {
+                    axios.post("/users/register", values).then(() => {
+                        //navigate(`/login`)
+                    })
+                }
+            });
         }
     });
 
@@ -120,8 +132,8 @@ function Register() {
                         // error={formik.touched.sex && Boolean(formik.errors.sex)}
                         // helperText={formik.touched.sex && formik.errors.sex}
                         >
-                            <FormControlLabel value="Kobieta" control={<Radio />} label="Kobieta" />
-                            <FormControlLabel value="Mężczyzna" control={<Radio />} label="Mężczyzna" />
+                            <FormControlLabel value="female" control={<Radio />} label="Kobieta" />
+                            <FormControlLabel value="male" control={<Radio />} label="Mężczyzna" />
                             {/* <FormControlLabel value="Inna" control={<Radio />} label="Inna" /> */}
                         </RadioGroup>
                         {(formik.touched.sex && Boolean(formik.errors.sex)) ?
