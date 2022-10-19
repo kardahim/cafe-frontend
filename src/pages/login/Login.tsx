@@ -1,5 +1,3 @@
-// import  useAuth  from '../../hooks/useAuth';
-
 import {
     Container,
     TextField,
@@ -15,7 +13,6 @@ import './Login.scss'
 import axios from '../../api/axios.js';
 
 function Login() {
-    // const { setAuth } = useAuth();
 
     const formik = useFormik({
         initialValues: {
@@ -24,27 +21,21 @@ function Login() {
         },
         validationSchema: LoginValidationSchema,
         onSubmit: (values) => {
-            // alert('Do something')
             axios.post("/users/login", values).then((response) => {
                 if (response.data.error) {
                     // setError(response.data.error)
                     console.log(response.data.error)
                 }
                 else {
-                    // localStorage.setItem("accessToken", response.data.token)
-                    // setAuthState({
-                    //     email: response.data.email,
-                    //     id: response.data.id,
-                    //     status: true
-                    // });
-                    // console.log("zalogowano")
                     console.log(response)
-                    // window.location.pathname = "/"
+
                     // const accessToken = response?.data?.accessToken;
                     // const RoleId = response?.data?.RoleId;
                     // do saving to context here...
 
-                    // setAuth({RoleId, accessToken});
+
+                    // przekierowanie po zalogowaniu ?
+                    // window.location.pathname = "/"
                 }
             }).catch(error => console.error(error))
         }
