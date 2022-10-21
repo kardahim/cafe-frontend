@@ -1,6 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './assets/scss/global.scss'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// import auth
+import { AuthContext } from './context/AuthContext';
+import { AuthInterface } from './interfaces/AuthInterface';
 
 // import components
 import Navbar from './components/navbar/Navbar'
@@ -19,21 +23,38 @@ import axios from '../src/api/axios';
 axios.defaults.withCredentials = true;
 
 function App() {
+
+  const [authState, setAuthState] = useState<AuthInterface>(
+    {
+      isLogged: false,
+      firstName: '',
+      lastName: '',
+      email: '',
+      phone: '',
+      sex: '',
+      points: 0,
+      hourlyRate: 0,
+      role: 0
+    }
+  )
+
   return (
     <div className="App">
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
-          <Route path='/reservation' element={<Reservation />} />
-          <Route path='/reset-password' element={<Reset />} />
-          <Route path='/confirm-reset-password' element={<ResetConfirmation />} />
-        </Routes>
-        <Footer />
-      </Router>
-    </div>
+      <AuthContext.Provider value={{ authState, setAuthState }}>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/reservation' element={<Reservation />} />
+            <Route path='/reset-password' element={<Reset />} />
+            <Route path='/confirm-reset-password' element={<ResetConfirmation />} />
+          </Routes>
+          <Footer />
+        </Router>
+      </AuthContext.Provider>
+    </div >
   );
 }
 
