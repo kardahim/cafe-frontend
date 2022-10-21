@@ -16,7 +16,6 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 
-
 // assets
 import logo from '../../assets/images/placeholder.png'
 
@@ -28,10 +27,14 @@ const pages = [
 
 // href = /profile or /id/profle or /profile/id
 const settings = [
-    { alt: 'Profile', href: '/profile' },
-    { alt: 'Account', href: '/account' },
-    { alt: 'Dashboard', href: '/dashboard' },
-    { alt: 'Logout', href: '/logout' }
+    // logged settings
+    { alt: 'Profile', href: '/profile', logged: true },
+    { alt: 'Account', href: '/account', logged: true },
+    { alt: 'Dashboard', href: '/dashboard', logged: true },
+    { alt: 'Logout', href: '/logout', logged: true },
+    // logout settings
+    { alt: 'Login', href: '/login', logged: false },
+    { alt: 'Register', href: '/register', logged: false },
 ];
 
 
@@ -131,8 +134,7 @@ function Navbar() {
                             letterSpacing: '.3rem',
                             color: 'inherit',
                             textDecoration: 'none',
-                        }}
-                    >
+                        }}>
                         LOGO
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
@@ -145,7 +147,6 @@ function Navbar() {
                             </Button>
                         ))}
                     </Box>
-
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Otwórz ustawienia">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
@@ -166,13 +167,16 @@ function Navbar() {
                                 horizontal: 'right',
                             }}
                             open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting.alt} onClick={() => { handleCloseUserMenu(); navigate(setting.href) }}>
-                                    <Typography textAlign="center">{setting.alt}</Typography>
-                                </MenuItem>
-                            ))}
+                            onClose={handleCloseUserMenu}>
+                            {settings.map
+                                ((setting) => {
+                                    if (!setting.logged)
+                                        return (
+                                            <MenuItem key={setting.alt} onClick={() => { handleCloseUserMenu(); navigate(setting.href) }}>
+                                                <Typography textAlign="center">{setting.alt}</Typography>
+                                            </MenuItem>
+                                        )
+                                })}
                         </Menu>
                     </Box>
                 </Toolbar>
