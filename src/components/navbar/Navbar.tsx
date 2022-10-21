@@ -176,6 +176,7 @@ function Navbar() {
                                                 <Typography textAlign="center">{setting.alt}</Typography>
                                             </MenuItem>
                                         )
+                                    else return null
                                 })}
                         </Menu>
                     </Box>
