@@ -1,4 +1,5 @@
 export interface AuthInterface {
+    id: number,
     isLogged: boolean,
     firstName: string,
     lastName: string,

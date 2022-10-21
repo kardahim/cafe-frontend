@@ -26,6 +26,7 @@ function App() {
 
   const [authState, setAuthState] = useState<AuthInterface>(
     {
+      id: 0,
       isLogged: false,
       firstName: '',
       lastName: '',
