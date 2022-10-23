@@ -42,7 +42,7 @@ function MiniGallery() {
                 sx={{ height: 600 }}
             >
                 {images.map((item) => (
-                    <ImageListItem key={item.img} className='gallery__item'>
+                    <ImageListItem key={item.title} className='gallery__item'>
                         <img
                             src={require(`../../assets/images/${item.img}`)}
                             alt={item.title}

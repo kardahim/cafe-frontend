@@ -6,4 +6,4 @@ interface AuthContextInterface {
     setAuthState: Dispatch<SetStateAction<AuthInterface>>
 }
 
-export const AuthContext = createContext<AuthContextInterface | null>(null);
+export const AuthContext = createContext(<AuthContextInterface | null>(null));

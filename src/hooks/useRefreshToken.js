@@ -1,17 +1,23 @@
-import axios from '../../api/axios.js';
-import useAuth from './useAuth'
+import axios from '../api/axios';
+import { useContext } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const useRefreshToken = () => {
-    const { setAuth } = useAuth();
+    const context = useContext(AuthContext);
 
     const refresh = async () => {
         const response = await axios.get('/refresh', {
-            withCredentials: true
+            withCredentials: true // sending cookies with request
         });
-        setAuth(prev => {
-            console.log(JSON.stringify(prev));
-            console.log(response.data.accessToken);
-            return { ...prev, accessToken: response.data.accessToken }
+
+        context.setAuthState(prev => {
+            // console.log(JSON.stringify(prev));
+            // console.log(response.data.accessToken);
+            return { ...prev,
+                email: response.data.email,
+                RoleId: response.data.RoleId,
+                accessToken: response.data.accessToken 
+            }
         });
         return response.data.accessToken;
     }

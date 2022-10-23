@@ -11,8 +11,23 @@ import { useFormik } from "formik"
 import { LoginValidationSchema } from "../../validations/LoginValidationSchema";
 import './Login.scss'
 import axios from '../../api/axios.js';
+import { useContext, useEffect } from 'react';
+// import { useState } from "react";
+import { AuthContext } from '../../context/AuthContext';
+// import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+// import useRefreshToken from "../../hooks/useRefreshToken";
 
 function Login() {
+
+    const context = useContext(AuthContext);
+    // const [users, setUsers] = useState();
+    // const axiosPrivate = useAxiosPrivate();
+    // const refresh = useRefreshToken();
+
+    useEffect(() => {
+        console.log(context?.authState);
+        // console.log("user: "+user)
+    }, [])
 
     const formik = useFormik({
         initialValues: {
@@ -21,7 +36,12 @@ function Login() {
         },
         validationSchema: LoginValidationSchema,
         onSubmit: (values) => {
-            axios.post("/users/login", values).then((response) => {
+            axios.post("/users/login", values, 
+                {
+                    headers: {'Content-Type': 'application/json'},
+                    withCredentials: true
+                }
+            ).then((response) => {
                 if (response.data.error) {
                     // setError(response.data.error)
                     console.log(response.data.error)
@@ -29,13 +49,20 @@ function Login() {
                 else {
                     console.log(response)
 
-                    // const accessToken = response?.data?.accessToken;
-                    // const RoleId = response?.data?.RoleId;
-                    // do saving to context here...
+                    const accessToken = response?.data?.accessToken;
+                    const email = response?.data?.email;
+                    const RoleId = response?.data?.RoleId;
+                    
+                    context?.setAuthState({
+                        RoleId: RoleId,
+                        email: email,
+                        isLogged: true,
+                        accessToken: accessToken})
 
+                    // console.log(context?.authState)
 
                     // przekierowanie po zalogowaniu ?
-                    // window.location.pathname = "/"
+                    window.location.pathname = "/"
                 }
             }).catch(error => console.error(error))
         }
