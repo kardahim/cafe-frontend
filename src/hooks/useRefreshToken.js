@@ -13,10 +13,13 @@ const useRefreshToken = () => {
         context.setAuthState(prev => {
             // console.log(JSON.stringify(prev));
             // console.log(response.data.accessToken);
-            return { ...prev,
+            // FIXME: respone and asign correct data
+            // console.log(response.data)
+            return {
+                ...prev,
                 email: response.data.email,
                 RoleId: response.data.RoleId,
-                accessToken: response.data.accessToken 
+                accessToken: response.data.accessToken
             }
         });
         return response.data.accessToken;
