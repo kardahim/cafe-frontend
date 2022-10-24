@@ -13,11 +13,16 @@ import {
 } from "@mui/material";
 
 import { useFormik } from "formik"
+
+import { useNavigate } from 'react-router-dom'
+
 import { RegisterValidationSchema } from "../../validations/RegisterValidationSchema";
 import './Register.scss'
 import axios from '../../api/axios.js';
 
 function Register() {
+    let navigate = useNavigate();
+
     const formik = useFormik({
         initialValues: {
             firstname: '',
@@ -38,7 +43,7 @@ function Register() {
                 }
                 else {
                     axios.post("/users/register", values).then(() => {
-                        //navigate(`/login`)
+                        navigate(`/login`)
                     })
                 }
             });
