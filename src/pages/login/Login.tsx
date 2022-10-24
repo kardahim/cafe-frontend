@@ -36,28 +36,29 @@ function Login() {
         },
         validationSchema: LoginValidationSchema,
         onSubmit: (values) => {
-            axios.post("/users/login", values, 
+            axios.post("/users/login", values,
                 {
-                    headers: {'Content-Type': 'application/json'},
+                    headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
                 }
             ).then((response) => {
                 if (response.data.error) {
                     // setError(response.data.error)
-                    console.log(response.data.error)
+                    // console.log(response.data.error)
                 }
                 else {
                     console.log(response)
 
-                    const accessToken = response?.data?.accessToken;
-                    const email = response?.data?.email;
-                    const RoleId = response?.data?.RoleId;
-                    
+                    // this code do nothing (when it doesnt work context was doing context things xD)
                     context?.setAuthState({
-                        RoleId: RoleId,
-                        email: email,
-                        isLogged: true,
-                        accessToken: accessToken})
+                        isLogged: response.data.isLogged,
+                        accessToken: response.data.accessToken,
+                        id: response.data.user.id,
+                        firstname: response.data.user.firstname,
+                        lastname: response.data.user.lastname,
+                        email: response.data.user.email,
+                        roleId: response.data.user.RoleId
+                    })
 
                     // console.log(context?.authState)
 

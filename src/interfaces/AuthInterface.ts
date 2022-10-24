@@ -1,6 +1,9 @@
 export interface AuthInterface {
     isLogged: boolean,
+    accessToken: string,
+    id: number,
+    firstname: string,
+    lastname: string,
     email: string,
-    RoleId: number,
-    accessToken: string
+    roleId: number
 }
