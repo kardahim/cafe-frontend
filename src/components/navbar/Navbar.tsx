@@ -1,6 +1,8 @@
 import React from 'react'
+import { useContext } from 'react';
 import { useNavigate } from "react-router-dom"
 import './Navbar.scss'
+import { AuthContext } from '../../context/AuthContext';
 
 // import MaterialUI
 import AppBar from '@mui/material/AppBar';
@@ -15,6 +17,7 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import PersonIcon from '@mui/icons-material/Person';
 
 // assets
 import logo from '../../assets/images/placeholder.png'
@@ -39,6 +42,8 @@ const settings = [
 
 
 function Navbar() {
+
+    const context = useContext(AuthContext)
     const navigate = useNavigate();
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -150,7 +155,11 @@ function Navbar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Otwórz ustawienia">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={"Firstname Lastname"} src={"/path/to/image"} className='navbar__content__avatar' />
+                                {context?.authState.isLogged ?
+                                    <Avatar className='navbar__content__avatar' > {context.authState.firstname[0]}{context.authState.lastname[0]} </Avatar>
+                                    :
+                                    <Avatar className='navbar__content__avatar' ><PersonIcon /></Avatar>
+                                }
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -170,7 +179,7 @@ function Navbar() {
                             onClose={handleCloseUserMenu}>
                             {settings.map
                                 ((setting) => {
-                                    if (!setting.logged)
+                                    if (setting.logged === context?.authState.isLogged)
                                         return (
                                             <MenuItem key={setting.alt} onClick={() => { handleCloseUserMenu(); navigate(setting.href) }}>
                                                 <Typography textAlign="center">{setting.alt}</Typography>
