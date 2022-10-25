@@ -35,18 +35,11 @@ function Register() {
         },
         validationSchema: RegisterValidationSchema,
         onSubmit: (values) => {
-            // alert('Do something')
 
-            axios.get(`/users/email/${values.email}`).then((response: any) => {
-                if (response.data !== null) {
-                    alert("Konto o podanym adresie email już istnieje");
-                }
-                else {
-                    axios.post("/users/register", values).then(() => {
-                        navigate(`/login`)
-                    })
-                }
-            });
+            // FIXME: errors handler
+            axios.post("/users/register", values).then(() => {
+                navigate(`/login`)
+            })
         }
     });
 
