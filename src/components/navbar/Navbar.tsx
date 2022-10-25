@@ -1,8 +1,9 @@
 import React from 'react'
 import { useContext } from 'react';
-import { useNavigate } from "react-router-dom"
+import { Navigate, useNavigate } from "react-router-dom"
 import './Navbar.scss'
 import { AuthContext } from '../../context/AuthContext';
+import axios from '../../api/axios.js';
 
 // import MaterialUI
 import AppBar from '@mui/material/AppBar';
@@ -21,25 +22,6 @@ import PersonIcon from '@mui/icons-material/Person';
 
 // assets
 import logo from '../../assets/images/placeholder.png'
-
-const pages = [
-    { alt: 'Link1', href: '/link1' },
-    { alt: 'Link2', href: '/link2' },
-    { alt: 'Link3', href: '/link3' }
-];
-
-// href = /profile or /id/profle or /profile/id
-const settings = [
-    // logged settings
-    { alt: 'Profile', href: '/profile', logged: true },
-    { alt: 'Account', href: '/account', logged: true },
-    { alt: 'Dashboard', href: '/dashboard', logged: true },
-    { alt: 'Logout', href: '/logout', logged: true },
-    // logout settings
-    { alt: 'Login', href: '/login', logged: false },
-    { alt: 'Register', href: '/register', logged: false },
-];
-
 
 function Navbar() {
 
@@ -63,6 +45,28 @@ function Navbar() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const pages = [
+        { alt: 'Link1', href: '/link1' },
+        { alt: 'Link2', href: '/link2' },
+        { alt: 'Link3', href: '/link3' }
+    ];
+
+    const settings = [
+        // logged settings
+        { alt: 'Profile', logged: true, Fun: function () { navigate('/profile') } },
+        { alt: 'Account', logged: true, Fun: function () { navigate('/account') } },
+        { alt: 'Dashboard', logged: true, Fun: function () { navigate('/dashboard') } },
+        {
+            alt: 'Logout', logged: true, Fun: function () {
+                axios.get('/logout');
+                window.location.href = '/';
+            }
+        },
+        // logout settings
+        { alt: 'Login', logged: false, Fun: function () { navigate('/login') } },
+        { alt: 'Register', logged: false, Fun: function () { navigate('/register') } },
+    ];
 
     return (
         <AppBar position="static" className='navbar'>
@@ -181,7 +185,7 @@ function Navbar() {
                                 ((setting) => {
                                     if (setting.logged === context?.authState.isLogged)
                                         return (
-                                            <MenuItem key={setting.alt} onClick={() => { handleCloseUserMenu(); navigate(setting.href) }}>
+                                            <MenuItem key={setting.alt} onClick={() => { handleCloseUserMenu(); setting.Fun() }}>
                                                 <Typography textAlign="center">{setting.alt}</Typography>
                                             </MenuItem>
                                         )
