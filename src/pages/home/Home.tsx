@@ -33,14 +33,14 @@ function Home() {
     const [users, setUsers] = useState();
     const axiosPrivate = useAxiosPrivate();
     const context = useContext(AuthContext);
-    const authState  = useContext(AuthContext)?.authState;
+    const authState = useContext(AuthContext)?.authState;
 
     useEffect(() => {
         let isMounted = true;
 
         const getUsers = async () => {
             try {
-                const response = await axiosPrivate.get('/users' );
+                const response = await axiosPrivate.get('/users');
                 // console.log(response.data);
                 isMounted && setUsers(response.data);
             } catch (err) {
@@ -55,14 +55,14 @@ function Home() {
             console.log(users)
         }
     }, [authState])
-    
+
     useEffect(() => {
-    //     axios.get("/users",{
-    //         headers: { 'Authorization' : `Bearer ${context?.authState.accessToken}` }
-    //       }).then((response) => {
-    //         console.log(JSON.stringify(response.data))
-    //       })
-        console.log(context?.authState)
+        //     axios.get("/users",{
+        //         headers: { 'Authorization' : `Bearer ${context?.authState.accessToken}` }
+        //       }).then((response) => {
+        //         console.log(JSON.stringify(response.data))
+        //       })
+        // console.log(context?.authState)
     }, [])
 
     return (
