@@ -5,12 +5,18 @@ import {
     Paper,
     MenuItem,
     Box,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle
 } from "@mui/material";
 import './NewProduct.scss'
 import { useFormik } from "formik"
-import { NewProductValidationSchema } from "../../validations/NewProductValidationSchema";
+import { NewProductValidationSchema, NewCategoryValidationSchema } from "../../validations/NewProductValidationSchema";
 import axios from '../../api/axios.js';
 import { useEffect, useState } from 'react';
+import * as Yup from "yup"
 
 
 function NewProduct() {
@@ -30,6 +36,22 @@ function NewProduct() {
         }
     });
 
+    const smallFormik = useFormik({
+        initialValues: {
+            name: '',
+        },
+        validationSchema: NewCategoryValidationSchema,
+        onSubmit: (values) => {
+            axios.post('/categories', values,
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }).then((response) => {
+                    console.log(response.data)
+                    handleClose()
+                })
+        }
+    });
 
     // get all categories
     useEffect(() => {
@@ -40,31 +62,74 @@ function NewProduct() {
         })
     }, [])
 
-    console.log(categories)
+
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     return (
         <Container maxWidth="sm" className='new_product'>
+            <Dialog open={open} onClose={handleClose}
+                onSubmit={(e) => { handleClose() }}
+            >
+                <DialogTitle>Dodawanie nowej kategorii</DialogTitle>
+                <form onSubmit={smallFormik.handleSubmit}>
+                    <DialogContent>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            name="name"
+                            label="Nazwa kategorii"
+                            fullWidth
+                            variant="standard"
+                            value={smallFormik.values.name}
+                            onChange={smallFormik.handleChange}
+                            error={smallFormik.touched.name && Boolean(smallFormik.errors.name)}
+                            helperText={smallFormik.touched.name && smallFormik.errors.name}
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose}>Anuluj</Button>
+                        <Button type="submit">Dodaj</Button>
+                    </DialogActions>
+                </form>
+            </Dialog>
             <Paper elevation={4} className='new_product__card'>
                 <Box className='new_product__card__header'>
                     dodawanie nowego produktu
                 </Box>
                 <Box className='new_product__card__content'>
                     <form onSubmit={formik.handleSubmit}>
-                        <TextField
-                            className='new_product__content__input'
-                            id="category-select"
-                            name='category'
-                            fullWidth
-                            autoFocus
-                            value={formik.values.category}
-                            onChange={formik.handleChange}
-                            error={formik.touched.category && Boolean(formik.errors.category)}
-                            helperText={formik.touched.category && formik.errors.category}
-                            select>
-                            {/* <MenuItem value={0}>Kategoria</MenuItem> */}
-                            {categories.map((value, key) =>
-                                <MenuItem value={value.id} key={key} selected>{value.name}</MenuItem>
-                            )}
-                        </TextField>
+                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <TextField
+                                className='new_product__content__input'
+                                id="category-select"
+                                name='category'
+                                fullWidth
+                                autoFocus
+                                value={formik.values.category}
+                                onChange={formik.handleChange}
+                                error={formik.touched.category && Boolean(formik.errors.category)}
+                                helperText={formik.touched.category && formik.errors.category}
+                                select>
+                                {/* <MenuItem value={0}>Kategoria</MenuItem> */}
+                                {categories.map((value, key) =>
+                                    <MenuItem value={value.id} key={key} selected>{value.name}</MenuItem>
+                                )}
+                            </TextField>
+                            <Button variant="outlined"
+                                onClick={handleClickOpen} className='new_product__content__button'
+                                title="Dodaj nową kategorię"
+                                style={{ height: "56px" }}>
+                                +
+                            </Button>
+                        </div>
                         <TextField className='new_product__content__input'
                             variant='outlined'
                             label='Nazwa produktu'

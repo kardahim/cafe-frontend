@@ -25,3 +25,9 @@ export const NewProductValidationSchema = Yup.object({
     allergen: Yup
         .string()
 });
+
+export const NewCategoryValidationSchema = Yup.object({
+    name: Yup
+        .string()
+        .required("Pole jest wymagane")
+})
