@@ -35,6 +35,7 @@ function Register() {
         },
         validationSchema: RegisterValidationSchema,
         onSubmit: (values) => {
+<<<<<<< HEAD
             // tutaj powinno być jeszcze sprawdzane, czy jako response
             // z "/users/register" nie przychodzi jsonem 'error';
             // wtedy wyświetlenie stosownego komunikatu, brak przekierowania
@@ -52,6 +53,13 @@ function Register() {
                     })
                 }
             });
+=======
+
+            // FIXME: errors handler
+            axios.post("/users/register", values).then(() => {
+                navigate(`/login`)
+            })
+>>>>>>> auth-details
         }
     });
 

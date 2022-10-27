@@ -27,6 +27,7 @@ function Reservation() {
     React.useEffect(() => {
         let today: Dayjs = dayjs()
 
+        // FIXME: check day - at the moment after 18 cant order future days 
         // reservation is available 8-18. Selecting the past time is disabled
         if (today.get('hour') > 8) {
             console.log(today.get('hour'))

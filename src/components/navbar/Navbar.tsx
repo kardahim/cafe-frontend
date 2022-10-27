@@ -1,6 +1,9 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom"
+import { useContext } from 'react';
+import { Navigate, useNavigate } from "react-router-dom"
 import './Navbar.scss'
+import { AuthContext } from '../../context/AuthContext';
+import axios from '../../api/axios.js';
 
 // import MaterialUI
 import AppBar from '@mui/material/AppBar';
@@ -15,30 +18,14 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import PersonIcon from '@mui/icons-material/Person';
 
 // assets
 import logo from '../../assets/images/placeholder.png'
 
-const pages = [
-    { alt: 'Link1', href: '/link1' },
-    { alt: 'Link2', href: '/link2' },
-    { alt: 'Link3', href: '/link3' }
-];
-
-// href = /profile or /id/profle or /profile/id
-const settings = [
-    // logged settings
-    { alt: 'Profile', href: '/profile', logged: true },
-    { alt: 'Account', href: '/account', logged: true },
-    { alt: 'Dashboard', href: '/dashboard', logged: true },
-    { alt: 'Logout', href: '/logout', logged: true },
-    // logout settings
-    { alt: 'Login', href: '/login', logged: false },
-    { alt: 'Register', href: '/register', logged: false },
-];
-
-
 function Navbar() {
+
+    const context = useContext(AuthContext)
     const navigate = useNavigate();
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -58,6 +45,28 @@ function Navbar() {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
+
+    const pages = [
+        { alt: 'Link1', href: '/link1' },
+        { alt: 'Link2', href: '/link2' },
+        { alt: 'Link3', href: '/link3' }
+    ];
+
+    const settings = [
+        // logged settings
+        { alt: 'Profile', logged: true, Fun: function () { navigate('/profile') } },
+        { alt: 'Account', logged: true, Fun: function () { navigate('/account') } },
+        { alt: 'Dashboard', logged: true, Fun: function () { navigate('/dashboard') } },
+        {
+            alt: 'Logout', logged: true, Fun: function () {
+                axios.get('/logout');
+                window.location.href = '/';
+            }
+        },
+        // logout settings
+        { alt: 'Login', logged: false, Fun: function () { navigate('/login') } },
+        { alt: 'Register', logged: false, Fun: function () { navigate('/register') } },
+    ];
 
     return (
         <AppBar position="static" className='navbar'>
@@ -150,7 +159,11 @@ function Navbar() {
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Otwórz ustawienia">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt={"Firstname Lastname"} src={"/path/to/image"} className='navbar__content__avatar' />
+                                {context?.authState.isLogged ?
+                                    <Avatar className='navbar__content__avatar' > {context.authState.firstname[0]}{context.authState.lastname[0]} </Avatar>
+                                    :
+                                    <Avatar className='navbar__content__avatar' ><PersonIcon /></Avatar>
+                                }
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -170,9 +183,9 @@ function Navbar() {
                             onClose={handleCloseUserMenu}>
                             {settings.map
                                 ((setting) => {
-                                    if (!setting.logged)
+                                    if (setting.logged === context?.authState.isLogged)
                                         return (
-                                            <MenuItem key={setting.alt} onClick={() => { handleCloseUserMenu(); navigate(setting.href) }}>
+                                            <MenuItem key={setting.alt} onClick={() => { handleCloseUserMenu(); setting.Fun() }}>
                                                 <Typography textAlign="center">{setting.alt}</Typography>
                                             </MenuItem>
                                         )

@@ -23,7 +23,7 @@ axios.defaults.withCredentials = true;
 function App() {
   return (
     <AuthProvider >
-    <div className="App">
+      <div className="App">
         <Router>
           <Navbar />
           <Routes>
@@ -38,7 +38,7 @@ function App() {
           </Routes>
           <Footer />
         </Router>
-    </div >
+      </div >
     </AuthProvider>
   );
 }
