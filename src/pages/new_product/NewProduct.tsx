@@ -15,13 +15,17 @@ import { useFormik } from "formik"
 import { NewProductValidationSchema, NewCategoryValidationSchema } from "../../validations/NewProductValidationSchema";
 import axios from '../../api/axios.js';
 import { useEffect, useState } from 'react';
+import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 
 function NewProduct() {
+    const context = useContext(AuthContext)
     const [categories, setCategories] = useState<any[]>([])
+    const [refresh, setRefresh] = useState(false)
     const formik = useFormik({
         initialValues: {
-            category: 0,
+            category: 1,
             name: '',
             size: 100,
             unit: 'g',
@@ -30,7 +34,7 @@ function NewProduct() {
         },
         validationSchema: NewProductValidationSchema,
         onSubmit: (values) => {
-            alert(values.category)
+            // alert(values.category)
         }
     });
 
@@ -40,14 +44,16 @@ function NewProduct() {
         },
         validationSchema: NewCategoryValidationSchema,
         onSubmit: (values) => {
+            (refresh ? setRefresh(false) : setRefresh(true))
             axios.post('/categories', values,
                 {
-                    headers: { 'Content-Type': 'application/json' },
-                    withCredentials: true
-                }).then((response) => {
-                    console.log(response.data)
-                    handleClose()
-                })
+                    headers: { 'Authorization': `Bearer ${context?.authState.accessToken}` },
+
+                }
+            ).then((response) => {
+                console.log(response.data)
+            })
+            handleClose()
         }
     });
 
@@ -58,7 +64,7 @@ function NewProduct() {
             // dont touch this (its vital)
             formik.values.category = response.data[0].id
         })
-    }, [])
+    }, [refresh])
 
 
     const [open, setOpen] = useState(false);
