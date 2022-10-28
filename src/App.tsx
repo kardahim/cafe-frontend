@@ -17,6 +17,7 @@ import Reservation from './pages/reservation/Reservation';
 import Reset from './pages/password_reset/Reset';
 import ResetConfirmation from './pages/password_reset/ResetConfirmation';
 import NewProduct from './pages/new_product/NewProduct';
+import Menu from './pages/menu/Menu';
 
 import axios from '../src/api/axios';
 axios.defaults.withCredentials = true;
@@ -36,6 +37,7 @@ function App() {
               <Route path='/reset-password' element={<Reset />} />
               <Route path='/confirm-reset-password' element={<ResetConfirmation />} />
               <Route path='/new-product' element={<NewProduct />} />
+              <Route path='/menu' element={<Menu />} />
             </Route>
           </Routes>
           <Footer />
