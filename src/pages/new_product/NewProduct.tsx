@@ -8,7 +8,6 @@ import {
     Dialog,
     DialogActions,
     DialogContent,
-    DialogContentText,
     DialogTitle
 } from "@mui/material";
 import './NewProduct.scss'
@@ -16,7 +15,6 @@ import { useFormik } from "formik"
 import { NewProductValidationSchema, NewCategoryValidationSchema } from "../../validations/NewProductValidationSchema";
 import axios from '../../api/axios.js';
 import { useEffect, useState } from 'react';
-import * as Yup from "yup"
 
 
 function NewProduct() {
