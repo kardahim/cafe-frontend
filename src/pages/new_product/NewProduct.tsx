@@ -115,6 +115,7 @@ function NewProduct() {
                                 className='new_product__content__input'
                                 id="category-select"
                                 name='category'
+                                label="Kategoria"
                                 fullWidth
                                 autoFocus
                                 value={formik.values.category}
