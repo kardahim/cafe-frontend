@@ -55,8 +55,10 @@ function Menu() {
                             onChange={formik.handleChange}
                             select>
                             <MenuItem value={0} selected>Wszystkie</MenuItem>
-                            {categories.map((value, key) =>
-                                <MenuItem value={value.id} key={key}>{value.name}</MenuItem>
+                            {categories.map((value, key) => {
+                                if (products.filter((v) => v.CategoryId === value.id).length > 0)
+                                    return <MenuItem value={value.id} key={key}>{value.name}</MenuItem>
+                            }
                             )}
                         </TextField>
                         <TextField className='menu__content__input'
@@ -75,7 +77,8 @@ function Menu() {
                         </Button> */}
                     </div>
                     {categories.map((category) => {
-                        if ((category.id === formik.values.category || formik.values.category === 0)) {
+                        if ((category.id === formik.values.category || formik.values.category === 0) && products.filter((v) => v.CategoryId === category.id).length > 0) {
+                            // console.log(products.filter((v) => v.CategoryId === category.id).length)
                             return (
                                 <>
                                     <Divider className='menu__content__category_name' textAlign="left">{category.name}</Divider>
