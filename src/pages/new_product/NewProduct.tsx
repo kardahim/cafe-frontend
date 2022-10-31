@@ -14,6 +14,7 @@ import './NewProduct.scss'
 import { useFormik } from "formik"
 import { NewProductValidationSchema, NewCategoryValidationSchema } from "../../validations/NewProductValidationSchema";
 import axios from '../../api/axios.js';
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect, useState } from 'react';
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
@@ -21,18 +22,19 @@ import { AuthContext } from "../../context/AuthContext";
 
 function NewProduct() {
     const context = useContext(AuthContext)
+    const axiosPrivate = useAxiosPrivate();
     const [categories, setCategories] = useState<any[]>([])
     const [statuses, setStatuses] = useState<any[]>([])
     const [refresh, setRefresh] = useState(false)
     const formik = useFormik({
         initialValues: {
-            category: 1,
+            CategoryId: 1,
             name: '',
             size: 100,
             unit: 'g',
             price: 20,
             allergen: '',
-            status: 1
+            ProductStatusId: 1
         },
         validationSchema: NewProductValidationSchema,
         onSubmit: (values) => {
@@ -47,14 +49,26 @@ function NewProduct() {
         validationSchema: NewCategoryValidationSchema,
         onSubmit: (values) => {
             (refresh ? setRefresh(false) : setRefresh(true))
-            axios.post('/categories', values,
-                {
-                    headers: { 'Authorization': `Bearer ${context?.authState.accessToken}` },
 
+            const postCategory = async () => {
+                try {
+                    await axiosPrivate.post('/categories', values).then((response) => {
+                        console.log(response.data)
+                    })
+                } catch (err) {
+                    console.error(err);
                 }
-            ).then((response) => {
-                console.log(response.data)
-            })
+            }
+            postCategory();
+
+            // axios.post('/categories', values,
+            //     {
+            //         headers: { 'Authorization': `Bearer ${context?.authState.accessToken}` },
+
+            //     }
+            // ).then((response) => {
+            //     console.log(response.data)
+            // })
             handleClose()
         }
     });
@@ -64,12 +78,12 @@ function NewProduct() {
         axios.get('/categories').then((response) => {
             setCategories(response.data)
             // dont touch this (its vital)
-            formik.values.category = response.data[0].id
+            formik.values.CategoryId = response.data[0].id
         })
 
         axios.get('/productstatuses').then((response) => {
             setStatuses(response.data)
-            formik.values.status = response.data[0].id
+            formik.values.ProductStatusId = response.data[0].id
         })
     }, [refresh])
 
@@ -125,10 +139,10 @@ function NewProduct() {
                                 label="Kategoria"
                                 fullWidth
                                 autoFocus
-                                value={formik.values.category}
+                                value={formik.values.CategoryId}
                                 onChange={formik.handleChange}
-                                error={formik.touched.category && Boolean(formik.errors.category)}
-                                helperText={formik.touched.category && formik.errors.category}
+                                error={formik.touched.CategoryId && Boolean(formik.errors.CategoryId)}
+                                helperText={formik.touched.CategoryId && formik.errors.CategoryId}
                                 select>
                                 {categories.map((value, key) =>
                                     <MenuItem value={value.id} key={key} selected>{value.name}</MenuItem>
@@ -182,10 +196,10 @@ function NewProduct() {
                             name='status'
                             label="Status"
                             fullWidth
-                            value={formik.values.status}
+                            value={formik.values.ProductStatusId}
                             onChange={formik.handleChange}
-                            error={formik.touched.status && Boolean(formik.errors.status)}
-                            helperText={formik.touched.category && formik.errors.status}
+                            error={formik.touched.ProductStatusId && Boolean(formik.errors.ProductStatusId)}
+                            helperText={formik.touched.CategoryId && formik.errors.ProductStatusId}
                             select>
                             {statuses.map((value, key) =>
                                 <MenuItem value={value.id} key={key} selected>{value.name}</MenuItem>
