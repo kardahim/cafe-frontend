@@ -22,6 +22,7 @@ import { AuthContext } from "../../context/AuthContext";
 function NewProduct() {
     const context = useContext(AuthContext)
     const [categories, setCategories] = useState<any[]>([])
+    const [statuses, setStatuses] = useState<any[]>([])
     const [refresh, setRefresh] = useState(false)
     const formik = useFormik({
         initialValues: {
@@ -30,11 +31,12 @@ function NewProduct() {
             size: 100,
             unit: 'g',
             price: 20,
-            allergen: ''
+            allergen: '',
+            status: 1
         },
         validationSchema: NewProductValidationSchema,
         onSubmit: (values) => {
-            // alert(values.category)
+            console.log(values)
         }
     });
 
@@ -63,6 +65,11 @@ function NewProduct() {
             setCategories(response.data)
             // dont touch this (its vital)
             formik.values.category = response.data[0].id
+        })
+
+        axios.get('/productstatuses').then((response) => {
+            setStatuses(response.data)
+            formik.values.status = response.data[0].id
         })
     }, [refresh])
 
@@ -123,7 +130,6 @@ function NewProduct() {
                                 error={formik.touched.category && Boolean(formik.errors.category)}
                                 helperText={formik.touched.category && formik.errors.category}
                                 select>
-                                {/* <MenuItem value={0}>Kategoria</MenuItem> */}
                                 {categories.map((value, key) =>
                                     <MenuItem value={value.id} key={key} selected>{value.name}</MenuItem>
                                 )}
@@ -170,6 +176,21 @@ function NewProduct() {
                                 <MenuItem value="ml">mililitry(ml)</MenuItem>
                             </TextField>
                         </div>
+                        <TextField
+                            className='new_product__content__input'
+                            id="status-select"
+                            name='status'
+                            label="Status"
+                            fullWidth
+                            value={formik.values.status}
+                            onChange={formik.handleChange}
+                            error={formik.touched.status && Boolean(formik.errors.status)}
+                            helperText={formik.touched.category && formik.errors.status}
+                            select>
+                            {statuses.map((value, key) =>
+                                <MenuItem value={value.id} key={key} selected>{value.name}</MenuItem>
+                            )}
+                        </TextField>
                         <TextField className='new_product__content__input'
                             variant='outlined'
                             fullWidth

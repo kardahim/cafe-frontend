@@ -23,7 +23,10 @@ export const NewProductValidationSchema = Yup.object({
         .min(0, "Cena nie może być ujemna"),
     // it should be multi select
     allergen: Yup
-        .string()
+        .string(),
+    status: Yup
+        .number()
+        .required("Status jest wymagany")
 });
 
 export const NewCategoryValidationSchema = Yup.object({
