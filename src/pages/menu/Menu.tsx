@@ -78,7 +78,6 @@ function Menu() {
                     </div>
                     {categories.map((category) => {
                         if ((category.id === formik.values.category || formik.values.category === 0) && products.filter((v) => v.CategoryId === category.id).length > 0) {
-                            // console.log(products.filter((v) => v.CategoryId === category.id).length)
                             return (
                                 <>
                                     <Divider className='menu__content__category_name' textAlign="left">{category.name}</Divider>
