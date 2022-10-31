@@ -77,12 +77,12 @@ function Menu() {
                         </Button> */}
                     </div>
                     {categories.map((category) => {
-                        if ((category.id === formik.values.category || formik.values.category === 0) && products.filter((v) => v.CategoryId === category.id).length > 0) {
+                        if ((category.id === formik.values.category || formik.values.category === 0) && products.filter((v) => (v.CategoryId === category.id && v.ProductStatusId === 1)).length > 0) {
                             return (
                                 <>
                                     <Divider className='menu__content__category_name' textAlign="left">{category.name}</Divider>
                                     {products.map((product) => {
-                                        if (product.CategoryId === category.id && (levenshteinDistance(formik.values.name, product.name) <= 3 || formik.values.name === ''))
+                                        if (product.ProductStatusId === 1 && product.CategoryId === category.id && (levenshteinDistance(formik.values.name, product.name) <= 3 || formik.values.name === ''))
                                             return (
                                                 <>
                                                     <div className='menu__content__product'>
