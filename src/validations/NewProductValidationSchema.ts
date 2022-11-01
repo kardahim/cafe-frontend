@@ -1,7 +1,7 @@
 import * as Yup from "yup"
 
 export const NewProductValidationSchema = Yup.object({
-    category: Yup
+    CategoryId: Yup
         .number()
         .required("Kategoria jest wymagana"),
     name: Yup
@@ -24,7 +24,7 @@ export const NewProductValidationSchema = Yup.object({
     // it should be multi select
     allergen: Yup
         .string(),
-    status: Yup
+    ProductStatusId: Yup
         .number()
         .required("Status jest wymagany")
 });

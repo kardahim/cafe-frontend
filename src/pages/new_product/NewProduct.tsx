@@ -14,14 +14,14 @@ import './NewProduct.scss'
 import { useFormik } from "formik"
 import { NewProductValidationSchema, NewCategoryValidationSchema } from "../../validations/NewProductValidationSchema";
 import axios from '../../api/axios.js';
-import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useEffect, useState } from 'react';
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 
 function NewProduct() {
-    const context = useContext(AuthContext)
+    const context = useContext(AuthContext);
     const axiosPrivate = useAxiosPrivate();
     const [categories, setCategories] = useState<any[]>([])
     const [statuses, setStatuses] = useState<any[]>([])
@@ -134,8 +134,8 @@ function NewProduct() {
                         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                             <TextField
                                 className='new_product__content__input'
-                                id="category-select"
-                                name='category'
+                                id="CategoryId-select"
+                                name='CategoryId'
                                 label="Kategoria"
                                 fullWidth
                                 autoFocus
@@ -192,8 +192,8 @@ function NewProduct() {
                         </div>
                         <TextField
                             className='new_product__content__input'
-                            id="status-select"
-                            name='status'
+                            id="ProductStatusId-select"
+                            name='ProductStatusId'
                             label="Status"
                             fullWidth
                             value={formik.values.ProductStatusId}
