@@ -39,27 +39,28 @@ function NewProduct() {
         },
         validationSchema: NewProductValidationSchema,
         onSubmit: (values) => {
-            const data = {
-                name: values.name,
-                size: values.size + values.unit,
-                price: values.price,
-                allergen: values.allergen,
-                CategoryId: values.CategoryId,
-                ProductStatusId: values.ProductStatusId
-            }
+            console.log(values)
+            //     const data = {
+            //         name: values.name,
+            //         size: values.size + values.unit,
+            //         price: values.price,
+            //         allergen: values.allergen,
+            //         CategoryId: values.CategoryId,
+            //         ProductStatusId: values.ProductStatusId
+            //     }
 
-            const postProduct = async () => {
-                console.log('kurwa')
-                try {
-                    await axiosPrivate.post('/products', data).then((response) => {
-                        console.log(response.data)
-                    })
-                } catch (err) {
-                    console.error(err);
-                }
-            }
-            postProduct();
-            (refresh ? setRefresh(false) : setRefresh(true))
+            //     const postProduct = async () => {
+            //         console.log('kurwa')
+            //         try {
+            //             await axiosPrivate.post('/products', data).then((response) => {
+            //                 console.log(response.data)
+            //             })
+            //         } catch (err) {
+            //             console.error(err);
+            //         }
+            //     }
+            //     postProduct();
+            //     (refresh ? setRefresh(false) : setRefresh(true))
         }
     });
 
