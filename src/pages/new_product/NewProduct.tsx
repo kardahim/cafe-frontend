@@ -26,6 +26,7 @@ function NewProduct() {
     const [categories, setCategories] = useState<any[]>([])
     const [statuses, setStatuses] = useState<any[]>([])
     const [refresh, setRefresh] = useState(false)
+
     const formik = useFormik({
         initialValues: {
             CategoryId: 1,
@@ -39,6 +40,27 @@ function NewProduct() {
         validationSchema: NewProductValidationSchema,
         onSubmit: (values) => {
             console.log(values)
+            //     const data = {
+            //         name: values.name,
+            //         size: values.size + values.unit,
+            //         price: values.price,
+            //         allergen: values.allergen,
+            //         CategoryId: values.CategoryId,
+            //         ProductStatusId: values.ProductStatusId
+            //     }
+
+            //     const postProduct = async () => {
+            //         console.log('kurwa')
+            //         try {
+            //             await axiosPrivate.post('/products', data).then((response) => {
+            //                 console.log(response.data)
+            //             })
+            //         } catch (err) {
+            //             console.error(err);
+            //         }
+            //     }
+            //     postProduct();
+            //     (refresh ? setRefresh(false) : setRefresh(true))
         }
     });
 
@@ -48,8 +70,6 @@ function NewProduct() {
         },
         validationSchema: NewCategoryValidationSchema,
         onSubmit: (values) => {
-            (refresh ? setRefresh(false) : setRefresh(true))
-
             const postCategory = async () => {
                 try {
                     await axiosPrivate.post('/categories', values).then((response) => {
@@ -60,15 +80,7 @@ function NewProduct() {
                 }
             }
             postCategory();
-
-            // axios.post('/categories', values,
-            //     {
-            //         headers: { 'Authorization': `Bearer ${context?.authState.accessToken}` },
-
-            //     }
-            // ).then((response) => {
-            //     console.log(response.data)
-            // })
+            (refresh ? setRefresh(false) : setRefresh(true))
             handleClose()
         }
     });
