@@ -17,8 +17,10 @@ import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 // import useRefreshToken from "../../hooks/useRefreshToken";
+import { useNavigate } from 'react-router-dom'
 
 function NewOrder() {
+    let navigate = useNavigate()
     const axiosPrivate = useAxiosPrivate()
     const context = useContext(AuthContext)
     const [tables, setTables] = useState<any[]>([])
@@ -69,6 +71,7 @@ function NewOrder() {
                     TableStatusId: 2
                 }
                 axios.put(`/tables/update/${values.tableId}`, newTableData)
+                navigate('/order-list')
             }
         }
     });
