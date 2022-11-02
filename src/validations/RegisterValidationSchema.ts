@@ -13,7 +13,7 @@ export const RegisterValidationSchema = Yup.object({
         .email("Wprowadź poprawny adres email"),
     phoneNumber: Yup
         .string()
-        .required("Hasło jest wymagane")
+        .required("Numer telefonu jest wymagany")
         .matches(/^[1-9][0-9]{8}$/, "Wpisz poprawny numer telefonu"),
     password: Yup
         .string()
