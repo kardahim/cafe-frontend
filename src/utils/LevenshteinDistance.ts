@@ -28,5 +28,11 @@ const calculateLevenshteinDistance = (input: string, target: string) => {
 };
 
 export const levenshteinDistance = (input: string, target: string) => {
-    return calculateLevenshteinDistance(input.toLowerCase(), target.toLowerCase());
+
+    const lowerInput = input.toLowerCase()
+    const lowerTarget = target.toLowerCase()
+    if (lowerTarget.startsWith(lowerInput)) {
+        return 0
+    }
+    else return calculateLevenshteinDistance(lowerInput, lowerTarget);
 }
