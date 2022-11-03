@@ -71,6 +71,7 @@ function NewOrder() {
                     TableStatusId: 2
                 }
                 axios.put(`/tables/update/${values.tableId}`, newTableData)
+                // should navigate to order detais
                 navigate('/order-list')
             }
         }
