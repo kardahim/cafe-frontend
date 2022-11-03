@@ -43,8 +43,11 @@ function Login() {
                 }
             ).then((response) => {
                 if (response.data.error) {
-                    // setError(response.data.error)
-                    // console.log(response.data.error)
+                    (response.data.error === 'Użytkownik nie istnieje' ?
+                        formik.setFieldError('email', response.data.error)
+                        :
+                        formik.setFieldError('password', response.data.error)
+                    )
                 }
                 else {
                     // console.log(response)
