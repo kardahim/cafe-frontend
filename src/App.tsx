@@ -20,6 +20,7 @@ import NewProduct from './pages/new_product/NewProduct';
 import Menu from './pages/menu/Menu';
 import OrderList from './pages/order/OrderList';
 import NewOrder from './pages/order/NewOrder';
+import Order from './pages/order/Order';
 
 import axios from '../src/api/axios';
 axios.defaults.withCredentials = true;
@@ -42,6 +43,7 @@ function App() {
               <Route path='/menu' element={<Menu />} />
               <Route path='/order-list' element={<OrderList />} />
               <Route path='/new-order' element={<NewOrder />} />
+              <Route path='/order/:id' element={<Order />} />
             </Route>
           </Routes>
           <Footer />

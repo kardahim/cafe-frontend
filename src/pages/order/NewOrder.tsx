@@ -34,13 +34,16 @@ function NewOrder() {
         },
         validationSchema: NewOrderValidationSchema,
         onSubmit: (values) => {
+            let clientId = 0
             const getUserByPhone = async () => {
                 try {
                     await axiosPrivate.get(`/users/phone/${values.phoneNumber}`).then((response) => {
                         if (response.data === null && hasAccount) {
                             formik.setFieldError('phoneNumber', "Numer jest niepoprawny")
                         }
-                        else setClient(response.data)
+                        else {
+                            clientId = response.data.id
+                        }
                     })
                 } catch (err) {
                     console.error(err);
@@ -48,32 +51,34 @@ function NewOrder() {
             }
             getUserByPhone()
 
-            const data = {
-                OrderStatusId: 1,
-                TableId: values.tableId,
-                ClientId: (client !== null ? client.id : null),
-                EmployeeId: context?.authState.id
-            }
+            setTimeout(() => {
+                const data = {
+                    OrderStatusId: 1,
+                    TableId: values.tableId,
+                    ClientId: (clientId !== 0 ? clientId : null),
+                    EmployeeId: context?.authState.id
+                }
 
-            const postOrder = async () => {
-                try {
-                    await axiosPrivate.post('/orderheaders', data).then((response) => {
-                        console.log(response.data)
-                    })
-                } catch (err) {
-                    console.error(err);
+                const postOrder = async () => {
+                    try {
+                        await axiosPrivate.post('/orderheaders', data).then((response) => {
+                            console.log(response.data)
+                            // if client hasnt account or if client has an account and the phone number is correct
+                            if (!hasAccount || (clientId !== 0 && hasAccount)) {
+                                const newTableData = {
+                                    TableStatusId: 2
+                                }
+                                axios.put(`/tables/update/${values.tableId}`, newTableData)
+                                // should navigate to order detais
+                                navigate(`/order/${response.data.id}`)
+                            }
+                        })
+                    } catch (err) {
+                        console.error(err);
+                    }
                 }
-            }
-            // if client hasnt account or if client has an account and the phone number is correct
-            if (!hasAccount || (client !== null && hasAccount)) {
                 postOrder()
-                const newTableData = {
-                    TableStatusId: 2
-                }
-                axios.put(`/tables/update/${values.tableId}`, newTableData)
-                // should navigate to order detais
-                navigate('/order-list')
-            }
+            }, 200)
         }
     });
 
