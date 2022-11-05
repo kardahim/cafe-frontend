@@ -25,7 +25,6 @@ function NewOrder() {
     const context = useContext(AuthContext)
     const [tables, setTables] = useState<any[]>([])
     const [hasAccount, setHasAccount] = useState(false)
-    const [client, setClient] = useState<any>(null)
 
     const formik = useFormik({
         initialValues: {
@@ -56,7 +55,8 @@ function NewOrder() {
                     OrderStatusId: 1,
                     TableId: values.tableId,
                     ClientId: (clientId !== 0 ? clientId : null),
-                    EmployeeId: context?.authState.id
+                    EmployeeId: context?.authState.id,
+                    finalPrice: 0
                 }
 
                 const postOrder = async () => {

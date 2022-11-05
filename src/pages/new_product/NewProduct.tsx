@@ -59,7 +59,10 @@ function NewProduct() {
                 }
             }
             postProduct();
-            (refresh ? setRefresh(false) : setRefresh(true))
+            setTimeout(() => {
+                (refresh ? setRefresh(false) : setRefresh(true))
+            }, 200)
+
         }
     });
 

@@ -1,0 +1,123 @@
+@import '../../assets/scss/variables.scss';
+
+$space-between-items: 25px;
+
+.order {
+
+    .order__button {
+        color: $floral-white;
+        background-color: $burlywood  !important;
+        height: 57px;
+        margin-right: $space-between-items;
+    }
+
+    .order__card {
+        padding: 30px;
+        border-radius: 8px;
+
+        .order__card__header {
+            margin-bottom: $space-between-items;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 2rem;
+            color: $aztec-gold;
+            text-shadow: 1px 1px $dutch-white;
+        }
+
+        .order__card__content {
+            display: flex;
+            flex-direction: column;
+
+            .order__content__category_name {
+                font-size: 1.5rem;
+                color: $aztec-gold;
+                text-shadow: 1px 1px $dutch-white;
+            }
+
+            .order__content__filters {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: $space-between-items;
+                // position: relative;
+
+                .order__content__input {
+                    margin-bottom: $space-between-items;
+                }
+            }
+
+            .order__content__product {
+                display: flex;
+                justify-content: space-between;
+                height: 30px;
+
+                &:hover {
+                    color: goldenrod;
+                    transition: 0.2s;
+                    font-size: 1.3rem;
+                    cursor: pointer;
+                }
+
+                .product__name {
+                    text-transform: capitalize;
+                    margin: auto 0;
+                }
+
+                .product__size {
+                    margin: auto 0;
+                }
+
+                .product__price {
+                    margin: auto 0 auto 20px;
+                }
+            }
+        }
+    }
+}
+
+.cart {
+    width: 100%;
+    min-height: 250px;
+    padding: 30px;
+    border-radius: 8px;
+
+    .cart__header {
+        margin-bottom: $space-between-items;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 2rem;
+        color: $aztec-gold;
+        text-shadow: 1px 1px $dutch-white;
+    }
+
+    .cart__body {
+
+        .cart__body__product {
+            display: flex;
+            justify-content: space-between;
+            height: 30px;
+
+            .product__name {
+                text-transform: capitalize;
+                margin: auto 0;
+            }
+
+            .product__price {
+                margin: auto 0;
+            }
+        }
+
+        .cart__body__button {
+            color: $floral-white;
+            background-color: $burlywood;
+            height: 57px;
+            width: 100px;
+            margin: 30px 25px 0 0;
+
+            &:hover {
+                // mui off box-shadow, i dont know why 
+                box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+            }
+
+        }
+    }
+}
