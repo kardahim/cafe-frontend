@@ -31,7 +31,7 @@ export const levenshteinDistance = (input: string, target: string) => {
 
     const lowerInput = input.toLowerCase()
     const lowerTarget = target.toLowerCase()
-    if (lowerTarget.startsWith(lowerInput)) {
+    if (lowerTarget.includes(lowerInput)) {
         return 0
     }
     else return calculateLevenshteinDistance(lowerInput, lowerTarget);
