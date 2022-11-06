@@ -70,7 +70,8 @@ function OrderList() {
                             select>
                             <MenuItem value={0}>Wszystkie</MenuItem>
                             {orderStatuses.map((value, key) => {
-                                return <MenuItem value={value.id} key={key}>{value.name}</MenuItem>
+                                if (orders.filter((v) => v.OrderStatusId === value.id).length > 0)
+                                    return <MenuItem value={value.id} key={key}>{value.name}</MenuItem>
                             }
                             )}
                         </TextField>
@@ -85,7 +86,7 @@ function OrderList() {
                             type='search' />
                     </div>
                     {orderStatuses.map((orderStatus) => {
-                        if (orderStatus.id === formik.values.orderStatus || formik.values.orderStatus === 0) {
+                        if ((orderStatus.id === formik.values.orderStatus || formik.values.orderStatus === 0) && (orders.filter((v) => v.OrderStatusId === orderStatus.id).length > 0)) {
                             return (
                                 <>
                                     <Divider className='order_list__content__category_name' textAlign="left">{orderStatus.name}</Divider>
