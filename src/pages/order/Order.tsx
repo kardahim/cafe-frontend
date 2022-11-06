@@ -11,6 +11,7 @@ import {
     Divider,
     MenuItem
 } from "@mui/material";
+import { Delete, Add, Remove } from '@mui/icons-material';
 import axios from '../../api/axios.js';
 import { useFormik } from "formik"
 import { levenshteinDistance } from '../../utils/LevenshteinDistance';
@@ -27,6 +28,9 @@ function Order() {
     const [order, setOrder] = React.useState<any>(null)
     const [orderDetails, setOrderDetails] = React.useState<any[]>([])
     const [refresh, setRefresh] = React.useState(false)
+    const [showOptions, setShowOptions] = React.useState<any>({
+        key: -1
+    })
 
     React.useEffect(() => {
         axios.get('/categories').then((respone) => {
@@ -89,8 +93,71 @@ function Order() {
         postOrderDetails();
         setTimeout(() => {
             (!refresh ? setRefresh(true) : setRefresh(false))
-        }, 200)
+        }, 50)
     }
+
+    const increaseQuantity = (orderDetailsId: number, quantity: number) => {
+        const data = {
+            quantity: quantity + 1
+        }
+        const putOrderDetails = async () => {
+            try {
+                await axiosPrivate.put(`/orderdetails/update/${orderDetailsId}`, data).then((response) => {
+                    console.log(response.data)
+                })
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        putOrderDetails();
+        setTimeout(() => {
+            (!refresh ? setRefresh(true) : setRefresh(false))
+        }, 50)
+    }
+
+    const decreaseQuantity = (orderDetailsId: number, quantity: number) => {
+        const data = {
+            quantity: quantity - 1
+        }
+        const putOrderDetails = async () => {
+            try {
+                await axiosPrivate.put(`/orderdetails/update/${orderDetailsId}`, data).then((response) => {
+                    console.log(response.data)
+                })
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        if (quantity > 1) {
+            putOrderDetails();
+            setTimeout(() => {
+                (!refresh ? setRefresh(true) : setRefresh(false))
+            }, 50)
+        }
+    }
+
+    const deleteProduct = (orderDetailsId: number) => {
+
+        const deleteOrderDetails = async () => {
+            try {
+                await axiosPrivate.delete(`/orderdetails/${orderDetailsId}`).then((response) => {
+                    console.log(response.data)
+                })
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        deleteOrderDetails();
+        setTimeout(() => {
+            (!refresh ? setRefresh(true) : setRefresh(false))
+        }, 50)
+
+    }
+    // TODO: finalize transaction
+    // 1. change status to inactive
+    // 2. change tablestatus to free
+    // 3 set payment status
 
 
     return (
@@ -178,18 +245,35 @@ function Order() {
                         {orderDetails.map((product, key) => {
                             return (
                                 <>
-                                    <div className='cart__body__product'>
+                                    <div className='cart__body__product'
+                                        onMouseEnter={() => setShowOptions(key)}
+                                        onMouseLeave={() => setShowOptions(-1)}>
                                         <div className='product__name'>{product.Product.name}
                                             <span style={{ textTransform: 'none' }}> x{product.quantity}</span>
                                         </div>
-                                        <span className='product__price'>{product.transaction_price * product.quantity}zł</span>
+                                        {key === showOptions ?
+                                            <div>
+                                                <Button className='product__button' onClick={() => increaseQuantity(product.id, product.quantity)}>
+                                                    <Add />
+                                                </Button>
+                                                <Button className='product__button' onClick={() => decreaseQuantity(product.id, product.quantity)}>
+                                                    <Remove />
+                                                </Button>
+                                                <Button className='product__button' onClick={() => deleteProduct(product.id)}>
+                                                    <Delete />
+                                                </Button>
+                                            </div>
+                                            :
+                                            <span className='product__price'>{product.transaction_price * product.quantity}zł</span>
+                                        }
                                     </div>
                                     {key < orderDetails.length - 1 ? <Divider /> : ''}
                                 </>
                             )
                         })}
                         <Button className='cart__body__button'>Anuluj</Button>
-                        <Button className='cart__body__button'>Zakończ</Button>
+                        {/*100btn + 25mg */}
+                        <Button className='cart__body__button' sx={{ left: '125px' }}>Zakończ</Button>
                     </Box>
                 </Paper>
             </Container>

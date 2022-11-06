@@ -76,7 +76,6 @@ $space-between-items: 25px;
 
 .cart {
     width: 100%;
-    min-height: 250px;
     padding: 30px;
     border-radius: 8px;
 
@@ -90,6 +89,9 @@ $space-between-items: 25px;
     }
 
     .cart__body {
+        position: relative;
+        min-height: 250px;
+        padding-bottom: 80px;
 
         .cart__body__product {
             display: flex;
@@ -104,6 +106,12 @@ $space-between-items: 25px;
             .product__price {
                 margin: auto 0;
             }
+
+            .product__button {
+                color: $aztec-gold;
+                height: 30px;
+                min-width: 40px;
+            }
         }
 
         .cart__body__button {
@@ -111,7 +119,8 @@ $space-between-items: 25px;
             background-color: $burlywood;
             height: 57px;
             width: 100px;
-            margin: 30px 25px 0 0;
+            position: absolute;
+            bottom: 0px;
 
             &:hover {
                 // mui off box-shadow, i dont know why 
