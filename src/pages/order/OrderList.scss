@@ -50,15 +50,26 @@ $space-between-items: 25px;
             .order_list__content__product {
                 display: flex;
                 justify-content: space-between;
+                height: 30px;
+
+                &:hover {
+                    color: goldenrod;
+                    transition: 0.2s;
+                    font-size: 1.2rem;
+                    cursor: pointer;
+                }
 
                 .product__name {
                     text-transform: capitalize;
+                    margin: auto 0;
                 }
 
-                .product__table {}
+                .product__table {
+                    margin: auto 0;
+                }
 
                 .product__date {
-                    margin-left: 20px;
+                    margin: auto 0;
                 }
             }
         }

@@ -16,8 +16,10 @@ import { levenshteinDistance } from '../../utils/LevenshteinDistance';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { useNavigate } from 'react-router-dom'
 
 function OrderList() {
+    let navigate = useNavigate()
     const axiosPrivate = useAxiosPrivate();
     const context = useContext(AuthContext);
 
@@ -96,9 +98,9 @@ function OrderList() {
                                             let date = new Date(order.updatedAt).toLocaleDateString('pl-PL').split(',')[0]
                                             return (
                                                 <>
-                                                    <div className='order_list__content__product'>
+                                                    <div className='order_list__content__product' onClick={() => navigate(`/order/${order.id}`)}>
                                                         <span className='product__name'>Zamówienie #{order.id}</span>
-                                                        <div style={{ display: "flex", justifyContent: "space-between", width: "175px" }}>
+                                                        <div style={{ display: "flex", justifyContent: "space-between", width: "200px" }}>
                                                             <span className='product__table'>Stolik nr. {order.TableId}</span>
                                                             <span className='product__date'>{date}</span>
                                                         </div>
@@ -113,7 +115,7 @@ function OrderList() {
                     })}
                 </Box>
             </Paper>
-        </Container>
+        </Container >
     )
 }
 
