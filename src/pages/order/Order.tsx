@@ -17,14 +17,17 @@ import { useFormik } from "formik"
 import { levenshteinDistance } from '../../utils/LevenshteinDistance';
 import { AuthContext } from '../../context/AuthContext';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useNavigate } from 'react-router-dom'
 
 function Order() {
+    let navigate = useNavigate()
     const { id } = useParams()
     const context = React.useContext(AuthContext)
     const axiosPrivate = useAxiosPrivate();
 
     const [categories, setCategories] = React.useState<any[]>([])
     const [products, setProducts] = React.useState<any[]>([])
+    const [payments, setPayments] = React.useState<any[]>([])
     const [order, setOrder] = React.useState<any>(null)
     const [orderDetails, setOrderDetails] = React.useState<any[]>([])
     const [refresh, setRefresh] = React.useState(false)
@@ -38,6 +41,11 @@ function Order() {
         })
         axios.get('/products').then((respone) => {
             setProducts(respone.data)
+        })
+
+        axios.get('/payments').then((respone) => {
+            setPayments(respone.data)
+            formik.values.payment = respone.data[0].id
         })
 
         const getOrder = async () => {
@@ -66,7 +74,8 @@ function Order() {
     const formik = useFormik({
         initialValues: {
             category: 0,
-            name: ''
+            name: '',
+            payment: 0
         },
         onSubmit: (values) => {
             // formik needs onSubmit but we dont need send data
@@ -154,11 +163,51 @@ function Order() {
         }, 50)
 
     }
-    // TODO: finalize transaction
-    // 1. change status to inactive
-    // 2. change tablestatus to free
-    // 3 set payment status
 
+    const finalizeTransaction = (finalize: boolean) => {
+        if (finalize) {
+            const data = {
+                PaymentId: formik.values.payment,
+                OrderStatusId: 2
+            }
+
+            const putOrderDetails = async () => {
+                try {
+                    await axiosPrivate.put(`/orderheaders/update/${id}`, data).then((response) => {
+                        console.log(response.data)
+                    })
+                } catch (err) {
+                    console.error(err);
+                    console.log(err);
+                }
+            }
+            putOrderDetails()
+        }
+        else {
+            const data = {
+                OrderStatusId: 3
+            }
+
+            const putOrderDetails = async () => {
+                try {
+                    await axiosPrivate.put(`/orderheaders/update/${id}`, data).then((response) => {
+                        console.log(response.data)
+                    })
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+            putOrderDetails()
+
+            const newTableData = {
+                TableStatusId: 1
+            }
+            axios.put(`/tables/update/${order.TableId}`, newTableData)
+            navigate('/order/order-list')
+        }
+
+
+    }
 
     return (
         <Container sx={{ display: 'flex', flexDirection: { md: 'row', xs: 'column' } }} maxWidth="xl">
@@ -168,6 +217,21 @@ function Order() {
                         Zamówienie #{id}
                     </Box>
                     <Box className='order__card__content'>
+                        <div className='order__content__filters'>
+                            <TextField
+                                className='order__content__input'
+                                name='payment'
+                                fullWidth
+                                label="Sposób płatności"
+                                value={formik.values.payment}
+                                onChange={formik.handleChange}
+                                select>
+                                {payments.map((value, key) => {
+                                    return <MenuItem value={value.id} key={key}>{value.name}</MenuItem>
+                                }
+                                )}
+                            </TextField>
+                        </div>
                         <div className='order__content__filters'>
                             <TextField
                                 className='order__content__input'
@@ -271,9 +335,9 @@ function Order() {
                                 </>
                             )
                         })}
-                        <Button className='cart__body__button'>Anuluj</Button>
+                        <Button className='cart__body__button' onClick={() => finalizeTransaction(false)}>Anuluj</Button>
                         {/*100btn + 25mg */}
-                        <Button className='cart__body__button' sx={{ left: '125px' }}>Zakończ</Button>
+                        <Button className='cart__body__button' sx={{ left: '125px' }} onClick={() => finalizeTransaction(true)}>Zakończ</Button>
                     </Box>
                 </Paper>
             </Container>
