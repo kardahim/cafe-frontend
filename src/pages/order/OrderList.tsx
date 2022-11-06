@@ -29,13 +29,16 @@ function OrderList() {
     React.useEffect(() => {
         axios.get('/orderstatuses').then((respone) => {
             setOrderStatuses(respone.data)
-            formik.values.orderStatus = respone.data[0].id
         })
-
         const getOrders = async () => {
             try {
                 await axiosPrivate.get('/orderheaders').then((response) => {
                     setOrders(response.data)
+
+                    if (response.data.filter((v: any) => v.OrderStatusId === 1).length > 0) {
+                        formik.values.orderStatus = 1
+                    }
+                    else formik.values.orderStatus = 0
                 })
             } catch (err) {
                 console.error(err);
@@ -53,7 +56,6 @@ function OrderList() {
             // formik needs onSubmit but we dont need send data
         }
     });
-
     return (
         <Container maxWidth="xl" className='order_list'>
             <Paper elevation={4} className='order_list__card'>
