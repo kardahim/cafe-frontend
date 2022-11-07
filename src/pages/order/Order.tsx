@@ -18,6 +18,7 @@ import { levenshteinDistance } from '../../utils/LevenshteinDistance';
 import { AuthContext } from '../../context/AuthContext';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from 'react-router-dom'
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 
 function Order() {
     let navigate = useNavigate()
@@ -302,7 +303,7 @@ function Order() {
                     <Box className='cart__header'>
                         Koszyk
                     </Box>
-                    <Box className='cart__body'>
+                    <Box className='cart__body' sx={{ minHeight: (orderDetails.length === 0 ? '0px !important' : 'none !important') }}>
                         {orderDetails.map((product, key) => {
                             return (
                                 <>
@@ -338,7 +339,7 @@ function Order() {
                     </Box>
                 </Paper>
             </Container>
-        </Container>
+        </Container >
     )
 }
 
