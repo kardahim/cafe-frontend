@@ -198,15 +198,12 @@ function Order() {
                 }
             }
             putOrderDetails()
-
-            const newTableData = {
-                TableStatusId: 1
-            }
-            axios.put(`/tables/update/${order.TableId}`, newTableData)
-            navigate('/order/order-list')
         }
-
-
+        const newTableData = {
+            TableStatusId: 1
+        }
+        axios.put(`/tables/update/${order.TableId}`, newTableData)
+        navigate('/order-list')
     }
 
     return (
