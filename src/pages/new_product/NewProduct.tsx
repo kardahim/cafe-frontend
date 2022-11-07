@@ -39,19 +39,19 @@ function NewProduct() {
         },
         validationSchema: NewProductValidationSchema,
         onSubmit: (values) => {
-            console.log(values)
-            //     const data = {
-            //         name: values.name,
-            //         size: values.size + values.unit,
-            //         price: values.price,
-            //         allergen: values.allergen,
-            //         CategoryId: values.CategoryId,
-            //         ProductStatusId: values.ProductStatusId
-            //     }
+            const data = {
+                name: values.name,
+                size: values.size + values.unit,
+                price: values.price,
+                allergen: values.allergen,
+                CategoryId: values.CategoryId,
+                ProductStatusId: values.ProductStatusId
+            }
+            console.log(data)
 
             const postProduct = async () => {
                 try {
-                    await axiosPrivate.post('/products', values).then((response) => {
+                    await axiosPrivate.post('/products', data).then((response) => {
                         console.log(response.data)
                     })
                 } catch (err) {
@@ -59,6 +59,10 @@ function NewProduct() {
                 }
             }
             postProduct();
+            setTimeout(() => {
+                (refresh ? setRefresh(false) : setRefresh(true))
+            }, 200)
+
         }
     });
 
