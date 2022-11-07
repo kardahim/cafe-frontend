@@ -61,7 +61,7 @@ function NewProduct() {
             postProduct();
             setTimeout(() => {
                 (refresh ? setRefresh(false) : setRefresh(true))
-            }, 200)
+            }, 50)
 
         }
     });
