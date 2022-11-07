@@ -82,7 +82,9 @@ function NewProduct() {
                 }
             }
             postCategory();
-            (refresh ? setRefresh(false) : setRefresh(true))
+            setTimeout(() => {
+                (refresh ? setRefresh(false) : setRefresh(true))
+            }, 50)
             handleClose()
         }
     });
