@@ -35,6 +35,7 @@ function Order() {
     const [showOptions, setShowOptions] = React.useState<any>({
         key: -1
     })
+    const [statusName, setStatusName] = React.useState('')
 
     React.useEffect(() => {
         axios.get('/categories').then((respone) => {
@@ -53,6 +54,9 @@ function Order() {
             try {
                 await axiosPrivate.get(`/orderheaders/${id}`).then((response) => {
                     setOrder(response.data)
+                    axios.get(`/orderstatuses/${response.data.OrderStatusId}`).then((resp) => {
+                        setStatusName(resp.data.name)
+                    })
                 })
             } catch (err) {
                 console.error(err);
@@ -204,104 +208,110 @@ function Order() {
             TableStatusId: 1
         }
         axios.put(`/tables/update/${order.TableId}`, newTableData)
-        navigate('/order-list')
+        window.location.href = '/order-list'
     }
 
     return (
         <Container sx={{ display: 'flex', flexDirection: { md: 'row', xs: 'column' } }} maxWidth="xl">
-            <Container maxWidth="xl" className='order' sx={{ marginBottom: { xs: '24px', md: '0' } }}>
-                <Paper elevation={4} className='order__card'>
-                    <Box className='order__card__header'>
-                        Zamówienie #{id}
-                    </Box>
-                    <Box className='order__card__content'>
-                        <div className='order__content__filters'>
-                            <TextField
-                                className='order__content__input'
-                                name='payment'
-                                fullWidth
-                                label="Sposób płatności"
-                                value={formik.values.payment}
-                                onChange={formik.handleChange}
-                                select>
-                                {payments.map((value, key) => {
-                                    return <MenuItem value={value.id} key={key}>{value.name}</MenuItem>
-                                }
-                                )}
-                            </TextField>
-                        </div>
-                        <div className='order__content__filters'>
-                            <TextField
-                                className='order__content__input'
-                                name='totalValue'
-                                fullWidth
-                                label="Wartość zamówienia"
-                                value={order !== null ? order.finalPrice + ' zł' : 'error'}
-                                disabled />
-                            <TextField
-                                className='order__content__input'
-                                name='tableId'
-                                fullWidth
-                                label="Stolik"
-                                style={{ marginLeft: "25px" }}
-                                value={order !== null ? 'stolik nr. ' + order.TableId : 'error'}
-                                disabled />
-                        </div>
-                        <div className='order__content__filters'>
-                            <TextField
-                                className='order__content__input'
-                                id="category-select"
-                                name='category'
-                                fullWidth
-                                label="Kategoria"
-                                value={formik.values.category}
-                                onChange={formik.handleChange}
-                                select>
-                                <MenuItem value={0} selected>Wszystkie</MenuItem>
-                                {categories.map((value, key) => {
-                                    if (products.filter((v) => v.CategoryId === value.id).length > 0)
+            {order?.OrderStatusId === 1 ?
+                <Container maxWidth="xl" className='order' sx={{ marginBottom: { xs: '24px', md: '0' } }}>
+                    <Paper elevation={4} className='order__card'>
+                        <Box className='order__card__header'>
+                            Zamówienie #{id} ({statusName})
+                        </Box>
+                        <Box className='order__card__content'>
+                            <div className='order__content__filters'>
+                                <TextField
+                                    className='order__content__input'
+                                    name='payment'
+                                    fullWidth
+                                    label="Sposób płatności"
+                                    value={formik.values.payment}
+                                    onChange={formik.handleChange}
+                                    select>
+                                    {payments.map((value, key) => {
                                         return <MenuItem value={value.id} key={key}>{value.name}</MenuItem>
-                                }
-                                )}
-                            </TextField>
-                            <TextField className='order__content__input'
-                                variant='outlined'
-                                label='Nazwa produktu'
-                                fullWidth
-                                name='name'
-                                style={{ marginLeft: "25px" }}
-                                value={formik.values.name}
-                                onChange={formik.handleChange}
-                                type='search' />
-                        </div>
-                        {categories.map((category) => {
-                            if ((category.id === formik.values.category || formik.values.category === 0) && products.filter((v) => (v.CategoryId === category.id && v.ProductStatusId === 1)).length > 0) {
-                                return (
-                                    <>
-                                        <Divider className='order__content__category_name' textAlign="left">{category.name}</Divider>
-                                        {products.map((product) => {
-                                            if (product.ProductStatusId === 1 && product.CategoryId === category.id && (levenshteinDistance(formik.values.name, product.name) <= 3 || formik.values.name === ''))
-                                                return (
-                                                    <div className='order__content__product' onClick={() => { addProduct(product) }} title='Dodaj produkt'>
-                                                        <span className='product__name'>{product.name}</span>
-                                                        <div style={{ display: "flex", justifyContent: "space-between", width: "100px" }}>
-                                                            <span className='product__size'>{product.size}</span>
-                                                            <span className='product__price'>{product.price}zł</span>
+                                    }
+                                    )}
+                                </TextField>
+                            </div>
+                            <div className='order__content__filters'>
+                                <TextField
+                                    className='order__content__input'
+                                    name='totalValue'
+                                    fullWidth
+                                    label="Wartość zamówienia"
+                                    value={order !== null ? order.finalPrice + ' zł' : 'error'}
+                                    disabled />
+                                <TextField
+                                    className='order__content__input'
+                                    name='tableId'
+                                    fullWidth
+                                    label="Stolik"
+                                    style={{ marginLeft: "25px" }}
+                                    value={order !== null ? 'stolik nr. ' + order.TableId : 'error'}
+                                    disabled />
+                            </div>
+                            <div className='order__content__filters'>
+                                <TextField
+                                    className='order__content__input'
+                                    id="category-select"
+                                    name='category'
+                                    fullWidth
+                                    label="Kategoria"
+                                    value={formik.values.category}
+                                    onChange={formik.handleChange}
+                                    select>
+                                    <MenuItem value={0} selected>Wszystkie</MenuItem>
+                                    {categories.map((value, key) => {
+                                        if (products.filter((v) => v.CategoryId === value.id).length > 0)
+                                            return <MenuItem value={value.id} key={key}>{value.name}</MenuItem>
+                                    }
+                                    )}
+                                </TextField>
+                                <TextField className='order__content__input'
+                                    variant='outlined'
+                                    label='Nazwa produktu'
+                                    fullWidth
+                                    name='name'
+                                    style={{ marginLeft: "25px" }}
+                                    value={formik.values.name}
+                                    onChange={formik.handleChange}
+                                    type='search' />
+                            </div>
+                            {categories.map((category) => {
+                                if ((category.id === formik.values.category || formik.values.category === 0) && products.filter((v) => (v.CategoryId === category.id && v.ProductStatusId === 1)).length > 0) {
+                                    return (
+                                        <>
+                                            <Divider className='order__content__category_name' textAlign="left">{category.name}</Divider>
+                                            {products.map((product) => {
+                                                if (product.ProductStatusId === 1 && product.CategoryId === category.id && (levenshteinDistance(formik.values.name, product.name) <= 3 || formik.values.name === ''))
+                                                    return (
+                                                        <div className='order__content__product' onClick={() => { addProduct(product) }} title='Dodaj produkt'>
+                                                            <span className='product__name'>{product.name}</span>
+                                                            <div style={{ display: "flex", justifyContent: "space-between", width: "100px" }}>
+                                                                <span className='product__size'>{product.size}</span>
+                                                                <span className='product__price'>{product.price}zł</span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                )
-                                        })}
-                                    </>
-                                )
-                            }
-                        })}
-                    </Box>
-                </Paper>
-            </Container>
+                                                    )
+                                            })}
+                                        </>
+                                    )
+                                }
+                            })}
+                        </Box>
+                    </Paper>
+                </Container>
+                : ''}
             <Container className='order' sx={{ marginTop: { xs: '24px', md: '0' } }}>
                 <Paper className='cart' elevation={4}>
                     <Box className='cart__header'>
-                        Koszyk
+                        {order?.OrderStatusId === 1 ?
+                            'Koszyk'
+                            :
+                            <>Zamówienie #{id} ({statusName})</>
+                        }
                     </Box>
                     <Box className='cart__body' sx={{ minHeight: (orderDetails.length === 0 ? '0px !important' : 'none !important') }}>
                         {orderDetails.map((product, key) => {
@@ -313,7 +323,7 @@ function Order() {
                                         <div className='product__name'>{product.Product.name}
                                             <span style={{ textTransform: 'none' }}> x{product.quantity}</span>
                                         </div>
-                                        {key === showOptions ?
+                                        {key === showOptions && order.OrderStatusId === 1 ?
                                             <div>
                                                 <Button className='product__button' onClick={() => increaseQuantity(product.id, product.quantity)}>
                                                     <Add />
@@ -333,9 +343,15 @@ function Order() {
                                 </>
                             )
                         })}
-                        <Button className='cart__body__button' onClick={() => finalizeTransaction(false)}>Anuluj</Button>
-                        {/*100btn + 25mg */}
-                        <Button className='cart__body__button' sx={{ left: '125px' }} onClick={() => finalizeTransaction(true)}>Zakończ</Button>
+                        {order?.OrderStatusId === 1 ?
+                            <>
+                                <Button className='cart__body__button' onClick={() => finalizeTransaction(false)}>Anuluj</Button>
+                                {/*100btn + 25mg */}
+                                <Button className='cart__body__button' sx={{ left: '125px' }} onClick={() => finalizeTransaction(true)}>Zakończ</Button>
+                            </>
+                            :
+                            <Button className='cart__body__button' onClick={() => navigate('/order-list')}>Powrót</Button>
+                        }
                     </Box>
                 </Paper>
             </Container>
