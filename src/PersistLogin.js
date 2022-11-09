@@ -4,6 +4,8 @@ import useRefreshToken from './hooks/useRefreshToken';
 
 import { AuthContext } from './context/AuthContext';
 
+import { CircularProgress } from "@mui/material";
+
 
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -37,16 +39,8 @@ const PersistLogin = () => {
     //     console.log(`aT: ${JSON.stringify(authState?.accessToken)}`)
     // }, [isLoading])
 
-    return (
-        <>
-            {isLoading
-                ? <Outlet />
-                : isLoading
-                    ? <p>Loading...</p>
-                    : <Outlet />
-            }
-        </>
-    )
+    if (isLoading) return <CircularProgress sx={{ margin: '0 auto', color: '#DCC080' }} size={200} />
+    else return <Outlet />
 }
 
 export default PersistLogin
