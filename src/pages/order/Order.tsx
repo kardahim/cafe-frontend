@@ -19,13 +19,14 @@ import { AuthContext } from '../../context/AuthContext';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from 'react-router-dom'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import NotFound from '../../components/notFound/NotFound';
 
 function Order() {
-    let navigate = useNavigate()
+    const navigate = useNavigate()
     const { id } = useParams()
     const context = React.useContext(AuthContext)
     const axiosPrivate = useAxiosPrivate();
-
+    const [isMounted, setIsMounted] = React.useState(false)
     const [categories, setCategories] = React.useState<any[]>([])
     const [products, setProducts] = React.useState<any[]>([])
     const [payments, setPayments] = React.useState<any[]>([])
@@ -74,6 +75,8 @@ function Order() {
             }
         }
         getOrderDetails();
+
+        setTimeout(() => { setIsMounted(true) }, 50)
     }, [context, refresh])
 
     const formik = useFormik({
@@ -211,7 +214,11 @@ function Order() {
         window.location.href = '/order-list'
     }
 
-    return (
+    const intRegex = /^\d+$/
+
+    // id is undefined || string. This is so stupid but its real :/
+    if ((order === '' || !intRegex.test((id !== undefined ? id : '1'))) && isMounted) return <NotFound />
+    else return (
         <Container sx={{ display: 'flex', flexDirection: { md: 'row', xs: 'column' } }} maxWidth="xl">
             {order?.OrderStatusId === 1 ?
                 <Container maxWidth="xl" className='order' sx={{ marginBottom: { xs: '24px', md: '0' } }}>
