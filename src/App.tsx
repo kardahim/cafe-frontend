@@ -8,6 +8,7 @@ import PersistLogin from './PersistLogin'
 // import components
 import Navbar from './components/navbar/Navbar'
 import Footer from './components/footer/Footer';
+import NotFound from './components/notFound/NotFound';
 
 // import pages
 import Login from './pages/login/Login'
@@ -44,6 +45,7 @@ function App() {
               <Route path='/order-list' element={<OrderList />} />
               <Route path='/new-order' element={<NewOrder />} />
               <Route path='/order/:id' element={<Order />} />
+              <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>
           <Footer />
