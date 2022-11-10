@@ -350,6 +350,17 @@ function Order() {
                                 </>
                             )
                         })}
+                        {order?.OrderStatusId !== 1 ?
+                            <>
+                                <Divider />
+                                <div className='cart__body__product'>
+                                    <div className='product__name'>
+                                        <span style={{ textTransform: 'none' }}></span>
+                                    </div>
+                                    <span className='product__price'>{order?.finalPrice}zł</span>
+                                </div>
+                            </>
+                            : ''}
                         {order?.OrderStatusId === 1 ?
                             <>
                                 <Button className='cart__body__button' onClick={() => finalizeTransaction(false)}>Anuluj</Button>
