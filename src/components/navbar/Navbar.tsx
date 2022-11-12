@@ -63,14 +63,14 @@ function Navbar() {
         // logged settings
         { alt: 'Profile', logged: true, Fun: function () { navigate('/profile') } },
         {
-            alt: 'Logout', logged: true, Fun: function () {
+            alt: 'Wyloguj się', logged: true, Fun: function () {
                 axios.get('/logout');
                 window.location.href = '/';
             }
         },
         // logout settings
-        { alt: 'Login', logged: false, Fun: function () { navigate('/login') } },
-        { alt: 'Register', logged: false, Fun: function () { navigate('/register') } },
+        { alt: 'Zaloguj się', logged: false, Fun: function () { navigate('/login') } },
+        { alt: 'Rejestracja', logged: false, Fun: function () { navigate('/register') } },
     ];
 
     return (
