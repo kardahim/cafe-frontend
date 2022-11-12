@@ -6,8 +6,7 @@ import {
     Tab
 } from "@mui/material";
 import './Dashboard.scss'
-import { useContext, useEffect, useState } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+import { useEffect, useState } from 'react';
 import TabContent from "../../components/tabContent/TabContent";
 import axios from '../../api/axios.js';
 import ProductsTab from "./ProductsTab";

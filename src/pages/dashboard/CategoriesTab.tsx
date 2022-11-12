@@ -41,8 +41,7 @@ function CategoriesTab(props: CategoriesTabInterface) {
                 experimentalFeatures={{ newEditingApi: true }}
                 localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
                 processRowUpdate={(row) => props.update(row)}
-                onProcessRowUpdateError={(error) => console.log(error.message)}
-            />
+                onProcessRowUpdateError={(error) => console.log(error.message)} />
         </Box>
     )
 }
