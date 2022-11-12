@@ -1,6 +1,6 @@
 import React from 'react'
 import { useContext } from 'react';
-import { Navigate, useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import './Navbar.scss'
 import { AuthContext } from '../../context/AuthContext';
 import axios from '../../api/axios.js';
@@ -47,16 +47,21 @@ function Navbar() {
     };
 
     const pages = [
-        { alt: 'Link1', href: '/link1' },
-        { alt: 'Link2', href: '/link2' },
-        { alt: 'Link3', href: '/link3' }
+        // client
+        { alt: 'C1', roleId: 1, Fun: function () { navigate('/link1') } },
+        { alt: 'C2', roleId: 1, Fun: function () { navigate('/link2') } },
+        { alt: 'C3', roleId: 1, Fun: function () { navigate('/link2') } },
+        // employee
+        { alt: 'Lista Zamówień', roleId: 3, Fun: function () { navigate('/order-list') } },
+        { alt: 'Nowe Zamówienie', roleId: 3, Fun: function () { navigate('/new-order') } },
+        // admin
+        { alt: 'Dashboard', roleId: 2, Fun: function () { navigate('/dashboard') } },
+        { alt: 'Nowy Produkt', roleId: 2, Fun: function () { navigate('/new-product') } },
     ];
 
     const settings = [
         // logged settings
         { alt: 'Profile', logged: true, Fun: function () { navigate('/profile') } },
-        { alt: 'Account', logged: true, Fun: function () { navigate('/account') } },
-        { alt: 'Dashboard', logged: true, Fun: function () { navigate('/dashboard') } },
         {
             alt: 'Logout', logged: true, Fun: function () {
                 axios.get('/logout');
@@ -119,11 +124,14 @@ function Navbar() {
                             sx={{
                                 display: { xs: 'block', md: 'none' },
                             }}>
-                            {pages.map((page) => (
-                                <MenuItem key={page.alt} onClick={() => { handleCloseNavMenu(); navigate(page.href) }}>
-                                    <Typography textAlign="center">{page.alt}</Typography>
-                                </MenuItem>
-                            ))}
+                            {pages.map((page) => {
+                                if (page.roleId === context?.authState.roleId || (page.roleId === 1 && context?.authState.isLogged === false))
+                                    return (
+                                        <MenuItem key={page.alt} onClick={() => { handleCloseNavMenu(); page.Fun() }}>
+                                            <Typography textAlign="center">{page.alt}</Typography>
+                                        </MenuItem>
+                                    )
+                            })}
                         </Menu>
                     </Box>
                     <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 10, height: 80, width: 20 }} className='navbar__content__logo'>
@@ -147,14 +155,18 @@ function Navbar() {
                         LOGO
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        {pages.map((page) => (
-                            <Button
-                                key={page.alt}
-                                onClick={() => { handleCloseNavMenu(); navigate(page.href) }}
-                                sx={{ my: 2, color: 'inherit', display: 'block' }}>
-                                {page.alt}
-                            </Button>
-                        ))}
+                        {pages.map((page) => {
+                            if (page.roleId === context?.authState.roleId || (page.roleId === 1 && context?.authState.isLogged === false))
+                                return (
+                                    <Button
+                                        key={page.alt}
+                                        onClick={() => { handleCloseNavMenu(); page.Fun() }}
+                                        sx={{ my: 2, color: 'inherit', display: 'block' }}>
+                                        {page.alt}
+                                    </Button>
+                                )
+                        }
+                        )}
                     </Box>
                     <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Otwórz ustawienia">
