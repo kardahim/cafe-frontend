@@ -1,7 +1,11 @@
-import React from 'react'
 import { ProductsTabInterface } from '../../interfaces/ProductsTabInterface'
 import './ProductsTab.scss'
-import { DataGrid, GridCellEditCommitParams, GridCellEditStopParams, GridCellEditStopReasons, GridColDef, GridPreProcessEditCellProps, GridValueGetterParams, MuiEvent, plPL } from '@mui/x-data-grid';
+import {
+    DataGrid,
+    GridColDef,
+    GridPreProcessEditCellProps,
+    plPL
+} from '@mui/x-data-grid';
 import { Box } from '@mui/material';
 
 

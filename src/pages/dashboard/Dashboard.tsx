@@ -12,6 +12,7 @@ import TabContent from "../../components/tabContent/TabContent";
 import axios from '../../api/axios.js';
 import ProductsTab from "./ProductsTab";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import CategoriesTab from "./CategoriesTab";
 
 function Dashboard() {
     const axiosPrivate = useAxiosPrivate();
@@ -55,7 +56,6 @@ function Dashboard() {
             CategoryId: product.CategoryId,
             ProductStatusId: product.ProductStatusId
         }
-        console.log(data)
         const putProduct = async () => {
             try {
                 await axiosPrivate.put(`/products/update/${product.id}`, data).then((response) => {
@@ -67,6 +67,23 @@ function Dashboard() {
         }
         putProduct();
         return product
+    }
+
+    const updateCategory = (category: any) => {
+        const data = {
+            name: category.name,
+        }
+        const putCategory = async () => {
+            try {
+                await axiosPrivate.put(`/categories/update/${category.id}`, data).then((response) => {
+                    console.log(response.data)
+                })
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        putCategory()
+        return category
     }
 
     return (
@@ -99,7 +116,10 @@ function Dashboard() {
                             update={updateProduct} />
                     </TabContent>
                     <TabContent value={tabId} index={1}>
-                        Item Two
+                        <CategoriesTab
+                            categories={categories}
+                            update={updateCategory}
+                        />
                     </TabContent>
                     <TabContent value={tabId} index={2}>
                         Item Three
