@@ -53,7 +53,7 @@ function ProductsTab(props: ProductsTabInterface) {
             headerAlign: 'center',
             editable: true,
             preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
-                const reg = /^[1-9][0-9]*(ml|gm){1}$/
+                const reg = /^[1-9][0-9]*(ml|g){1}$/
                 const hasError = !reg.test(params.props.value)
                 return { ...params.props, error: hasError };
             },
