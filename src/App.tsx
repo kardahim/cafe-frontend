@@ -23,6 +23,7 @@ import OrderList from './pages/order/OrderList';
 import NewOrder from './pages/order/NewOrder';
 import Order from './pages/order/Order';
 import Dashboard from './pages/dashboard/Dashboard';
+import NewSpecialOffer from './pages/new_special_offert/NewSpecialOffer';
 
 // axios
 import axios from '../src/api/axios';
@@ -48,6 +49,7 @@ function App() {
               <Route path='/new-order' element={<NewOrder />} />
               <Route path='/order/:id' element={<Order />} />
               <Route path='/dashboard' element={<Dashboard />}></Route>
+              <Route path='/new-special-offert' element={<NewSpecialOffer />}></Route>
               <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>
