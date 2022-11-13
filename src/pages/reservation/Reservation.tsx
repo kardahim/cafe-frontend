@@ -11,9 +11,10 @@ import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import PersonIcon from '@mui/icons-material/Person';
 // assets
 import map from '../../assets/images/placeholder.png'
-
+import 'dayjs/locale/pl';
 
 function Reservation() {
+    dayjs.locale('pl')
     // pickers hooks
     const [value, setValue] = React.useState<Dayjs | null>(
         dayjs()

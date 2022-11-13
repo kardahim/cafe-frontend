@@ -19,9 +19,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import dayjs, { Dayjs } from 'dayjs';
-
+import 'dayjs/locale/pl';
 
 function NewSpecialOffer() {
+    dayjs.locale('pl')
     const context = useContext(AuthContext);
     const axiosPrivate = useAxiosPrivate();
     const [products, setProducts] = useState<any[]>([])
