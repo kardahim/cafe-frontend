@@ -57,6 +57,7 @@ function Navbar() {
         // admin
         { alt: 'Dashboard', roleId: 2, Fun: function () { navigate('/dashboard') } },
         { alt: 'Nowy Produkt', roleId: 2, Fun: function () { navigate('/new-product') } },
+        { alt: 'Nowa Promocja', roleId: 2, Fun: function () { navigate('/new-special-offer') } },
     ];
 
     const settings = [

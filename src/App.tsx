@@ -49,7 +49,7 @@ function App() {
               <Route path='/new-order' element={<NewOrder />} />
               <Route path='/order/:id' element={<Order />} />
               <Route path='/dashboard' element={<Dashboard />}></Route>
-              <Route path='/new-special-offert' element={<NewSpecialOffer />}></Route>
+              <Route path='/new-special-offer' element={<NewSpecialOffer />}></Route>
               <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>

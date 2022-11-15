@@ -74,7 +74,7 @@ function NewSpecialOffer() {
         <Container maxWidth="sm" className='new_special_offer'>
             <Paper elevation={4} className='new_special_offer__card'>
                 <Box className='new_special_offer__card__header'>
-                    dodawanie nowegj promocji
+                    dodawanie nowej promocji
                 </Box>
                 <Box className='new_special_offer__card__content'>
                     <form onSubmit={formik.handleSubmit}>
@@ -110,20 +110,19 @@ function NewSpecialOffer() {
                                 direction={{ xs: 'column', sm: 'row' }}
                                 justifyContent="center"
                                 alignItems="center">
-                                {/* add onChange */}
                                 <DesktopDatePicker
                                     label="Data rozpoczęcia"
                                     inputFormat='DD.MM.YYYY'
                                     value={formik.values.start_date}
                                     onChange={formik.handleChange}
-                                    renderInput={(params) => <TextField {...params} />}
+                                    renderInput={(params) => <TextField fullWidth {...params} />}
                                     disablePast />
                                 <DesktopDatePicker
                                     label="Data zakończenia"
                                     inputFormat='DD.MM.YYYY'
                                     value={formik.values.end_date}
                                     onChange={formik.handleChange}
-                                    renderInput={(params) => <TextField {...params} />}
+                                    renderInput={(params) => <TextField fullWidth {...params} />}
                                     disablePast />
                             </Stack>
                         </LocalizationProvider>
