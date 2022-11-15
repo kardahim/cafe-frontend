@@ -46,7 +46,7 @@ function SpecialOffersTab(props: SpecialOffersTabInterface) {
             editable: true,
             renderCell: params => dayjs(params.row.start_date).format('DD.MM.YYYY'),
             preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
-                const hasError = (dayjs(params.props.value).add(1, 'day')).isBefore(dayjs())
+                const hasError = (dayjs(params.props.value).add(1, 'day')).isBefore(dayjs()) || (dayjs(params.props.value).add(1, 'day')).isAfter(params.row.end_date)
                 return { ...params.props, error: hasError };
             },
         },
@@ -60,7 +60,7 @@ function SpecialOffersTab(props: SpecialOffersTabInterface) {
             editable: true,
             renderCell: params => dayjs(params.row.end_date).format('DD.MM.YYYY'),
             preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
-                const hasError = dayjs(params.props.value).isBefore(dayjs(params.row.start_date))
+                const hasError = (dayjs(params.props.value).subtract(1, 'day')).isBefore(dayjs(params.row.start_date))
                 return { ...params.props, error: hasError };
             },
         },

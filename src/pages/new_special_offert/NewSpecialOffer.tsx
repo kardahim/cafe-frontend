@@ -112,7 +112,8 @@ function NewSpecialOffer() {
                                     value={formik.values.end_date}
                                     onChange={formik.handleChange}
                                     renderInput={(params) => <TextField fullWidth {...params} />}
-                                    disablePast />
+                                    disablePast
+                                    minDate={dayjs().add(1, 'day')} />
                             </Stack>
                         </LocalizationProvider>
                         <Button className='new_special_offer__content__button'
