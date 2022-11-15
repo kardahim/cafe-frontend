@@ -33,7 +33,7 @@ function NewSpecialOffer() {
             ProductId: 1,
             value: 5,
             start_date: dayjs(),
-            end_date: dayjs().add(1, 'day')
+            end_date: dayjs().add(1, 'day'),
         },
         validationSchema: NewSpecialOfferValidationSchema,
         onSubmit: (values) => {
@@ -53,11 +53,39 @@ function NewSpecialOffer() {
     });
 
     useEffect(() => {
-        axios.get('/products').then((response) => {
+        axios.get('/products/specialoffers').then((response) => {
             setProducts(response.data)
             formik.values.ProductId = response.data[0].id
         })
     }, [refresh])
+
+    const disableDates = (date: any) => {
+        const product = products.find((product) => product.id === formik.values.ProductId)
+        const dates = product?.SpecialOffers.map((offer: any) => ({
+            start_date: offer.start_date,
+            end_date: offer.end_date
+        }))
+
+        const interval = dates?.map((date: any) => {
+            const end = dayjs(date.end_date).add(1, 'day')
+
+            let dates = []
+            let current = dayjs(date.start_date)
+            while (current.isBefore(end)) {
+                dates.push(current.format('DD'))
+                current = current.add(1, 'day')
+            }
+            return ({ data: dates })
+        })
+
+        let excluded: any[] = []
+        interval?.forEach((item: any) => excluded = excluded.concat(item.data))
+
+        // console.log(excluded)
+
+
+        return excluded?.includes(date.format('DD'));
+    }
 
     return (
         <Container maxWidth="sm" className='new_special_offer'>
@@ -103,17 +131,21 @@ function NewSpecialOffer() {
                                     label="Data rozpoczęcia"
                                     inputFormat='DD.MM.YYYY'
                                     value={formik.values.start_date}
-                                    onChange={formik.handleChange}
+                                    onChange={(e) => formik.setFieldValue('start_date', e)}
                                     renderInput={(params) => <TextField fullWidth {...params} />}
-                                    disablePast />
+                                    disablePast
+                                    shouldDisableDate={disableDates}
+                                />
                                 <DesktopDatePicker
                                     label="Data zakończenia"
                                     inputFormat='DD.MM.YYYY'
                                     value={formik.values.end_date}
-                                    onChange={formik.handleChange}
+                                    onChange={(e) => formik.setFieldValue('end_date', e)}
                                     renderInput={(params) => <TextField fullWidth {...params} />}
                                     disablePast
-                                    minDate={dayjs().add(1, 'day')} />
+                                    minDate={dayjs().add(1, 'day')}
+                                    shouldDisableDate={disableDates}
+                                />
                             </Stack>
                         </LocalizationProvider>
                         <Button className='new_special_offer__content__button'
