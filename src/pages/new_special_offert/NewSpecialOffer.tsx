@@ -37,26 +37,16 @@ function NewSpecialOffer() {
         },
         validationSchema: NewSpecialOfferValidationSchema,
         onSubmit: (values) => {
-            // const data = {
-            //     name: values.name,
-            //     size: values.size + values.unit,
-            //     price: values.price,
-            //     allergen: values.allergen,
-            //     CategoryId: values.CategoryId,
-            //     ProductStatusId: values.ProductStatusId
-            // }
-            console.log(values)
+            // console.log(values.start_date.toDate())
+            const data = {
+                value: values.value,
+                start_date: values.start_date.toDate(),
+                end_date: values.end_date.toDate(),
+                ProductId: values.ProductId
+            }
 
-            // const postProduct = async () => {
-            //     try {
-            //         await axiosPrivate.post('/products', data).then((response) => {
-            //             console.log(response.data)
-            //         })
-            //     } catch (err) {
-            //         console.error(err);
-            //     }
-            // }
-            // postProduct();
+            axios.post('/specialoffers', data).then((response) => console.log(response));
+
             setTimeout(() => {
                 (refresh ? setRefresh(false) : setRefresh(true))
             }, 50)
