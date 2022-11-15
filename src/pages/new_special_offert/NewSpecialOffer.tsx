@@ -37,11 +37,10 @@ function NewSpecialOffer() {
         },
         validationSchema: NewSpecialOfferValidationSchema,
         onSubmit: (values) => {
-            // console.log(values.start_date.toDate())
             const data = {
                 value: values.value,
-                start_date: values.start_date.toDate(),
-                end_date: values.end_date.toDate(),
+                start_date: values.start_date.hour(0).minute(0).second(0).millisecond(0).toDate(),
+                end_date: values.end_date.hour(0).minute(0).second(0).millisecond(0).toDate(),
                 ProductId: values.ProductId
             }
 

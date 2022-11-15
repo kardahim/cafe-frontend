@@ -12,6 +12,7 @@ import axios from '../../api/axios.js';
 import ProductsTab from "./ProductsTab";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import CategoriesTab from "./CategoriesTab";
+import SpecialOffersTab from "./SpecialOffersTab";
 
 function Dashboard() {
     const axiosPrivate = useAxiosPrivate();
@@ -29,6 +30,7 @@ function Dashboard() {
     const [categories, setCategories] = useState<any[]>([])
     const [products, setProducts] = useState<any[]>([])
     const [statuses, setStatuses] = useState<any[]>([])
+    const [specialOffers, setSpecialOffers] = useState<any[]>([])
 
     const tabsHandleChange = (event: React.SyntheticEvent, newValue: number) => {
         setTabId(newValue);
@@ -43,6 +45,9 @@ function Dashboard() {
         })
         axios.get('/productstatuses').then((response) => {
             setStatuses(response.data)
+        })
+        axios.get('/specialoffers').then((response) => {
+            setSpecialOffers(response.data)
         })
     }, [])
 
@@ -84,6 +89,18 @@ function Dashboard() {
         putCategory()
         return category
     }
+    const updateSpecialOffer = (specialOffer: any) => {
+        const data = {
+            value: specialOffer.value,
+            start_date: specialOffer.start_date,
+            end_date: specialOffer.end_date,
+            ProductId: specialOffer.productId
+        }
+        axios.put(`/specialoffers/update/${specialOffer.id}`, data).then((response) => {
+            console.log(response.data)
+        })
+        return specialOffer
+    }
 
     return (
         <Container maxWidth="xl" className='dashboard'>
@@ -121,7 +138,10 @@ function Dashboard() {
                         />
                     </TabContent>
                     <TabContent value={tabId} index={2}>
-                        Item Three
+                        <SpecialOffersTab
+                            specialOffers={specialOffers}
+                            update={updateSpecialOffer}
+                            products={products} />
                     </TabContent>
                     <TabContent value={tabId} index={3}>
                         Item Four
