@@ -60,6 +60,11 @@ $space-between-items: 25px;
                 .product__price {
                     margin-left: 20px;
                 }
+
+                .product__price--special {
+                    color: red;
+                    text-decoration: line-through;
+                }
             }
         }
     }

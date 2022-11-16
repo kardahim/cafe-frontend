@@ -13,6 +13,7 @@ import {
 import axios from '../../api/axios.js';
 import { useFormik } from "formik"
 import { levenshteinDistance } from '../../utils/LevenshteinDistance';
+import dayjs from 'dayjs';
 
 function Menu() {
 
@@ -22,8 +23,22 @@ function Menu() {
         axios.get('/categories').then((respone) => {
             setCategories(respone.data)
         })
-        axios.get('/products').then((respone) => {
-            setProducts(respone.data)
+        axios.get('/products/specialoffers').then((response) => {
+            setProducts(
+                response.data.map((product: any) => ({
+                    id: product.id,
+                    name: product.name,
+                    size: product.size,
+                    price: product.price,
+                    allergen: product.allergen,
+                    CategoryId: product.CategoryId,
+                    ProductStatusId: product.ProductStatusId,
+                    specialOffer: product.SpecialOffers.find((offer: any) =>
+                        dayjs().isAfter(dayjs(offer.start_date).subtract(1, 'day')) && dayjs().isBefore(dayjs(offer.end_date).add(1, 'day'))
+                    )
+                })
+                )
+            )
         })
     }, [])
 
@@ -36,7 +51,6 @@ function Menu() {
             // formik needs onSubmit but we dont need send data
         }
     });
-    // console.log(levenshteinDistance('pies', 'pies'))
     return (
         <Container maxWidth="xl" className='menu'>
             <Paper elevation={4} className='menu__card'>
@@ -87,9 +101,18 @@ function Menu() {
                                                 <>
                                                     <div className='menu__content__product'>
                                                         <span className='product__name'>{product.name}</span>
-                                                        <div style={{ display: "flex", justifyContent: "space-between", width: "100px" }}>
+                                                        <div style={{ display: "flex", justifyContent: "space-between", width: "150px" }}>
                                                             <span className='product__size'>{product.size}</span>
-                                                            <span className='product__price'>{product.price}zł</span>
+                                                            {product.specialOffer !== undefined ?
+                                                                <>
+                                                                    <span className='product__price'>
+                                                                        {((100 - product.specialOffer.value) / 100 * product.price)}zł
+                                                                    </span>
+                                                                    <span className='product__price product__price--special'>{product.price}zł</span>
+                                                                </>
+                                                                :
+                                                                <span className='product__price'>{product.price}zł</span>
+                                                            }
                                                         </div>
                                                     </div>
                                                 </>
