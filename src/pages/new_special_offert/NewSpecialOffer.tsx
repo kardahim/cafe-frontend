@@ -43,7 +43,6 @@ function NewSpecialOffer() {
                 end_date: values.end_date.hour(0).minute(0).second(0).millisecond(0).toDate(),
                 ProductId: values.ProductId
             }
-
             axios.post('/specialoffers', data).then((response) => console.log(response));
 
             setTimeout(() => {
@@ -87,6 +86,16 @@ function NewSpecialOffer() {
         return excluded?.includes(date.format('DD'));
     }
 
+    const dateErrorHandlerStart = (reason: any, value: any) => {
+        if (reason === 'shouldDisableDate') {
+            formik.setFieldError('start_date', 'Wybrano złą datę')
+        }
+    }
+    const dateErrorHandlerEnd = (reason: any, value: any) => {
+        if (reason === 'shouldDisableDate') {
+            formik.setFieldError('end_date', 'Wybrano złą datę')
+        }
+    }
     return (
         <Container maxWidth="sm" className='new_special_offer'>
             <Paper elevation={4} className='new_special_offer__card'>
@@ -132,9 +141,15 @@ function NewSpecialOffer() {
                                     inputFormat='DD.MM.YYYY'
                                     value={formik.values.start_date}
                                     onChange={(e) => formik.setFieldValue('start_date', e)}
-                                    renderInput={(params) => <TextField fullWidth {...params} />}
+                                    renderInput={(params) => <TextField
+                                        fullWidth
+                                        {...params}
+                                        name='start_date'
+                                    />}
                                     disablePast
                                     shouldDisableDate={disableDates}
+                                    onError={dateErrorHandlerStart}
+
                                 />
                                 <DesktopDatePicker
                                     label="Data zakończenia"
@@ -145,6 +160,7 @@ function NewSpecialOffer() {
                                     disablePast
                                     minDate={dayjs().add(1, 'day')}
                                     shouldDisableDate={disableDates}
+                                    onError={dateErrorHandlerEnd}
                                 />
                             </Stack>
                         </LocalizationProvider>
