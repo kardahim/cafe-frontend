@@ -64,7 +64,7 @@ function Navbar() {
 
     const settings = [
         // logged settings
-        { alt: 'Profile', logged: true, Fun: function () { navigate('/profile') } },
+        { alt: 'Konto', logged: true, Fun: function () { navigate('/profile') } },
         {
             alt: 'Wyloguj się', logged: true, Fun: function () {
                 axios.get('/logout');
