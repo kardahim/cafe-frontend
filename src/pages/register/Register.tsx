@@ -19,8 +19,9 @@ import { useNavigate } from 'react-router-dom'
 import { RegisterValidationSchema } from "../../validations/RegisterValidationSchema";
 import './Register.scss'
 import axios from '../../api/axios.js';
+import { RegisterInterface } from "../../interfaces/RegisterInterface";
 
-function Register() {
+function Register(props: RegisterInterface) {
     let navigate = useNavigate();
 
     const formik = useFormik({
@@ -36,9 +37,14 @@ function Register() {
         validationSchema: RegisterValidationSchema,
         onSubmit: (values) => {
             // FIXME: errors handler
-            axios.post("/users/register", values).then(() => {
-                navigate(`/login`)
-            })
+            if (!props.isAdmin) {
+                axios.post("/users/register", values).then(() => {
+                    navigate(`/login`)
+                })
+            }
+            else {
+                // axios add new employee
+            }
         }
     });
 
@@ -46,7 +52,7 @@ function Register() {
         <Container maxWidth="sm" className='register'>
             <Paper elevation={4} className='register__card'>
                 <Box className='register__card__header'>
-                    rejestracja
+                    {!props.isAdmin ? 'rejestracja' : 'dodawanie nowego pracownika'}
                 </Box>
                 <Box className='register__card__content'>
                     <form onSubmit={formik.handleSubmit}>

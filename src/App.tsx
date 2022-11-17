@@ -39,7 +39,7 @@ function App() {
             <Route element={<PersistLogin />}>
               <Route path='/' element={<Home />} />
               <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register />} />
+              <Route path='/register' element={<Register isAdmin={false} />} />
               <Route path='/reservation' element={<Reservation />} />
               <Route path='/reset-password' element={<Reset />} />
               <Route path='/confirm-reset-password' element={<ResetConfirmation />} />
@@ -50,6 +50,7 @@ function App() {
               <Route path='/order/:id' element={<Order />} />
               <Route path='/dashboard' element={<Dashboard />}></Route>
               <Route path='/new-special-offer' element={<NewSpecialOffer />}></Route>
+              <Route path='/new-employee' element={<Register isAdmin={true} />} />
               <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>
