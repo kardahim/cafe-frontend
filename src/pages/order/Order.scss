@@ -69,6 +69,11 @@ $space-between-items: 25px;
                 .product__price {
                     margin: auto 0 auto 20px;
                 }
+
+                .product__price--special {
+                    color: red;
+                    text-decoration: line-through;
+                }
             }
         }
     }

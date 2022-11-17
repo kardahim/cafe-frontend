@@ -20,6 +20,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate } from 'react-router-dom'
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import NotFound from '../../components/notFound/NotFound';
+import dayjs from 'dayjs';
 
 function Order() {
     const navigate = useNavigate()
@@ -42,8 +43,22 @@ function Order() {
         axios.get('/categories').then((respone) => {
             setCategories(respone.data)
         })
-        axios.get('/products').then((respone) => {
-            setProducts(respone.data)
+        axios.get('/products/specialoffers').then((response) => {
+            setProducts(
+                response.data.map((product: any) => ({
+                    id: product.id,
+                    name: product.name,
+                    size: product.size,
+                    price: product.price,
+                    allergen: product.allergen,
+                    CategoryId: product.CategoryId,
+                    ProductStatusId: product.ProductStatusId,
+                    specialOffer: product.SpecialOffers.find((offer: any) =>
+                        dayjs().isAfter(dayjs(offer.start_date).subtract(1, 'day')) && dayjs().isBefore(dayjs(offer.end_date).add(1, 'day'))
+                    )
+                })
+                )
+            )
         })
 
         axios.get('/payments').then((respone) => {
@@ -92,22 +107,42 @@ function Order() {
 
     const addProduct = (product: any) => {
         console.log(product)
-        const data = {
-            transaction_price: product.price,
-            quantity: 1,
-            OrderHeaderId: id,
-            ProductId: product.id
-        }
-        const postOrderDetails = async () => {
-            try {
-                await axiosPrivate.post('/orderdetails', data).then((response) => {
-                    console.log(response.data)
-                })
-            } catch (err) {
-                console.error(err);
+        if (product.specialOffer === undefined) {
+            const data = {
+                transaction_price: product.price,
+                quantity: 1,
+                OrderHeaderId: id,
+                ProductId: product.id
             }
+            const postOrderDetails = async () => {
+                try {
+                    await axiosPrivate.post('/orderdetails', data).then((response) => {
+                        console.log(response.data)
+                    })
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+            postOrderDetails();
         }
-        postOrderDetails();
+        else {
+            const data = {
+                transaction_price: ((100 - product.specialOffer.value) / 100 * product.price),
+                quantity: 1,
+                OrderHeaderId: id,
+                ProductId: product.id
+            }
+            const postOrderDetails = async () => {
+                try {
+                    await axiosPrivate.post('/orderdetails', data).then((response) => {
+                        console.log(response.data)
+                    })
+                } catch (err) {
+                    console.error(err);
+                }
+            }
+            postOrderDetails();
+        }
         setTimeout(() => {
             (!refresh ? setRefresh(true) : setRefresh(false))
         }, 50)
@@ -296,9 +331,18 @@ function Order() {
                                                     return (
                                                         <div className='order__content__product' onClick={() => { addProduct(product) }} title='Dodaj produkt'>
                                                             <span className='product__name'>{product.name}</span>
-                                                            <div style={{ display: "flex", justifyContent: "space-between", width: "100px" }}>
+                                                            <div style={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
                                                                 <span className='product__size'>{product.size}</span>
-                                                                <span className='product__price'>{product.price}zł</span>
+                                                                {product.specialOffer !== undefined ?
+                                                                    <>
+                                                                        <span className='product__price'>
+                                                                            {((100 - product.specialOffer.value) / 100 * product.price)}zł
+                                                                        </span>
+                                                                        <span className='product__price product__price--special'>{product.price}zł</span>
+                                                                    </>
+                                                                    :
+                                                                    <span className='product__price'>{product.price}zł</span>
+                                                                }
                                                             </div>
                                                         </div>
                                                     )
