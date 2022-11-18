@@ -13,6 +13,7 @@ import ProductsTab from "./ProductsTab";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import CategoriesTab from "./CategoriesTab";
 import SpecialOffersTab from "./SpecialOffersTab";
+import UsersTab from "./UsersTab";
 
 function Dashboard() {
     const axiosPrivate = useAxiosPrivate();
@@ -23,7 +24,7 @@ function Dashboard() {
         { label: 'Produkty' },
         { label: 'Kategorie' },
         { label: 'Promocje' },
-        { label: 'Pracownicy' }
+        { label: 'Użytkownicy' }
     ]);
 
     // data
@@ -31,6 +32,8 @@ function Dashboard() {
     const [products, setProducts] = useState<any[]>([])
     const [statuses, setStatuses] = useState<any[]>([])
     const [specialOffers, setSpecialOffers] = useState<any[]>([])
+    const [users, setUsers] = useState<any[]>([])
+    const [roles, setRoles] = useState<any[]>([])
 
     const tabsHandleChange = (event: React.SyntheticEvent, newValue: number) => {
         setTabId(newValue);
@@ -48,6 +51,12 @@ function Dashboard() {
         })
         axios.get('/specialoffers').then((response) => {
             setSpecialOffers(response.data)
+        })
+        axios.get('/users').then((response) => {
+            setUsers(response.data)
+        })
+        axios.get('/roles').then((response) => {
+            setRoles(response.data)
         })
     }, [])
 
@@ -101,6 +110,22 @@ function Dashboard() {
         })
         return specialOffer
     }
+    const updateUser = (user: any) => {
+        const data = {
+            RoleId: user.RoleId
+        }
+        const putUser = async () => {
+            try {
+                await axiosPrivate.put(`/users/${user.id}`, data).then((response) => {
+                    console.log(response.data)
+                })
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        putUser();
+        return user
+    }
 
     return (
         <Container maxWidth="xl" className='dashboard'>
@@ -144,7 +169,10 @@ function Dashboard() {
                             products={products} />
                     </TabContent>
                     <TabContent value={tabId} index={3}>
-                        Item Four
+                        <UsersTab
+                            users={users}
+                            roles={roles}
+                            update={updateUser} />
                     </TabContent>
                 </Box>
             </Paper>

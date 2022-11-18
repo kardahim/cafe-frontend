@@ -6,7 +6,7 @@ const useRefreshToken = () => {
     const context = useContext(AuthContext);
 
     const refresh = async () => {
-        const response = await axios.get('/refresh', {
+        const response = await axios.get('auth/refresh', {
             withCredentials: true // sending cookies with request
         });
 
