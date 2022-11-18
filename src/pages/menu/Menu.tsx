@@ -101,12 +101,12 @@ function Menu() {
                                                 <>
                                                     <div className='menu__content__product'>
                                                         <span className='product__name'>{product.name}</span>
-                                                        <div style={{ display: "flex", justifyContent: "space-between", width: "150px" }}>
+                                                        <div style={{ display: "flex", justifyContent: "space-between", width: "170px" }}>
                                                             <span className='product__size'>{product.size}</span>
                                                             {product.specialOffer !== undefined ?
                                                                 <>
                                                                     <span className='product__price'>
-                                                                        {((100 - product.specialOffer.value) / 100 * product.price)}zł
+                                                                        {((100 - product.specialOffer.value) / 100 * product.price).toFixed(2)}zł
                                                                     </span>
                                                                     <span className='product__price product__price--special'>{product.price}zł</span>
                                                                 </>

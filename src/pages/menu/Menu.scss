@@ -55,13 +55,17 @@ $space-between-items: 25px;
                     text-transform: capitalize;
                 }
 
-                .product__size {}
+                .product__size {
+                    width: 50px;
+                }
 
                 .product__price {
-                    margin-left: 20px;
+                    width: 50px;
+                    text-align: right;
                 }
 
                 .product__price--special {
+                    width: 50px;
                     color: red;
                     text-decoration: line-through;
                 }
