@@ -107,7 +107,7 @@ function NewOrder() {
                             onChange={formik.handleChange}
                             select>
                             {tables.map((value, key) => {
-                                return <MenuItem value={value.id} key={key}>Stolik nr. {value.id} ({value.number_of_seats} os.)</MenuItem>
+                                return <MenuItem value={value.id} key={key}>Stolik nr. {value.id} ({value.numberOfSeats} os.)</MenuItem>
                             }
                             )}
                         </TextField>
