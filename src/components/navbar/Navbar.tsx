@@ -46,6 +46,7 @@ function Navbar() {
         setAnchorElUser(null);
     };
 
+    // TODO: max 3 links, change localizations others link
     const pages = [
         // client
         { alt: 'Menu', roleId: 1, Fun: function () { navigate('/menu') } },
