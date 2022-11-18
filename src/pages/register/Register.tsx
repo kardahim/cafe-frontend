@@ -15,13 +15,15 @@ import {
 import { useFormik } from "formik"
 
 import { useNavigate } from 'react-router-dom'
-
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { RegisterValidationSchema } from "../../validations/RegisterValidationSchema";
 import './Register.scss'
 import axios from '../../api/axios.js';
+import { RegisterInterface } from "../../interfaces/RegisterInterface";
 
-function Register() {
-    let navigate = useNavigate();
+function Register(props: RegisterInterface) {
+    const navigate = useNavigate();
+    const axiosPrivate = useAxiosPrivate();
 
     const formik = useFormik({
         initialValues: {
@@ -36,9 +38,40 @@ function Register() {
         validationSchema: RegisterValidationSchema,
         onSubmit: (values) => {
             // FIXME: errors handler
-            axios.post("/users/register", values).then(() => {
-                navigate(`/login`)
-            })
+            if (!props.isAdmin) {
+                axios.post("/users/register", values).then((response) => {
+                    navigate(`/login`)
+                }).catch(({ response }) => {
+                    if (response.data?.error === 'Użytkownik z podanym adresem email już istnieje')
+                        formik.setFieldError('email', response.data.error)
+                    if (response.data?.error === 'Użytkownik z podanym numerem telefonu już istnieje')
+                        formik.setFieldError('phoneNumber', response.data.error)
+                })
+            }
+            else {
+                const data = {
+                    firstname: values.firstname,
+                    lastname: values.lastname,
+                    email: values.email,
+                    password: values.password,
+                    phoneNumber: values.phoneNumber,
+                    sex: values.sex,
+                    RoleId: 3
+                }
+                const postEmployee = async () => {
+                    await axiosPrivate.post('/users', data).then((response) => {
+                        console.log(response.data)
+                        formik.resetForm();
+                    }).catch(({ response }) => {
+                        if (response.data?.error === 'Użytkownik z podanym adresem email już istnieje')
+                            formik.setFieldError('email', response.data.error)
+                        if (response.data?.error === 'Użytkownik z podanym numerem telefonu już istnieje')
+                            formik.setFieldError('phoneNumber', response.data.error)
+                    })
+
+                }
+                postEmployee();
+            }
         }
     });
 
@@ -46,7 +79,7 @@ function Register() {
         <Container maxWidth="sm" className='register'>
             <Paper elevation={4} className='register__card'>
                 <Box className='register__card__header'>
-                    rejestracja
+                    {!props.isAdmin ? 'rejestracja' : 'dodawanie nowego pracownika'}
                 </Box>
                 <Box className='register__card__content'>
                     <form onSubmit={formik.handleSubmit}>

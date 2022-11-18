@@ -42,33 +42,13 @@ function Login() {
                     withCredentials: true
                 }
             ).then((response) => {
-                if (response.data.error) {
-                    (response.data.error === 'Użytkownik nie istnieje' ?
-                        formik.setFieldError('email', response.data.error)
-                        :
-                        formik.setFieldError('password', response.data.error)
-                    )
-                }
-                else {
-                    // console.log(response)
-
-                    // this code do nothing (when it doesnt work context was doing context things xD)
-                    // context?.setAuthState({
-                    //     isLogged: response.data.isLogged,
-                    //     accessToken: response.data.accessToken,
-                    //     id: response.data.user.id,
-                    //     firstname: response.data.user.firstname,
-                    //     lastname: response.data.user.lastname,
-                    //     email: response.data.user.email,
-                    //     roleId: response.data.user.RoleId
-                    // })
-
-                    // console.log(context?.authState)
-
-                    // przekierowanie po zalogowaniu ?
-                    window.location.href = "/"
-                }
-            }).catch(error => console.error(error))
+                window.location.href = "/"
+            }).catch(({ response }) => {
+                if (response.data?.error === 'Użytkownik nie istnieje')
+                    formik.setFieldError('email', response.data.error)
+                if (response.data?.error === 'Hasło jest niepoprawne')
+                    formik.setFieldError('password', response.data.error)
+            })
         }
     });
     // it show context
