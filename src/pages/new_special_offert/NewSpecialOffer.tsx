@@ -43,7 +43,8 @@ function NewSpecialOffer() {
                 end_date: values.end_date.hour(0).minute(0).second(0).millisecond(0).toDate(),
                 ProductId: values.ProductId
             }
-            axios.post('/specialoffers', data).then((response) => console.log(response));
+            if (!startDateError && !endDateError)
+                axios.post('/specialoffers', data).then((response) => console.log(response));
 
             setTimeout(() => {
                 (refresh ? setRefresh(false) : setRefresh(true))
@@ -86,14 +87,22 @@ function NewSpecialOffer() {
         return excluded?.includes(date.format('DD'));
     }
 
+    const [startDateError, setStartDateError] = useState(false)
     const dateErrorHandlerStart = (reason: any, value: any) => {
         if (reason === 'shouldDisableDate') {
-            formik.setFieldError('start_date', 'Wybrano złą datę')
+            setStartDateError(true)
+        }
+        else {
+            setStartDateError(false)
         }
     }
+    const [endDateError, setEndDateError] = useState(false)
     const dateErrorHandlerEnd = (reason: any, value: any) => {
         if (reason === 'shouldDisableDate') {
-            formik.setFieldError('end_date', 'Wybrano złą datę')
+            setEndDateError(true)
+        }
+        else {
+            setEndDateError(false)
         }
     }
     return (
@@ -140,7 +149,7 @@ function NewSpecialOffer() {
                                     label="Data rozpoczęcia"
                                     inputFormat='DD.MM.YYYY'
                                     value={formik.values.start_date}
-                                    onChange={(e) => formik.setFieldValue('start_date', e)}
+                                    onChange={(e) => { formik.setFieldValue('start_date', e); }}
                                     renderInput={(params) => <TextField
                                         fullWidth
                                         {...params}
@@ -155,7 +164,7 @@ function NewSpecialOffer() {
                                     label="Data zakończenia"
                                     inputFormat='DD.MM.YYYY'
                                     value={formik.values.end_date}
-                                    onChange={(e) => formik.setFieldValue('end_date', e)}
+                                    onChange={(e) => { formik.setFieldValue('end_date', e) }}
                                     renderInput={(params) => <TextField fullWidth {...params} />}
                                     disablePast
                                     minDate={dayjs().add(1, 'day')}

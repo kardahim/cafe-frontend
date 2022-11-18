@@ -8,10 +8,10 @@ export const NewSpecialOfferValidationSchema = Yup.object({
         .min(5, "Wartość promocji może być z zakresu od 5 do 100")
         .max(100, "Wartość promocji może być z zakresu od 5 do 100"),
     start_date: Yup
-        .date()
+        .object()
         .required("Data rozpoczęcia promocji jest wymagana"),
     end_date: Yup
-        .date()
+        .object()
         .required("Data zakończenia promocji jest wymagana"),
     ProductId: Yup
         .number()
