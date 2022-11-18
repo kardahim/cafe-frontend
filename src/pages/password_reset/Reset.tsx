@@ -9,16 +9,34 @@ import {
 import { useFormik } from "formik"
 import { ResetPasswordValidationSchema } from "../../validations/ResetPasswordValidationSchema";
 import './Reset.scss'
+import axios from '../../api/axios.js';
+import { useNavigate } from 'react-router-dom'
 
 
 function Reset() {
+    let navigate = useNavigate();
+
     const formik = useFormik({
         initialValues: {
             email: '',
         },
         validationSchema: ResetPasswordValidationSchema,
         onSubmit: (values) => {
-            alert('Do something')
+            axios.post("/auth/requestpasswordreset", values
+            ).then((response) => {
+                console.log(response.data);
+                if(response?.data?.error) {
+                    alert(response.data.error);
+                }
+                else if(response?.data?.message) {
+                    alert(response.data.message);
+                    navigate(`/confirm-reset-password`, {
+                        state: {
+                          email: values.email,
+                        }
+                    });
+                }
+            });
         }
     });
     return (

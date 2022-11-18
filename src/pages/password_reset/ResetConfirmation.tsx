@@ -9,8 +9,20 @@ import {
 import { useFormik } from "formik"
 import { ResetPasswordConfirmationValidationSchema } from "../../validations/ResetPasswordConfirmationValidationSchema";
 import './ResetConfirmation.scss'
+import axios from '../../api/axios.js';
+import { useNavigate } from 'react-router-dom'
+import { useLocation } from "react-router-dom";
+
+interface CustomizedState {
+    email: string
+}
 
 function ResetConfirmation() {
+    let navigate = useNavigate();
+    const location = useLocation();
+    const state = location.state as CustomizedState
+    let email = state.email;
+
     const formik = useFormik({
         initialValues: {
             code: '',
@@ -19,7 +31,22 @@ function ResetConfirmation() {
         },
         validationSchema: ResetPasswordConfirmationValidationSchema,
         onSubmit: (values) => {
-            alert('Do something')
+            let fixedValues = {
+                resetCode: values.code,
+                password: values.password,
+                email: email
+            }
+            axios.post("/auth/resetpassword", fixedValues
+            ).then((response) => {
+                console.log(response.data.error);
+                if(response?.data?.error) {
+                    alert(response.data.error);
+                }
+                else if(response?.data?.message) {
+                    alert(response.data.message);
+                    navigate(`/login`);
+                }
+            });
         }
     });
 
