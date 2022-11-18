@@ -67,7 +67,7 @@ function Navbar() {
         { alt: 'Konto', logged: true, Fun: function () { navigate('/profile') } },
         {
             alt: 'Wyloguj się', logged: true, Fun: function () {
-                axios.get('/logout');
+                axios.get('/auth/logout');
                 window.location.href = '/';
             }
         },
