@@ -7,6 +7,7 @@ import {
 } from '@mui/x-data-grid';
 import { Box } from '@mui/material';
 import { UsersTabInterface } from '../../interfaces/UsersTabInterface';
+import UsersTypeChart from '../../components/usersTypeChart/UsersTypeChart';
 
 
 
@@ -42,6 +43,7 @@ function UsersTab(props: UsersTabInterface) {
             headerName: 'Rola',
             flex: 1,
             type: 'singleSelect',
+            // without admin
             valueOptions: props.roles.filter(role => role.id !== 2).map(role => (
                 {
                     value: role.id,
@@ -73,6 +75,7 @@ function UsersTab(props: UsersTabInterface) {
                 processRowUpdate={(row) => props.update(row)}
                 onProcessRowUpdateError={(error) => console.log(error.message)}
             />
+            <UsersTypeChart users={props.users} roles={props.roles} />
         </Box>
     )
 }

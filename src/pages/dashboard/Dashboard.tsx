@@ -17,6 +17,7 @@ import UsersTab from "./UsersTab";
 
 function Dashboard() {
     const axiosPrivate = useAxiosPrivate();
+    const [refresh, setRefresh] = useState(false)
 
     // tabs navigation
     const [tabId, setTabId] = useState(0);
@@ -24,7 +25,7 @@ function Dashboard() {
         { label: 'Produkty' },
         { label: 'Kategorie' },
         { label: 'Promocje' },
-        { label: 'Użytkownicy' }
+        { label: 'Użytkownicy' },
     ]);
 
     // data
@@ -58,8 +59,7 @@ function Dashboard() {
         axios.get('/roles').then((response) => {
             setRoles(response.data)
         })
-    }, [])
-
+    }, [refresh])
     const updateProduct = (product: any) => {
         const data = {
             name: product.name,
@@ -79,6 +79,11 @@ function Dashboard() {
             }
         }
         putProduct();
+
+        setTimeout(() => {
+            (refresh ? setRefresh(false) : setRefresh(true))
+        }, 50)
+
         return product
     }
 
@@ -96,8 +101,14 @@ function Dashboard() {
             }
         }
         putCategory()
+
+        setTimeout(() => {
+            (refresh ? setRefresh(false) : setRefresh(true))
+        }, 50)
+
         return category
     }
+
     const updateSpecialOffer = (specialOffer: any) => {
         const data = {
             value: specialOffer.value,
@@ -108,8 +119,14 @@ function Dashboard() {
         axios.put(`/specialoffers/update/${specialOffer.id}`, data).then((response) => {
             console.log(response.data)
         })
+
+        setTimeout(() => {
+            (refresh ? setRefresh(false) : setRefresh(true))
+        }, 50)
+
         return specialOffer
     }
+
     const updateUser = (user: any) => {
         const data = {
             RoleId: user.RoleId
@@ -124,6 +141,11 @@ function Dashboard() {
             }
         }
         putUser();
+
+        setTimeout(() => {
+            (refresh ? setRefresh(false) : setRefresh(true))
+        }, 50)
+
         return user
     }
 
