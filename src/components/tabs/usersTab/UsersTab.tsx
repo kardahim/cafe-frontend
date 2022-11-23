@@ -6,8 +6,8 @@ import {
     plPL
 } from '@mui/x-data-grid';
 import { Box, Divider } from '@mui/material';
-import { UsersTabInterface } from '../../interfaces/UsersTabInterface';
-import UsersTypeChart from '../../components/usersTypeChart/UsersTypeChart';
+import UsersTypeChart from '../../usersTypeChart/UsersTypeChart';
+import { UsersTabInterface } from '../../../interfaces/UsersTabInterface';
 
 
 

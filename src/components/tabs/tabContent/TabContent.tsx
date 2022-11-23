@@ -1,6 +1,6 @@
 import { Box, Typography } from '@mui/material';
 import React from 'react'
-import { TabContentInterface } from '../../interfaces/TabContentInterface';
+import { TabContentInterface } from '../../../interfaces/TabContentInterface';
 
 function TabContent(props: TabContentInterface) {
     const { children, value, index, ...other } = props;

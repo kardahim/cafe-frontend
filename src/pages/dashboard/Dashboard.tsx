@@ -7,13 +7,13 @@ import {
 } from "@mui/material";
 import './Dashboard.scss'
 import { useEffect, useState } from 'react';
-import TabContent from "../../components/tabContent/TabContent";
+import TabContent from "../../components/tabs/tabContent/TabContent";
 import axios from '../../api/axios.js';
-import ProductsTab from "./ProductsTab";
+import ProductsTab from "../../components/tabs/productsTab/ProductsTab";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import CategoriesTab from "./CategoriesTab";
-import SpecialOffersTab from "./SpecialOffersTab";
-import UsersTab from "./UsersTab";
+import CategoriesTab from "../../components/tabs/categoriesTab/CategoriesTab";
+import SpecialOffersTab from "../../components/tabs/specialOffersTab/SpecialOffersTab";
+import UsersTab from "../../components/tabs/usersTab/UsersTab";
 
 function Dashboard() {
     const axiosPrivate = useAxiosPrivate();

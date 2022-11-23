@@ -1,5 +1,5 @@
 import React from 'react'
-import { CategoriesTabInterface } from '../../interfaces/CategoriesTabInterface'
+import { CategoriesTabInterface } from '../../../interfaces/CategoriesTabInterface';
 import {
     DataGrid,
     GridColDef,

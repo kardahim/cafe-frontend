@@ -1,9 +1,9 @@
-@import '../../assets/scss/variables.scss';
+@import '../../../assets/scss/variables.scss';
 
-.products_tab {
-    .products_tab__table {}
+.users_tab {
+    .users_tab__table {}
 
-    .products_tab__divider {
+    .users_tab__divider {
         font-size: 1.5rem;
         color: $aztec-gold;
         text-shadow: 1px 1px $dutch-white;

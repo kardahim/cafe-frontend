@@ -1,5 +1,5 @@
 import React from 'react'
-import { SpecialOffersTabInterface } from '../../interfaces/SpecialOffersTabInterface';
+import { SpecialOffersTabInterface } from '../../../interfaces/SpecialOffersTabInterface';
 import {
     DataGrid,
     GridColDef,

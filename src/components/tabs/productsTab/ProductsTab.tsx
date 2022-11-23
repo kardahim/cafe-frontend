@@ -1,4 +1,4 @@
-import { ProductsTabInterface } from '../../interfaces/ProductsTabInterface'
+import { ProductsTabInterface } from '../../../interfaces/ProductsTabInterface';
 import './ProductsTab.scss'
 import {
     DataGrid,
@@ -7,7 +7,7 @@ import {
     plPL
 } from '@mui/x-data-grid';
 import { Box, Divider } from '@mui/material';
-import ProductsInCategoryChart from '../../components/productsInCategoryChart/ProductsInCategoryChart';
+import ProductsInCategoryChart from '../../productsInCategoryChart/ProductsInCategoryChart';
 
 
 
