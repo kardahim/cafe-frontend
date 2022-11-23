@@ -7,7 +7,7 @@ import {
     plPL
 } from '@mui/x-data-grid';
 import { Box, Divider } from '@mui/material';
-import ProductsInCategoryChart from '../../productsInCategoryChart/ProductsInCategoryChart';
+import ProductsInCategoryChart from '../../charts/productsInCategoryChart/ProductsInCategoryChart';
 
 
 
