@@ -245,7 +245,7 @@ function Order() {
         const newTableData = {
             TableStatusId: 1
         }
-        axios.put(`/tables/update/${order.TableId}`, newTableData)
+        axiosPrivate.put(`/tables/update/${order.TableId}`, newTableData)
         window.location.href = '/order-list'
     }
 
