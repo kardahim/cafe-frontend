@@ -1,72 +1,12 @@
 @import '../../assets/scss/variables.scss';
 
-$space-between-items: 25px;
-
 .products_tab {
-    .products_tab__list {
-        .products__name {}
+    .products_tab__table {}
+
+    .products_tab__divider {
+        font-size: 1.5rem;
+        color: $aztec-gold;
+        text-shadow: 1px 1px $dutch-white;
+        margin: 50px 0 20px;
     }
 }
-
-// .menu {
-//     .menu__card {
-//         padding: 30px;
-//         border-radius: 8px;
-
-//         .menu__card__header {
-//             margin-bottom: $space-between-items;
-//             text-align: center;
-//             text-transform: uppercase;
-//             font-size: 2rem;
-//             color: $aztec-gold;
-//             text-shadow: 1px 1px $dutch-white;
-//         }
-
-//         .menu__card__content {
-//             display: flex;
-//             flex-direction: column;
-
-//             .menu__content__category_name {
-//                 font-size: 1.5rem;
-//                 color: $aztec-gold;
-//                 text-shadow: 1px 1px $dutch-white;
-//             }
-
-//             .menu__content__filters {
-//                 display: flex;
-//                 justify-content: space-between;
-//                 margin-bottom: $space-between-items;
-//                 // position: relative;
-
-//                 .menu__content__input {
-//                     margin-bottom: $space-between-items;
-//                 }
-
-//                 // .menu__content__button {
-//                 //     color: $floral-white;
-//                 //     background-color: $burlywood;
-//                 //     margin-bottom: $space-between-items;
-//                 //     height: 57px;
-//                 //     position: absolute;
-//                 //     right: 0;
-//                 //     bottom: 0;
-//                 // }
-//             }
-
-//             .menu__content__product {
-//                 display: flex;
-//                 justify-content: space-between;
-
-//                 .product__name {
-//                     text-transform: capitalize;
-//                 }
-
-//                 .product__size {}
-
-//                 .product__price {
-//                     margin-left: 20px;
-//                 }
-//             }
-//         }
-//     }
-// }

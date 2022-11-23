@@ -6,7 +6,8 @@ import {
     GridPreProcessEditCellProps,
     plPL
 } from '@mui/x-data-grid';
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
+import ProductsInCategoryChart from '../../components/productsInCategoryChart/ProductsInCategoryChart';
 
 
 
@@ -105,8 +106,9 @@ function ProductsTab(props: ProductsTabInterface) {
     ];
 
     return (
-        <Box>
+        <Box className='products_tab'>
             <DataGrid
+                className='products_tab__table'
                 autoHeight
                 rows={props.products}
                 columns={columns}
@@ -118,6 +120,10 @@ function ProductsTab(props: ProductsTabInterface) {
                 processRowUpdate={(row) => props.update(row)}
                 onProcessRowUpdateError={(error) => console.log(error.message)}
             />
+            <Divider className='products_tab__divider'>Liczba produktów w kategoriach</Divider>
+            <ProductsInCategoryChart
+                products={props.products}
+                categories={props.categories} />
         </Box>
     )
 }
