@@ -97,7 +97,7 @@ function OrderList() {
                                     {orders.map((order) => {
                                         // I think that here should be an exact match
                                         if (order.OrderStatusId === orderStatus.id && (levenshteinDistance(formik.values.name, order.id.toString()) <= 0 || formik.values.name === '')) {
-                                            let date = new Date(order.updatedAt).toLocaleDateString('pl-PL').split(',')[0]
+                                            let date = new Date(order.createdAt).toLocaleDateString('pl-PL').split(',')[0]
                                             return (
                                                 <>
                                                     <div className='order_list__content__product' onClick={() => navigate(`/order/${order.id}`)}>
