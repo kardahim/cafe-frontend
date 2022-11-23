@@ -228,6 +228,7 @@ function Order() {
         }
         else {
             const data = {
+                finalPrice: 0,
                 OrderStatusId: 3
             }
 

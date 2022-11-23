@@ -37,6 +37,7 @@ function Dashboard() {
     const [specialOffers, setSpecialOffers] = useState<any[]>([])
     const [users, setUsers] = useState<any[]>([])
     const [roles, setRoles] = useState<any[]>([])
+    const [orders, setOrders] = useState<any[]>([])
 
     const tabsHandleChange = (event: React.SyntheticEvent, newValue: number) => {
         setTabId(newValue);
@@ -60,6 +61,12 @@ function Dashboard() {
         })
         axios.get('/roles').then((response) => {
             setRoles(response.data)
+        })
+        axios.get('/roles').then((response) => {
+            setRoles(response.data)
+        })
+        axiosPrivate.get('/orderheaders').then((response) => {
+            setOrders(response.data)
         })
     }, [refresh])
     const updateProduct = (product: any) => {
@@ -199,7 +206,8 @@ function Dashboard() {
                             update={updateUser} />
                     </TabContent>
                     <TabContent value={tabId} index={4}>
-                        <ReportsTab />
+                        <ReportsTab
+                            orders={orders} />
                     </TabContent>
                 </Box>
             </Paper>
