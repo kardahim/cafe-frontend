@@ -36,11 +36,6 @@ function UsersTypeChart(props: { users: any[], roles: any[] }) {
         maintainAspectRatio: false,
     }
 
-    // klient administrator pracownik
-    console.log(props.roles.map(role => role.name))
-    // // 2 1 1
-    console.log(props.roles.map(role => props.users.filter(user => user.RoleId === role.id).length))
-
     return (
         <Container className='users_type_chart' >
             <Doughnut data={data} options={options} />

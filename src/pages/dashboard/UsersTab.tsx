@@ -5,7 +5,7 @@ import {
     GridPreProcessEditCellProps,
     plPL
 } from '@mui/x-data-grid';
-import { Box } from '@mui/material';
+import { Box, Divider } from '@mui/material';
 import { UsersTabInterface } from '../../interfaces/UsersTabInterface';
 import UsersTypeChart from '../../components/usersTypeChart/UsersTypeChart';
 
@@ -61,8 +61,9 @@ function UsersTab(props: UsersTabInterface) {
     ];
 
     return (
-        <Box>
+        <Box className='users_tab'>
             <DataGrid
+                className='users_tab__table'
                 autoHeight
                 rows={props.users}
                 columns={columns}
@@ -75,7 +76,10 @@ function UsersTab(props: UsersTabInterface) {
                 processRowUpdate={(row) => props.update(row)}
                 onProcessRowUpdateError={(error) => console.log(error.message)}
             />
-            <UsersTypeChart users={props.users} roles={props.roles} />
+            <Divider className='users_tab__divider'>Rodzaje użytkowników</Divider>
+            <UsersTypeChart
+                users={props.users}
+                roles={props.roles} />
         </Box>
     )
 }
