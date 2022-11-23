@@ -14,6 +14,7 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import CategoriesTab from "../../components/tabs/categoriesTab/CategoriesTab";
 import SpecialOffersTab from "../../components/tabs/specialOffersTab/SpecialOffersTab";
 import UsersTab from "../../components/tabs/usersTab/UsersTab";
+import ReportsTab from "../../components/tabs/reportsTab/ReportsTab";
 
 function Dashboard() {
     const axiosPrivate = useAxiosPrivate();
@@ -26,6 +27,7 @@ function Dashboard() {
         { label: 'Kategorie' },
         { label: 'Promocje' },
         { label: 'Użytkownicy' },
+        { label: 'Raporty' },
     ]);
 
     // data
@@ -195,6 +197,9 @@ function Dashboard() {
                             users={users}
                             roles={roles}
                             update={updateUser} />
+                    </TabContent>
+                    <TabContent value={tabId} index={4}>
+                        <ReportsTab />
                     </TabContent>
                 </Box>
             </Paper>
