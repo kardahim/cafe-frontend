@@ -27,13 +27,17 @@ function OrderList() {
     const [orders, setOrders] = React.useState<any[]>([])
 
     React.useEffect(() => {
-        axios.get('/orderstatuses').then((respone) => {
-            setOrderStatuses(respone.data)
+        axios.get('/orderstatuses').then((response) => {
+            if (response.status !== 204) {
+                setOrderStatuses(response.data)
+            }
         })
         const getOrders = async () => {
             try {
                 await axiosPrivate.get('/orderheaders').then((response) => {
-                    setOrders(response.data)
+                    if (response.status !== 204) {
+                        setOrders(response.data)
+                    }
 
                     if (response.data.filter((v: any) => v.OrderStatusId === 1).length > 0) {
                         formik.values.orderStatus = 1

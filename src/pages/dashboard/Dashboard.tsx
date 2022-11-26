@@ -44,29 +44,40 @@ function Dashboard() {
     }
 
     useEffect(() => {
-        axios.get('/categories').then((respone) => {
-            setCategories(respone.data)
+        axios.get('/categories').then((response) => {
+            if (response.status !== 204) {
+                setCategories(response.data)
+            }
         })
-        axios.get('/products').then((respone) => {
-            setProducts(respone.data)
+        axios.get('/products').then((response) => {
+            if (response.status !== 204) {
+                setProducts(response.data)
+            }
         })
         axios.get('/productstatuses').then((response) => {
-            setStatuses(response.data)
+            if (response.status !== 204) {
+                setStatuses(response.data)
+            }
         })
         axios.get('/specialoffers').then((response) => {
-            setSpecialOffers(response.data)
+            if (response.status !== 204) {
+                setSpecialOffers(response.data)
+            }
         })
         axios.get('/users').then((response) => {
-            setUsers(response.data)
+            if (response.status !== 204) {
+                setUsers(response.data)
+            }
         })
         axios.get('/roles').then((response) => {
-            setRoles(response.data)
-        })
-        axios.get('/roles').then((response) => {
-            setRoles(response.data)
+            if (response.status !== 204) {
+                setRoles(response.data)
+            }
         })
         axiosPrivate.get('/orderheaders').then((response) => {
-            setOrders(response.data)
+            if (response.status !== 204) {
+                setOrders(response.data)
+            }
         })
     }, [refresh])
     const updateProduct = (product: any) => {

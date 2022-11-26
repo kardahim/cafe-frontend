@@ -54,16 +54,6 @@ function MonthSalesChart(props: { orders: any[], year: number }) {
         maintainAspectRatio: false,
     }
 
-    months.map(month => {
-        let total = 0
-
-        props.orders.map(order => {
-            if (month === (dayjs(order.createdAt).get('month') + 1) && dayjs().get('year') === dayjs(order.createdAt).get('year'))
-                total += order.finalPrice
-        })
-        return total
-    })
-
     return (
         <Container className='month_sales_chart' >
             <Bar data={data} options={options} />
