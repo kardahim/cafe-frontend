@@ -54,13 +54,13 @@ function Navbar() {
         { alt: 'Lista Zamówień', roleId: 3, Fun: function () { navigate('/order-list') } },
         { alt: 'Nowe Zamówienie', roleId: 3, Fun: function () { navigate('/new-order') } },
         // admin
-        { alt: 'Menu', roleId: 2, Fun: function () { navigate('/menu') } },
+        // { alt: 'Menu', roleId: 2, Fun: function () { navigate('/menu') } },
         { alt: 'Lista Zamówień', roleId: 2, Fun: function () { navigate('/order-list') } },
         { alt: 'Nowe Zamówienie', roleId: 2, Fun: function () { navigate('/new-order') } },
         { alt: 'Dashboard', roleId: 2, Fun: function () { navigate('/dashboard') } },
-        { alt: 'Nowy Produkt', roleId: 2, Fun: function () { navigate('/new-product') } },
-        { alt: 'Nowa Promocja', roleId: 2, Fun: function () { navigate('/new-special-offer') } },
-        { alt: 'Nowy Pracownik', roleId: 2, Fun: function () { navigate('/new-employee') } },
+        // { alt: 'Nowy Produkt', roleId: 2, Fun: function () { navigate('/new-product') } },
+        // { alt: 'Nowa Promocja', roleId: 2, Fun: function () { navigate('/new-special-offer') } },
+        // { alt: 'Nowy Pracownik', roleId: 2, Fun: function () { navigate('/new-employee') } },
     ];
 
     const settings = [
