@@ -1,4 +1,4 @@
-import { Button, Container, Paper, Stack, Box } from '@mui/material'
+import { Button, Container, Paper, Stack, Box, tablePaginationClasses } from '@mui/material'
 import React from 'react'
 import './Reservation.scss'
 // date
@@ -9,176 +9,203 @@ import dayjs, { Dayjs } from 'dayjs';
 import TextField from '@mui/material/TextField';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import PersonIcon from '@mui/icons-material/Person';
-// assets
 import map from '../../assets/images/placeholder.png'
 import 'dayjs/locale/pl';
+import axios from '../../api/axios';
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { AuthContext } from '../../context/AuthContext';
 
 function Reservation() {
     dayjs.locale('pl')
-    // pickers hooks
-    const [value, setValue] = React.useState<Dayjs | null>(
-        dayjs()
-    );
+
+    const axiosPrivate = useAxiosPrivate();
+    const context = React.useContext(AuthContext)
+
+    const [value, setValue] = React.useState<Dayjs | null>(dayjs().second(0));
+    const [minTime, setMinTime] = React.useState<Dayjs>(dayjs())
+    const [tables, setTables] = React.useState<any[]>([])
+    const [activeReservations, setActiveReservation] = React.useState<any[]>([{
+        ClientId: 0
+    }])
+    const [refresh, setRefresh] = React.useState(false)
 
     const handleChange = (newValue: Dayjs | null) => {
         setValue(newValue);
     };
 
-    const [minTime, setMinTime] = React.useState<Dayjs>(dayjs())
     React.useEffect(() => {
         let today: Dayjs = dayjs()
 
-        // FIXME: check day - at the moment after 18 cant order future days 
-        // reservation is available 8-18. Selecting the past time is disabled
-        if (today.get('hour') > 8) {
-            console.log(today.get('hour'))
+        if (today.get('hour') > 8 && today.isAfter(value)) {
             setMinTime(today)
         }
         else {
             setMinTime(dayjs().hour(8).minute(0))
         }
-    }, [])
+        // console.log(value?.format('DD.MM.YYYY HH:mm:ss'))
+    }, [value, refresh])
 
-    // tables hooks
-    // example data
-    const [tables, setTables] = React.useState([
-        {
-            name: "Stolik nr 1",
-            slots: 3,
-            isfree: true
-        },
-        {
-            name: "Stolik nr 2",
-            slots: 2,
-            isfree: false
-        },
-        {
-            name: "Stolik nr 3",
-            slots: 1,
-            isfree: true
-        },
-        {
-            name: "Stolik nr 4",
-            slots: 5,
-            isfree: true
-        },
-        {
-            name: "Stolik nr 1",
-            slots: 3,
-            isfree: true
-        },
-        {
-            name: "Stolik nr 2",
-            slots: 2,
-            isfree: false
-        },
-        {
-            name: "Stolik nr 3",
-            slots: 1,
-            isfree: true
-        },
-        {
-            name: "Stolik nr 4",
-            slots: 5,
-            isfree: true
-        },
-        {
-            name: "Stolik nr 1",
-            slots: 3,
-            isfree: true
-        },
-        {
-            name: "Stolik nr 2",
-            slots: 2,
-            isfree: false
-        },
-        {
-            name: "Stolik nr 3",
-            slots: 1,
-            isfree: true
-        },
-        {
-            name: "Stolik nr 4",
-            slots: 5,
-            isfree: true
-        },
-        {
-            name: "Stolik nr 1",
-            slots: 3,
-            isfree: true
-        },
-        {
-            name: "Stolik nr 2",
-            slots: 2,
-            isfree: false
-        },
-        {
-            name: "Stolik nr 3",
-            slots: 1,
-            isfree: true
-        },
-        {
-            name: "Stolik nr 4",
-            slots: 5,
-            isfree: true
+    React.useEffect(() => {
+        axios.get('/tables').then((response) => {
+            if (response.status !== 204) {
+                setTables(response.data)
+            }
+        })
+
+        axiosPrivate.get('reservations/reservationstatus/1').then((response) => {
+            if (response.status !== 204) {
+                setActiveReservation(response.data)
+            }
+        })
+    }, [refresh])
+
+    const [dateError, setDateError] = React.useState(false)
+    const dateErrorHandler = (reason: any, value: any) => {
+        if (reason === 'disablePast') {
+            setDateError(true)
         }
-    ])
+        else {
+            setDateError(false)
+        }
+    }
+
+    const [timeError, setTimeError] = React.useState(false)
+    const timeErrorHandler = (reason: any, value: any) => {
+        if (reason === 'maxTime' || reason === 'minTime') {
+            setTimeError(true)
+        }
+        else {
+            setTimeError(false)
+        }
+    }
+
+    const submitReservation = (tableId: number) => {
+        const data = {
+            date: value?.second(0).toDate(),
+            ReservationStatusId: 1,
+            TableId: tableId,
+            ClientId: context?.authState.id
+        }
+
+        if (!dateError && !timeError) {
+            axiosPrivate.post('/reservations', data).then((response) => console.log(response.data))
+        }
+
+        setTimeout(() => {
+            (!refresh ? setRefresh(true) : setRefresh(false))
+        }, 50)
+    }
+
+    const cancelReservation = (reservationId: number) => {
+        const data = {
+            ReservationStatusId: 2
+        }
+
+        axiosPrivate.put(`/reservations/${reservationId}`, data).then((response) => console.log(response.data))
+
+        setTimeout(() => {
+            (!refresh ? setRefresh(true) : setRefresh(false))
+
+            setActiveReservation([{
+                ClientId: 0
+            }])
+        }, 50)
+    }
 
     return (
         <Container maxWidth="lg">
-            <Paper elevation={2} className='reservation'>
-                <Box className='reservation__header'>
-                    rezerwacja stolika
-                </Box>
-                <div className='reservation__data'>
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <Stack
-                            spacing={3}
-                            direction={{ xs: 'column', sm: 'row' }}
-                            justifyContent="center"
-                            alignItems="center">
-                            {/* add onChange */}
-                            <DesktopDatePicker
-                                label="Data"
-                                inputFormat='DD.MM.YYYY'
-                                value={value}
-                                onChange={handleChange}
-                                renderInput={(params) => <TextField {...params} />}
-                                disablePast
-                            />
-                            <TimePicker
-                                label="Godzina"
-                                value={value}
-                                onChange={handleChange}
-                                renderInput={(params) => <TextField {...params} />}
-                                ampm={false}
-                                minTime={minTime}
-                                maxTime={dayjs().hour(18).minute(0)}
-                            />
-                        </Stack>
-                    </LocalizationProvider>
-                </div>
-                <div className='reservation__table-list'>
-                    <Stack spacing={2}>
-                        {/* divider */}
-                        {tables.map((value, key) =>
-                            <div key={key} className='reservation__table-list__item'>
-                                <div>{value.name}<PersonIcon sx={{ margin: '0 0  0 20px' }} />x{value.slots}</div>
-                                <Button className='reservation__button'
-                                    variant='contained'
-                                    type='submit'
-                                >Złóż zamówienie</Button>
-                            </div>
-                        )}
-                    </Stack>
-                </div>
-                <div className='reservation__map'>
-                    <Box className='map__header'>
-                        mapa sali
-                    </Box>
-                    <img src={map} alt='map' />
-                </div>
-            </Paper >
+            {
+                activeReservations.find(reservation => reservation.ClientId !== context?.authState.id) ?
+                    <Paper elevation={2} className='reservation'>
+                        <Box className='reservation__header'>
+                            rezerwacja stolika
+                        </Box>
+                        <div className='reservation__data'>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <Stack
+                                    spacing={3}
+                                    direction={{ xs: 'column', sm: 'row' }}
+                                    justifyContent="center"
+                                    alignItems="center">
+                                    {/* add onChange */}
+                                    <DesktopDatePicker
+                                        label="Data"
+                                        inputFormat='DD.MM.YYYY'
+                                        value={value}
+                                        onChange={handleChange}
+                                        renderInput={(params) => <TextField {...params} />}
+                                        disablePast
+                                        onError={dateErrorHandler}
+                                    />
+                                    <TimePicker
+                                        label="Godzina"
+                                        value={value}
+                                        onChange={handleChange}
+                                        renderInput={(params) => <TextField {...params} />}
+                                        ampm={false}
+                                        minTime={minTime}
+                                        maxTime={dayjs().hour(18).minute(0)}
+                                        onError={timeErrorHandler}
+                                    />
+                                </Stack>
+                            </LocalizationProvider>
+                        </div>
+                        <div className='reservation__table-list'>
+                            <Stack spacing={2}>
+                                {/* divider */}
+                                {tables.map((table, key) => {
+                                    if (activeReservations.find(reservation => (reservation.TableId !== table.id || !value?.isSame(dayjs(reservation.date), 'day'))))
+                                        return (
+                                            <div key={key} className='reservation__table-list__item'>
+                                                <div>Stolik nr. {table.number}<PersonIcon sx={{ margin: '0 0  0 20px' }} />x{table.numberOfSeats}</div>
+                                                <Button className='reservation__button'
+                                                    variant='contained'
+                                                    onClick={() => submitReservation(table.id)}
+                                                >Zarezerwuj
+                                                </Button>
+                                            </div>
+                                        )
+                                })}
+                            </Stack>
+                        </div>
+                        <div className='reservation__map'>
+                            <Box className='map__header'>
+                                mapa sali
+                            </Box>
+                            <img src={map} alt='map' />
+                        </div>
+                    </Paper >
+                    :
+                    <Paper elevation={2} className='reservation'>
+                        <Box className='reservation__header'>
+                            moja rezerwacja
+                        </Box>
+                        <div className='reservation__table-list'>
+                            <Stack spacing={2}>
+                                {tables.map((table, key) => {
+                                    const reservation = activeReservations.find(reservation => (reservation.ClientId === context?.authState.id && reservation.TableId === table.id))
+                                    if (reservation)
+                                        return (
+                                            <div key={key} className='reservation__table-list__item'>
+                                                <div>Stolik nr. {table.number}<PersonIcon sx={{ margin: '0 0  0 20px' }} />x{table.numberOfSeats}</div>
+                                                <Button className='reservation__button'
+                                                    variant='contained'
+                                                    onClick={() => cancelReservation(reservation.id)}>
+                                                    Anuluj
+                                                </Button>
+                                            </div>
+                                        )
+                                })}
+                            </Stack>
+                        </div>
+                        <div className='reservation__map'>
+                            <Box className='map__header'>
+                                mapa sali
+                            </Box>
+                            <img src={map} alt='map' />
+                        </div>
+                    </Paper >
+            }
         </Container>
     )
 }
