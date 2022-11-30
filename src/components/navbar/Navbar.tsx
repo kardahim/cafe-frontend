@@ -22,6 +22,8 @@ import PersonIcon from '@mui/icons-material/Person';
 
 // assets
 import logo from '../../assets/images/placeholder.png'
+import Reservation from '../../pages/reservation/Reservation';
+import ReservationDrawer from '../reservationDrawer/ReservationDrawer';
 
 function Navbar() {
 
@@ -30,6 +32,7 @@ function Navbar() {
 
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
+    const [isOpen, setIsOpen] = React.useState(false)
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
@@ -53,11 +56,13 @@ function Navbar() {
         // employee
         { alt: 'Lista Zamówień', roleId: 3, Fun: function () { navigate('/order-list') } },
         { alt: 'Nowe Zamówienie', roleId: 3, Fun: function () { navigate('/new-order') } },
+        { alt: 'Rezerwacje', roleId: 3, Fun: function () { setIsOpen(true) } },
         // admin
         // { alt: 'Menu', roleId: 2, Fun: function () { navigate('/menu') } },
         { alt: 'Lista Zamówień', roleId: 2, Fun: function () { navigate('/order-list') } },
         { alt: 'Nowe Zamówienie', roleId: 2, Fun: function () { navigate('/new-order') } },
         { alt: 'Dashboard', roleId: 2, Fun: function () { navigate('/dashboard') } },
+        { alt: 'Rezerwacje', roleId: 2, Fun: function () { setIsOpen(true) } },
         // { alt: 'Nowy Produkt', roleId: 2, Fun: function () { navigate('/new-product') } },
         // { alt: 'Nowa Promocja', roleId: 2, Fun: function () { navigate('/new-special-offer') } },
         // { alt: 'Nowy Pracownik', roleId: 2, Fun: function () { navigate('/new-employee') } },
@@ -79,6 +84,7 @@ function Navbar() {
 
     return (
         <AppBar position="static" className='navbar'>
+            <ReservationDrawer isOpen={isOpen} setIsOpen={setIsOpen} />
             <Container maxWidth="xl">
                 <Toolbar disableGutters className='navbar__content'>
                     <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 10, height: 80, width: 20 }} className='navbar__content__logo'>
