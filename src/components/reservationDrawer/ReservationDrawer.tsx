@@ -13,6 +13,8 @@ function ReservationDrawer(props: ReservationDrawerInterface) {
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
     const context = React.useContext(AuthContext)
+    
+    const [refresh, setRefresh] = React.useState(false)
 
     const toggleDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
         if (event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
@@ -27,21 +29,18 @@ function ReservationDrawer(props: ReservationDrawerInterface) {
     }])
 
     useEffect(() => {
-        console.log(context?.authState)
-        axiosPrivate.get('reservations/reservationstatus/1').then((response) => {
-            if (response.status !== 204) {
-                setActiveReservation(response.data)
-            }
-        })
-        // axios.get('reservations/reservationstatus/1', {
-        //     headers: { 'Content-Type': 'application/json' },
-        //     withCredentials: true
-        // }).then((response) => {
-        //     if (response.status !== 204) {
-        //         setActiveReservation(response.data)
-        //     }
-        // })
-    }, [])
+        if(context?.authState.isLogged){
+            axiosPrivate.get('reservations/reservationstatus/1').then((response) => {
+                if (response.status !== 204) {
+                    setActiveReservation(response.data)
+                }
+            })
+        } else {
+            setTimeout(() => {
+                (!refresh ? setRefresh(true) : setRefresh(false))
+            }, 50)
+        }
+    }, [refresh])
 
     return (
         <Drawer
