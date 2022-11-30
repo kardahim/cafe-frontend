@@ -1,0 +1,47 @@
+@import '../../assets/scss/variables.scss';
+
+$drawer-width: 300px;
+$button-width: 200px;
+
+.reservation_drawer {
+    .reservation_drawer__content {
+        height: 100%;
+        width: $drawer-width;
+
+        .content__header {
+            text-transform: uppercase;
+            font-size: 2rem;
+            color: $aztec-gold;
+            text-shadow: 1px 1px $dutch-white;
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .content__body {
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-size: 1.2rem;
+
+            .content__body__button {
+                color: $floral-white;
+                background-color: $burlywood;
+                height: 50px;
+                width: $button-width;
+                margin-left: calc((#{$drawer-width} - #{$button-width}) / 2);
+            }
+
+            .content__body__divider {
+                color: $aztec-gold;
+                text-shadow: 1px 1px $dutch-white;
+                margin: 25px 0;
+            }
+
+            .content__body__reservation {
+                margin-bottom: 25px;
+                margin-left: calc((#{$drawer-width} - #{$button-width}) / 2);
+
+            }
+        }
+    }
+}
