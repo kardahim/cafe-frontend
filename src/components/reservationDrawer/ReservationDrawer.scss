@@ -1,6 +1,6 @@
 @import '../../assets/scss/variables.scss';
 
-$drawer-width: 300px;
+$drawer-width: 400px;
 $button-width: 200px;
 
 .reservation_drawer {
@@ -38,9 +38,7 @@ $button-width: 200px;
             }
 
             .content__body__reservation {
-                margin-bottom: 25px;
                 margin-left: calc((#{$drawer-width} - #{$button-width}) / 2);
-
             }
         }
     }

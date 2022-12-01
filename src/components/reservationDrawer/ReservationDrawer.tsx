@@ -7,13 +7,14 @@ import { useNavigate } from 'react-router-dom';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import axios from '../../api/axios.js';
 import { AuthContext } from '../../context/AuthContext';
+import dayjs from 'dayjs';
 
 function ReservationDrawer(props: ReservationDrawerInterface) {
 
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
     const context = React.useContext(AuthContext)
-    
+
     const [refresh, setRefresh] = React.useState(false)
 
     const toggleDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -24,15 +25,28 @@ function ReservationDrawer(props: ReservationDrawerInterface) {
         props.setIsOpen(false);
     };
 
-    const [activeReservations, setActiveReservation] = useState<any[]>([{
-        ClientId: 0
-    }])
+    const [activeReservations, setActiveReservation] = useState<any[]>([])
 
+    // get all active reservations change past data to inactive reservations
     useEffect(() => {
-        if(context?.authState.isLogged){
+        if (context?.authState.isLogged) {
             axiosPrivate.get('reservations/reservationstatus/1').then((response) => {
                 if (response.status !== 204) {
-                    setActiveReservation(response.data)
+                    setActiveReservation(response.data.filter((reservation: any) => {
+                        if (dayjs(reservation.date).add(1, 'day').isAfter(dayjs(), 'day')) {
+                            return (dayjs(reservation.date).add(1, 'day').isAfter(dayjs(), 'day'))
+                        }
+                        else {
+                            const data = {
+                                ReservationStatusId: 2
+                            }
+                            axiosPrivate.put(`reservations/${reservation.id}`, data)
+                        }
+                    }
+                    ))
+                }
+                else {
+                    setActiveReservation([])
                 }
             })
         } else {
@@ -40,7 +54,18 @@ function ReservationDrawer(props: ReservationDrawerInterface) {
                 (!refresh ? setRefresh(true) : setRefresh(false))
             }, 50)
         }
-    }, [refresh])
+    }, [refresh, props.isOpen])
+
+    const endReservation = (id: number) => {
+        const data = {
+            ReservationStatusId: 2
+        }
+        axiosPrivate.put(`reservations/${id}`, data).then((response) => {
+            setTimeout(() => {
+                (!refresh ? setRefresh(true) : setRefresh(false))
+            }, 50)
+        })
+    }
 
     return (
         <Drawer
@@ -66,13 +91,16 @@ function ReservationDrawer(props: ReservationDrawerInterface) {
                     {activeReservations.map((reserv, key) =>
                         <>
                             <div className='content__body__reservation'>
-                                {/* TODO change to tableNumber */}
-                                Stolik nr: {reserv.TableId} <br />
-                                {/* TODO add phone number */}
-                                Tel klienta: { } <br />
-                                Data: { } <br />
+                                Data: {dayjs(reserv.date).format('DD.MM.YYYY HH:mm')} <br />
+                                Stolik nr: {reserv.Table.number} ({reserv.Table.numberOfSeats}-osobowy)<br />
+                                Tel klienta: {reserv.Client.phone} <br />
                             </div>
-                            {key < activeReservations.length - 1 ? <Divider /> : ''}
+                            <Button
+                                className='content__body__button'
+                                onClick={() => endReservation(reserv.id)}>
+                                Zakończ
+                            </Button>
+                            {key < activeReservations.length - 1 ? <Divider className='content__body__divider' /> : ''}
                         </>
                     )}
                 </Box>
