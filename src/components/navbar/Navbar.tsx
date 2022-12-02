@@ -53,6 +53,7 @@ function Navbar() {
     const pages = [
         // client
         { alt: 'Menu', roleId: 1, Fun: function () { navigate('/menu') } },
+        { alt: 'Rezerwacje', roleId: 1, Fun: function () { navigate('/reservation') } },
         // employee
         { alt: 'Lista Zamówień', roleId: 3, Fun: function () { navigate('/order-list') } },
         { alt: 'Nowe Zamówienie', roleId: 3, Fun: function () { navigate('/new-order') } },
