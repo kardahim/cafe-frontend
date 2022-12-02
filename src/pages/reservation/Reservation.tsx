@@ -1,5 +1,5 @@
 import { Button, Container, Paper, Stack, Box, tablePaginationClasses } from '@mui/material'
-import React from 'react'
+import React, { useEffect } from 'react'
 import './Reservation.scss'
 // date
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -95,22 +95,43 @@ function Reservation() {
         }
     }
 
-    // TODO add employee id and client id by phone number
     const submitReservation = (tableId: number) => {
-        const data = {
-            date: value?.second(0).toDate(),
-            ReservationStatusId: 1,
-            TableId: tableId,
-            ClientId: context?.authState.id
-        }
+        if (context?.authState.roleId === 1) {
+            const data = {
+                date: value?.second(0).toDate(),
+                ReservationStatusId: 1,
+                TableId: tableId,
+                ClientId: context?.authState.id
+            }
 
-        if (!dateError && !timeError) {
-            axiosPrivate.post('/reservations', data).then((response) => console.log(response.data))
+            if (!dateError && !timeError && !phoneError) {
+                axiosPrivate.post('/reservations', data).then((response) => console.log(response.data))
+            }
+            setTimeout(() => {
+                (!refresh ? setRefresh(true) : setRefresh(false))
+            }, 50)
         }
+        else if (context?.authState.roleId === 2 || context?.authState.roleId === 3) {
+            axiosPrivate.get(`/users/phone/${phoneNumber}`).then((response) => {
+                if (response.data == null) setPhoneError(true)
+                else {
+                    const data = {
+                        date: value?.second(0).toDate(),
+                        ReservationStatusId: 1,
+                        TableId: tableId,
+                        ClientId: response.data.id,
+                        EmployeeId: context?.authState.id
+                    }
 
-        setTimeout(() => {
-            (!refresh ? setRefresh(true) : setRefresh(false))
-        }, 50)
+                    if (!dateError && !timeError && !phoneError) {
+                        axiosPrivate.post('/reservations', data).then((response) => console.log(response.data))
+                    }
+                }
+            })
+            setTimeout(() => {
+                (!refresh ? setRefresh(true) : setRefresh(false))
+            }, 50)
+        }
     }
 
     const cancelReservation = (reservationId: number) => {
@@ -129,10 +150,25 @@ function Reservation() {
         }, 50)
     }
 
+    const [findReservation, setFindReservation] = React.useState(false)
+    useEffect(() => {
+        activeReservations.find(reservation => {
+            console.log(context?.authState.id)
+            if (reservation.ClientId === context?.authState.id && context?.authState.roleId === 1) {
+                setFindReservation(true)
+                // console.log(reservation)
+            }
+            else {
+                setFindReservation(false)
+                console.log(reservation)
+            }
+        })
+    }, [refresh, activeReservations])
+
     return (
         <Container maxWidth="lg">
             {
-                activeReservations.find(reservation => reservation.ClientId !== context?.authState.id) ?
+                !findReservation ?
                     <Paper elevation={2} className='reservation'>
                         <Box className='reservation__header'>
                             rezerwacja stolika
