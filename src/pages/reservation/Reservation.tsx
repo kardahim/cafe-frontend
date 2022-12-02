@@ -28,6 +28,7 @@ function Reservation() {
         ClientId: 0
     }])
     const [refresh, setRefresh] = React.useState(false)
+    const [phoneNumber, setPhoneNumber] = React.useState('')
 
     const handleChange = (newValue: Dayjs | null) => {
         setValue(newValue);
@@ -59,6 +60,8 @@ function Reservation() {
         })
     }, [refresh])
 
+
+    // errors handlers
     const [dateError, setDateError] = React.useState(false)
     const dateErrorHandler = (reason: any, value: any) => {
         if (reason === 'disablePast') {
@@ -79,6 +82,20 @@ function Reservation() {
         }
     }
 
+    const [phoneError, setPhoneError] = React.useState(false)
+    const phoneHandler = (phone: string) => {
+        setPhoneNumber(phone)
+
+        const reg = /^[1-9][0-9]{8}$/
+        if (!reg.exec(phone)) {
+            setPhoneError(true)
+        }
+        else {
+            setPhoneError(false)
+        }
+    }
+
+    // TODO add employee id and client id by phone number
     const submitReservation = (tableId: number) => {
         const data = {
             date: value?.second(0).toDate(),
@@ -124,29 +141,45 @@ function Reservation() {
                             <LocalizationProvider dateAdapter={AdapterDayjs}>
                                 <Stack
                                     spacing={3}
+                                    sx={{ padding: '0 100px' }}
                                     direction={{ xs: 'column', sm: 'row' }}
                                     justifyContent="center"
                                     alignItems="center">
                                     {/* add onChange */}
-                                    <DesktopDatePicker
-                                        label="Data"
-                                        inputFormat='DD.MM.YYYY'
-                                        value={value}
-                                        onChange={handleChange}
-                                        renderInput={(params) => <TextField {...params} />}
-                                        disablePast
-                                        onError={dateErrorHandler}
-                                    />
-                                    <TimePicker
-                                        label="Godzina"
-                                        value={value}
-                                        onChange={handleChange}
-                                        renderInput={(params) => <TextField {...params} />}
-                                        ampm={false}
-                                        minTime={minTime}
-                                        maxTime={dayjs().hour(18).minute(0)}
-                                        onError={timeErrorHandler}
-                                    />
+                                    <div style={{ width: '100%' }}>
+                                        <DesktopDatePicker
+                                            label="Data"
+                                            inputFormat='DD.MM.YYYY'
+                                            value={value}
+                                            onChange={handleChange}
+                                            renderInput={(params) => <TextField {...params} fullWidth />}
+                                            disablePast
+                                            onError={dateErrorHandler} />
+                                    </div>
+                                    <div style={{ width: '100%' }}>
+                                        <TimePicker
+                                            label="Godzina"
+                                            value={value}
+                                            onChange={handleChange}
+                                            renderInput={(params) => <TextField {...params} fullWidth />}
+                                            ampm={false}
+                                            minTime={minTime}
+                                            maxTime={dayjs().hour(18).minute(0)}
+                                            onError={timeErrorHandler} />
+                                    </div>
+                                    {(context?.authState.roleId === 2 || context?.authState.roleId === 3) ?
+                                        <div style={{ width: '100%' }}>
+                                            <TextField
+                                                fullWidth
+                                                margin="dense"
+                                                name="name"
+                                                label="Numer telefonu"
+                                                variant="outlined"
+                                                value={phoneNumber}
+                                                error={phoneError}
+                                                onChange={(e) => phoneHandler(e.target.value)} />
+                                        </div>
+                                        : ''}
                                 </Stack>
                             </LocalizationProvider>
                         </div>
