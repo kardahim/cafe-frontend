@@ -5,9 +5,10 @@ import {
     GridPreProcessEditCellProps,
     plPL
 } from '@mui/x-data-grid';
-import { Box, Divider } from '@mui/material';
+import { Box, Divider, Button } from '@mui/material';
 import UsersTypeChart from '../../charts/usersTypeChart/UsersTypeChart';
 import { UsersTabInterface } from '../../../interfaces/UsersTabInterface';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -59,9 +60,11 @@ function UsersTab(props: UsersTabInterface) {
             },
         },
     ];
+    const navigate = useNavigate()
 
     return (
         <Box className='users_tab'>
+            <Button className='users_tab__button' onClick={() => navigate('/new-employee')}>Dodaj pracownika</Button>
             <DataGrid
                 className='users_tab__table'
                 autoHeight

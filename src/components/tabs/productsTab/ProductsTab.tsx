@@ -6,8 +6,9 @@ import {
     GridPreProcessEditCellProps,
     plPL
 } from '@mui/x-data-grid';
-import { Box, Divider } from '@mui/material';
+import { Box, Button, Divider } from '@mui/material';
 import ProductsInCategoryChart from '../../charts/productsInCategoryChart/ProductsInCategoryChart';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -104,9 +105,11 @@ function ProductsTab(props: ProductsTabInterface) {
             },
         }
     ];
+    const navigate = useNavigate()
 
     return (
         <Box className='products_tab'>
+            <Button className='products_tab__button' onClick={() => navigate('/new-product')}>Dodaj produkt lub kategorię</Button>
             <DataGrid
                 className='products_tab__table'
                 autoHeight

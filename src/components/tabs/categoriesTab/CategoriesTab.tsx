@@ -5,7 +5,9 @@ import {
     GridColDef,
     plPL
 } from '@mui/x-data-grid';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import './CategoriesTab.scss'
 
 function CategoriesTab(props: CategoriesTabInterface) {
 
@@ -28,10 +30,13 @@ function CategoriesTab(props: CategoriesTabInterface) {
             editable: true
         },
     ];
+    const navigate = useNavigate()
 
     return (
-        <Box>
+        <Box className='categories_tab'>
+            <Button className='categories_tab__button' onClick={() => navigate('/new-product')}>Dodaj produkt lub kategorię</Button>
             <DataGrid
+                className='categories_tab__table'
                 autoHeight
                 rows={props.categories}
                 columns={columns}
