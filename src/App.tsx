@@ -27,6 +27,7 @@ import NewSpecialOffer from './pages/new_special_offert/NewSpecialOffer';
 
 // axios
 import axios from '../src/api/axios';
+import NewCoupon from './pages/new_coupon/NewCoupon';
 axios.defaults.withCredentials = true;
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
               <Route path='/dashboard' element={<Dashboard />}></Route>
               <Route path='/new-special-offer' element={<NewSpecialOffer />}></Route>
               <Route path='/new-employee' element={<Register isAdmin={true} />} />
+              <Route path='/new-coupon' element={<NewCoupon />} />
               <Route path='*' element={<NotFound />} />
             </Route>
           </Routes>
