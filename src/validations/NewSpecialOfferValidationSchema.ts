@@ -4,7 +4,7 @@ export const NewSpecialOfferValidationSchema = Yup.object({
     value: Yup
         .number()
         .typeError("Wymagana jest liczba")
-        .required("Rozmiar jest wymagany")
+        .required("Wartość jest wymagana")
         .min(5, "Wartość promocji może być z zakresu od 5 do 100")
         .max(100, "Wartość promocji może być z zakresu od 5 do 100"),
     start_date: Yup
