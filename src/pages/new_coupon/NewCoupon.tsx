@@ -4,41 +4,68 @@ import {
     Button,
     Paper,
     MenuItem,
-    Box,
-    Stack
+    Box
 } from "@mui/material";
 import './NewCoupon.scss'
 import { useFormik } from "formik"
 import axios from '../../api/axios.js';
+import { useNavigate } from "react-router-dom"
 import { useEffect, useState } from 'react';
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { NewCouponValidationSchema } from "../../validations/NewCouponValidationSchema";
-import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/pl';
 
 function NewCoupon() {
-    const context = useContext(AuthContext);
     const axiosPrivate = useAxiosPrivate();
     const [products, setProducts] = useState<any[]>([])
     const [refresh, setRefresh] = useState(false)
+    const navigate = useNavigate();
 
     const formik = useFormik({
         initialValues: {
-            ProductId: 1,
+            ProductId: '',
             value: 5,
             pointPrice: '',
         },
         validationSchema: NewCouponValidationSchema,
         onSubmit: (values) => {
+            const data = {
+                ProductId: values.ProductId,
+                value: values.value,
+                pointPrice: values.pointPrice,
+                isAvailable: true
+            }
+            const postCoupon = async () => {
+                await axiosPrivate.post('/coupons', data).then((response) => {
+                    console.log(response.data)
+                }).then((response) => {
+
+                }).catch(({ response }) => {
+                    console.log(response.data?.error)
+                    if (response.data?.error.includes("Istnieje już kupon na produkt"))
+                        alert(response.data.error)
+                    if (response.data?.error === 'Wartość kuponu jest niepoprawna')
+                        formik.setFieldError('value', response.data.error)
+                })
+                
+            }
+            
+            postCoupon();
+            setTimeout(() => {
+                (refresh ? setRefresh(false) : setRefresh(true))
+            }, 50)
         }
     });
 
     useEffect(() => {
-        axios.get('/products/specialoffers').then((response) => {
-            setProducts(response.data)
-            formik.values.ProductId = response.data[0].id
+        axios.get('/products/withoutcoupons').then((response) => {
+            if(response.data.length > 0){
+                setProducts(response.data)
+                formik.values.ProductId = response.data[0].id
+            }
+            else {
+                navigate('/dashboard')
+            }
         })
     }, [refresh])
 
@@ -67,7 +94,7 @@ function NewCoupon() {
                         <TextField className='new_coupon__content__input'
                             variant='outlined'
                             fullWidth
-                            label='Wartość promocji'
+                            label='Wartość promocji [ % ]'
                             name='value'
                             value={formik.values.value}
                             onChange={formik.handleChange}
