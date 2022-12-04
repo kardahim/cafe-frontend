@@ -52,7 +52,7 @@ function Navbar() {
     // TODO: max 3 links, change localizations others link
     const pages = [
         // client
-        { alt: 'Menu', roleId: 1, Fun: function () { navigate('/menu') } },
+        { alt: 'Menu', roleId: 0, Fun: function () { navigate('/menu') } },
         { alt: 'Rezerwacje', roleId: 1, Fun: function () { navigate('/reservation') } },
         // employee
         { alt: 'Lista Zamówień', roleId: 3, Fun: function () { navigate('/order-list') } },
@@ -167,7 +167,7 @@ function Navbar() {
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => {
-                            if (page.roleId === context?.authState.roleId || (page.roleId === 1 && context?.authState.isLogged === false))
+                            if (page.roleId === context?.authState.roleId /*|| (page.roleId === 1 && context?.authState.isLogged === false)*/ || page.roleId === 0)
                                 return (
                                     <Button
                                         key={page.alt}
