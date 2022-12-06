@@ -39,6 +39,7 @@ function Dashboard() {
     const [users, setUsers] = useState<any[]>([])
     const [roles, setRoles] = useState<any[]>([])
     const [orders, setOrders] = useState<any[]>([])
+    const [coupons, setCoupons] = useState<any[]>([])
 
     const tabsHandleChange = (event: React.SyntheticEvent, newValue: number) => {
         setTabId(newValue);
@@ -49,38 +50,46 @@ function Dashboard() {
             if (response.status !== 204) {
                 setCategories(response.data)
             }
+            else setCategories([])
         })
         axios.get('/products').then((response) => {
             if (response.status !== 204) {
                 setProducts(response.data)
             }
+            else setProducts([])
         })
         axios.get('/productstatuses').then((response) => {
             if (response.status !== 204) {
                 setStatuses(response.data)
             }
+            else setStatuses([])
         })
         axios.get('/specialoffers').then((response) => {
             if (response.status !== 204) {
                 setSpecialOffers(response.data)
             }
+            else setSpecialOffers([])
         })
         axios.get('/users').then((response) => {
             if (response.status !== 204) {
                 setUsers(response.data)
             }
+            else setUsers([])
         })
         axios.get('/roles').then((response) => {
             if (response.status !== 204) {
                 setRoles(response.data)
             }
+            else setRoles([])
         })
         axiosPrivate.get('/orderheaders').then((response) => {
             if (response.status !== 204) {
                 setOrders(response.data)
             }
+            else setOrders([])
         })
     }, [refresh])
+
     const updateProduct = (product: any) => {
         const data = {
             name: product.name,
