@@ -250,6 +250,17 @@ function Order() {
         window.location.href = '/order-list'
     }
 
+    // TODO make function
+    const applyCoupon = () => {
+    }
+
+    // if we plan coupons validation then we should fill error state
+    const [coupon, setCoupon] = React.useState('')
+    const [couponError, setCouponError] = React.useState(false)
+    const couponHandler = (coupon: string) => {
+        setCoupon(coupon)
+    }
+
     const intRegex = /^\d+$/
 
     // id is undefined || string. This is so stupid but its real :/
@@ -277,6 +288,25 @@ function Order() {
                                     }
                                     )}
                                 </TextField>
+                            </div>
+                            <div className='order__content__filters'>
+                                <TextField className='order__content__input'
+                                    variant='outlined'
+                                    label='Kupon'
+                                    fullWidth
+                                    name='coupon'
+                                    value={coupon}
+                                    onChange={(event) => couponHandler(event.target.value)}
+                                    error={couponError}
+                                    style={{ marginRight: '25px' }}
+                                    type='search' />
+                                <Button
+                                    className='order__button'
+                                    fullWidth
+                                    onClick={() => applyCoupon()}
+                                    style={{ marginRight: '0' }}>
+                                    Dodaj
+                                </Button>
                             </div>
                             <div className='order__content__filters'>
                                 <TextField
