@@ -26,6 +26,7 @@ function Dashboard() {
         { label: 'Produkty' },
         { label: 'Kategorie' },
         { label: 'Promocje' },
+        { label: 'Kupony' },
         { label: 'Użytkownicy' },
         { label: 'Raporty' },
     ]);
@@ -210,13 +211,16 @@ function Dashboard() {
                             update={updateSpecialOffer}
                             products={products} />
                     </TabContent>
-                    <TabContent value={tabId} index={3}>
+                    <TabContent value={tabId} index={2}>
+                        EMPTY
+                    </TabContent>
+                    <TabContent value={tabId} index={4}>
                         <UsersTab
                             users={users}
                             roles={roles}
                             update={updateUser} />
                     </TabContent>
-                    <TabContent value={tabId} index={4}>
+                    <TabContent value={tabId} index={5}>
                         <ReportsTab
                             orders={orders} />
                     </TabContent>
