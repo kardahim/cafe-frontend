@@ -25,13 +25,35 @@ function CouponsTab(props: CouponsTabInterface) {
             headerAlign: 'center'
         },
         {
+            field: 'name',
+            headerName: 'Nazwa',
+            flex: 1,
+            type: 'string',
+            align: 'center',
+            headerAlign: 'center'
+        },
+        {
+            field: 'pointPrice',
+            headerName: 'Punkty',
+            flex: 1,
+            type: 'number',
+            align: 'center',
+            headerAlign: 'center',
+            editable: true,
+            preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
+                const hasError = params.props.value < 0
+                return { ...params.props, error: hasError };
+            },
+            // renderCell: params => `${params.row.value}%`,
+        },
+        {
             field: 'value',
             headerName: 'Wartość',
             flex: 1,
             type: 'number',
             align: 'center',
             headerAlign: 'center',
-            // editable: true,
+            editable: true,
             preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
                 const hasError = params.props.value < 5 || params.props.value > 100
                 return { ...params.props, error: hasError };
@@ -39,36 +61,8 @@ function CouponsTab(props: CouponsTabInterface) {
             renderCell: params => `${params.row.value}%`,
         },
         {
-            field: 'start_date',
-            headerName: 'Data rozpoczęcia',
-            flex: 1,
-            type: 'date',
-            align: 'center',
-            headerAlign: 'center',
-            // editable: true,
-            renderCell: params => dayjs(params.row.start_date).format('DD.MM.YYYY'),
-            preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
-                const hasError = (dayjs(params.props.value).add(1, 'day')).isBefore(dayjs()) || (dayjs(params.props.value).add(1, 'day')).isAfter(params.row.end_date)
-                return { ...params.props, error: hasError };
-            },
-        },
-        {
-            field: 'end_date',
-            headerName: 'Data zakończenia',
-            flex: 1,
-            type: 'date',
-            align: 'center',
-            headerAlign: 'center',
-            // editable: true,
-            renderCell: params => dayjs(params.row.end_date).format('DD.MM.YYYY'),
-            preProcessEditCellProps: (params: GridPreProcessEditCellProps) => {
-                const hasError = (dayjs(params.props.value).subtract(1, 'day')).isBefore(dayjs(params.row.start_date))
-                return { ...params.props, error: hasError };
-            },
-        },
-        {
             field: 'ProductId',
-            headerName: 'Kategoria',
+            headerName: 'Produkt',
             flex: 1,
             type: 'singleSelect',
             valueOptions: props.products.map(product => ({
@@ -77,18 +71,27 @@ function CouponsTab(props: CouponsTabInterface) {
             })),
             align: 'center',
             headerAlign: 'center',
-            // editable: true,
+            editable: true,
             renderCell: params => {
                 const product = props.products.find((product) => product.id == params.row.ProductId)
                 return (product.name)
             },
         },
+        {
+            field: 'isAvailable',
+            headerName: 'Dostępny',
+            flex: 1,
+            type: 'boolean',
+            align: 'center',
+            editable: true,
+            headerAlign: 'center'
+        }
     ];
     const navigate = useNavigate()
 
     return (
         <Box className='coupons_tab'>
-            <Button className='coupons_tab__button' onClick={() => navigate('/new-coupon')}>Dodaj promocję</Button>
+            <Button className='coupons_tab__button' onClick={() => navigate('/new-coupon')}>Dodaj Kupon</Button>
             <DataGrid
                 className='coupons_tab__table'
                 autoHeight

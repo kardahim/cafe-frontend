@@ -15,6 +15,7 @@ import CategoriesTab from "../../components/tabs/categoriesTab/CategoriesTab";
 import SpecialOffersTab from "../../components/tabs/specialOffersTab/SpecialOffersTab";
 import UsersTab from "../../components/tabs/usersTab/UsersTab";
 import ReportsTab from "../../components/tabs/reportsTab/ReportsTab";
+import CouponsTab from "../../components/tabs/couponsTab/CouponTab";
 
 function Dashboard() {
     const axiosPrivate = useAxiosPrivate();
@@ -87,6 +88,12 @@ function Dashboard() {
                 setOrders(response.data)
             }
             else setOrders([])
+        })
+        axiosPrivate.get('/coupons').then((response) => {
+            if (response.status !== 204) {
+                setCoupons(response.data)
+            }
+            else setCoupons([])
         })
     }, [refresh])
 
@@ -179,6 +186,31 @@ function Dashboard() {
         return user
     }
 
+    const updateCoupon = (coupon: any) => {
+        const data = {
+            ProductId: coupon.ProductId,
+            isAvailable: coupon.isAvailable,
+            pointPrice: coupon.pointPrice,
+            value: coupon.value
+        }
+        const putCoupon = async () => {
+            try {
+                await axiosPrivate.put(`/coupons/${coupon.id}`, data).then((response) => {
+                    console.log(response.data)
+                })
+            } catch (err) {
+                console.log(err)
+            }
+        }
+        putCoupon();
+
+        setTimeout(() => {
+            (refresh ? setRefresh(false) : setRefresh(true))
+        }, 50)
+
+        return coupon
+    }
+
     return (
         <Container maxWidth="xl" className='dashboard'>
             <Paper elevation={4} className='dashboard__card'>
@@ -220,8 +252,11 @@ function Dashboard() {
                             update={updateSpecialOffer}
                             products={products} />
                     </TabContent>
-                    <TabContent value={tabId} index={2}>
-                        EMPTY
+                    <TabContent value={tabId} index={3}>
+                        <CouponsTab
+                            coupons={coupons}
+                            update={updateCoupon}
+                            products={products} />
                     </TabContent>
                     <TabContent value={tabId} index={4}>
                         <UsersTab
