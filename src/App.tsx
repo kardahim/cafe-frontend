@@ -25,14 +25,27 @@ import Order from './pages/order/Order';
 import Dashboard from './pages/dashboard/Dashboard';
 import NewSpecialOffer from './pages/new_special_offert/NewSpecialOffer';
 
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from './context/AuthContext';
+
 // axios
 import axios from '../src/api/axios';
 import NewCoupon from './pages/new_coupon/NewCoupon';
 axios.defaults.withCredentials = true;
 
+
 function App() {
+  
+  const context = useContext(AuthContext);
+  const authState = useContext(AuthContext)?.authState;
+
+  // useEffect(()=>{
+  //   console.log("authstate in app.tsx:")
+  //   console.log(authState?.isLogged)
+  // })
+
   return (
-    <AuthProvider >
+    // <AuthProvider >
       <div className="App">
         <Router>
           <Navbar />
@@ -59,7 +72,7 @@ function App() {
           <Footer />
         </Router>
       </div >
-    </AuthProvider>
+    // </AuthProvider>
   );
 }
 
