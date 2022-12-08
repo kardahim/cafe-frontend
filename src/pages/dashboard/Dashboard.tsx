@@ -189,7 +189,7 @@ function Dashboard() {
     const updateCoupon = (coupon: any) => {
         const data = {
             ProductId: coupon.ProductId,
-            isAvailable: coupon.isAvailable,
+            isAvailable: coupon.isAvailable ? "true" : "false",
             pointPrice: coupon.pointPrice,
             value: coupon.value
         }
