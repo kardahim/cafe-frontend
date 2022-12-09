@@ -22,7 +22,8 @@ const useRefreshToken = () => {
                 firstname: response.data.user.firstname,
                 lastname: response.data.user.lastname,
                 email: response.data.user.email,
-                roleId: response.data.user.RoleId
+                roleId: response.data.user.RoleId,
+                phone: response.data.user.phone
             }
         });
         return response.data.accessToken;

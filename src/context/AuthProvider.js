@@ -10,7 +10,8 @@ export const AuthProvider = ({ children }) => {
         firstname: '',
         lastname: '',
         email: '',
-        roleId: 0
+        roleId: 0,
+        phone: ''
     });
 
     return (
