@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthProvider';
 import PersistLogin from './PersistLogin'
 
-// import components
+// import independent components
 import Navbar from './components/navbar/Navbar'
 import Footer from './components/footer/Footer';
 import NotFound from './components/notFound/NotFound';
@@ -24,18 +24,19 @@ import NewOrder from './pages/order/NewOrder';
 import Order from './pages/order/Order';
 import Dashboard from './pages/dashboard/Dashboard';
 import NewSpecialOffer from './pages/new_special_offert/NewSpecialOffer';
+import NewCoupon from './pages/new_coupon/NewCoupon';
+import Profile from './pages/profile/Profile';
 
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from './context/AuthContext';
 
 // axios
 import axios from '../src/api/axios';
-import NewCoupon from './pages/new_coupon/NewCoupon';
 axios.defaults.withCredentials = true;
 
 
 function App() {
-  
+
   const context = useContext(AuthContext);
   const authState = useContext(AuthContext)?.authState;
 
@@ -46,32 +47,33 @@ function App() {
 
   return (
     // <AuthProvider >
-      <div className="App">
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route element={<PersistLogin />}>
-              <Route path='/' element={<Home />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register isAdmin={false} />} />
-              <Route path='/reservation' element={<Reservation />} />
-              <Route path='/reset-password' element={<Reset />} />
-              <Route path='/confirm-reset-password' element={<ResetConfirmation />} />
-              <Route path='/new-product' element={<NewProduct />} />
-              <Route path='/menu' element={<Menu />} />
-              <Route path='/order-list' element={<OrderList />} />
-              <Route path='/new-order' element={<NewOrder />} />
-              <Route path='/order/:id' element={<Order />} />
-              <Route path='/dashboard' element={<Dashboard />}></Route>
-              <Route path='/new-special-offer' element={<NewSpecialOffer />}></Route>
-              <Route path='/new-employee' element={<Register isAdmin={true} />} />
-              <Route path='/new-coupon' element={<NewCoupon />} />
-              <Route path='*' element={<NotFound />} />
-            </Route>
-          </Routes>
-          <Footer />
-        </Router>
-      </div >
+    <div className="App">
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route element={<PersistLogin />}>
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register isAdmin={false} />} />
+            <Route path='/reservation' element={<Reservation />} />
+            <Route path='/reset-password' element={<Reset />} />
+            <Route path='/confirm-reset-password' element={<ResetConfirmation />} />
+            <Route path='/new-product' element={<NewProduct />} />
+            <Route path='/menu' element={<Menu />} />
+            <Route path='/order-list' element={<OrderList />} />
+            <Route path='/new-order' element={<NewOrder />} />
+            <Route path='/order/:id' element={<Order />} />
+            <Route path='/dashboard' element={<Dashboard />}></Route>
+            <Route path='/new-special-offer' element={<NewSpecialOffer />}></Route>
+            <Route path='/new-employee' element={<Register isAdmin={true} />} />
+            <Route path='/new-coupon' element={<NewCoupon />} />
+            <Route path='/profile' element={<Profile />} />
+            <Route path='*' element={<NotFound />} />
+          </Route>
+        </Routes>
+        <Footer />
+      </Router>
+    </div >
     // </AuthProvider>
   );
 }
