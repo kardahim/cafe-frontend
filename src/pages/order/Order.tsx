@@ -112,7 +112,8 @@ function Order() {
                 transaction_price: product.price,
                 quantity: 1,
                 OrderHeaderId: id,
-                ProductId: product.id
+                ProductId: product.id,
+                isCoupon: false
             }
             const postOrderDetails = async () => {
                 try {
@@ -130,7 +131,8 @@ function Order() {
                 transaction_price: ((100 - product.specialOffer.value) / 100 * product.price),
                 quantity: 1,
                 OrderHeaderId: id,
-                ProductId: product.id
+                ProductId: product.id,
+                isCoupon: false
             }
             const postOrderDetails = async () => {
                 try {
@@ -250,15 +252,72 @@ function Order() {
         window.location.href = '/order-list'
     }
 
+    const [userCoupon, setUserCoupon] = React.useState<any>(null)
+    const [coupon, setCoupon] = React.useState<any>(null)
+    const [couponProduct, setCouponProduct] = React.useState<any>(null)
+
     // TODO make function
     const applyCoupon = () => {
+        const getUserCouponData = () => {
+            try {
+                axiosPrivate.get(`/usercoupons/code/${couponCode}`).then((response) => {
+                    console.log(response.data)
+                    setUserCoupon(response.data)
+                    try {
+                        axiosPrivate.get(`/coupons/${response.data.CouponId}`).then((response) => {
+                            console.log(response.data)
+                            setCoupon(response.data)
+                            try {
+                                axiosPrivate.get(`/products/${response.data.ProductId}`).then((response) => {
+                                    console.log(response.data)
+                                    setCouponProduct(response.data)
+                                })
+                            } catch (err) {
+                                console.error(err);
+                            }
+                        })
+                    } catch (err) {
+                        console.error(err);
+                    }
+                })
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        getUserCouponData();
+
+        const data = {
+            transaction_price: couponProduct?.price - (couponProduct?.price * coupon?.value / 100),
+            quantity: 1,
+            OrderHeaderId: id,
+            ProductId: couponProduct?.id,
+            isCoupon: true,
+            UserCouponId: userCoupon?.id
+        }
+        const postOrderDetails = () => {
+            try {
+                axiosPrivate.post('/orderdetails', data).then((response) => {
+                    console.log(response.data)
+                }).catch((response) => {
+                    console.log(response.response.data)
+                })
+            } catch (err) {
+                console.error(err);
+            }
+        }
+        if(coupon!==null){
+            postOrderDetails();
+            setTimeout(() => {
+                (!refresh ? setRefresh(true) : setRefresh(false))
+            }, 50)
+        }
     }
 
     // if we plan coupons validation then we should fill error state
-    const [coupon, setCoupon] = React.useState('')
+    const [couponCode, setCouponCode] = React.useState('')
     const [couponError, setCouponError] = React.useState(false)
-    const couponHandler = (coupon: string) => {
-        setCoupon(coupon)
+    const couponHandler = (couponCode: string) => {
+        setCouponCode(couponCode)
     }
 
     const intRegex = /^\d+$/
@@ -295,7 +354,7 @@ function Order() {
                                     label='Kupon'
                                     fullWidth
                                     name='coupon'
-                                    value={coupon}
+                                    value={couponCode}
                                     onChange={(event) => couponHandler(event.target.value)}
                                     error={couponError}
                                     style={{ marginRight: '25px' }}
@@ -404,15 +463,26 @@ function Order() {
                                         onMouseLeave={() => setShowOptions(-1)}>
                                         <div className='product__name'>{product.Product.name}
                                             <span style={{ textTransform: 'none' }}> x{product.quantity}</span>
+                                            {product.isCoupon ?
+                                            <span style={{ textTransform: 'none' }}> - {"Kupon"}</span>
+                                            :
+                                            <></>
+                                            }
                                         </div>
                                         {key === showOptions && order.OrderStatusId === 1 ?
                                             <div>
-                                                <Button className='product__button' onClick={() => increaseQuantity(product.id, product.quantity)}>
-                                                    <Add />
-                                                </Button>
-                                                <Button className='product__button' onClick={() => decreaseQuantity(product.id, product.quantity)}>
-                                                    <Remove />
-                                                </Button>
+                                                { !product.isCoupon ?
+                                                <>
+                                                    <Button className='product__button' onClick={() => increaseQuantity(product.id, product.quantity)}>
+                                                        <Add />
+                                                    </Button>
+                                                    <Button className='product__button' onClick={() => decreaseQuantity(product.id, product.quantity)}>
+                                                        <Remove />
+                                                    </Button>
+                                                </> 
+                                                :
+                                                <></>
+                                                }
                                                 <Button className='product__button' onClick={() => deleteProduct(product.id)}>
                                                     <Delete />
                                                 </Button>
