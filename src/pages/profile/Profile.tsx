@@ -1,12 +1,10 @@
 import { Box, Container, Paper, Tabs, Tab } from '@mui/material'
-import React, { useContext, useState } from 'react'
-import { AuthContext } from '../../context/AuthContext'
+import React, { useState } from 'react'
 import './Profile.scss'
 import TabContent from "../../components/tabs/tabContent/TabContent";
+import MyData from '../../components/myData/MyData';
 
 function Profile() {
-    const context = useContext(AuthContext)
-
     // tabs navigation
     const [tabId, setTabId] = useState(0);
     const [tabs, setTabs] = useState([
@@ -41,7 +39,7 @@ function Profile() {
                 </Box>
                 <Box className='profile__card__content'>
                     <TabContent value={tabId} index={0}>
-                        EMPTY
+                        <MyData />
                     </TabContent>
                     <TabContent value={tabId} index={1}>
                         EMPTY
