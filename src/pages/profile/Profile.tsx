@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import './Profile.scss'
 import TabContent from "../../components/tabs/tabContent/TabContent";
 import MyData from '../../components/myData/MyData';
+import OrderHistory from '../../components/orderHistory/OrderHistory';
 
 function Profile() {
     // tabs navigation
@@ -42,7 +43,7 @@ function Profile() {
                         <MyData />
                     </TabContent>
                     <TabContent value={tabId} index={1}>
-                        EMPTY
+                        <OrderHistory />
                     </TabContent>
                 </Box>
             </Paper>
