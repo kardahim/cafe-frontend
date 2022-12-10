@@ -1,5 +1,5 @@
 import './assets/scss/global.scss'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 // import auth
 import { AuthProvider } from './context/AuthProvider';
@@ -68,6 +68,30 @@ function App() {
     return () => { isMounted = false };
   }, [])
 
+  const AdminRoute = ({ children }: { children: JSX.Element }) => {
+    const roleId = authState.roleId
+
+    if (roleId === 2) return children
+    else return <Navigate to='/' />
+  }
+  const EmployeeRoute = ({ children }: { children: JSX.Element }) => {
+    const roleId = authState.roleId
+
+    if (roleId === 2 || roleId === 3) return children
+    else return <Navigate to='/' />
+  }
+  const LoggedRoute = ({ children }: { children: JSX.Element }) => {
+    const isLogged = authState.isLogged
+
+    if (isLogged) return children
+    else return <Navigate to='/' />
+  }
+  const LoggedOffRoute = ({ children }: { children: JSX.Element }) => {
+    const isLogged = authState.isLogged
+
+    if (!isLogged) return children
+    else return <Navigate to='/' />
+  }
 
   return (
     <div className="App">
@@ -76,24 +100,27 @@ function App() {
           <Router>
             <Navbar />
             <Routes>
-              {/* <Route element={<PersistLogin />}> */}
+              {/* admin only routes */}
+              <Route path='/dashboard' element={<AdminRoute><Dashboard /></AdminRoute>} />
+              <Route path='/new-product' element={<AdminRoute><NewProduct /></AdminRoute>} />
+              <Route path='/new-special-offer' element={<AdminRoute><NewSpecialOffer /></AdminRoute>} />
+              <Route path='/new-employee' element={<AdminRoute><Register isAdmin={true} /></AdminRoute>} />
+              <Route path='/new-coupon' element={<AdminRoute><NewCoupon /></AdminRoute>} />
+              {/* staff routes */}
+              <Route path='/order-list' element={<EmployeeRoute><OrderList /></EmployeeRoute>} />
+              <Route path='/new-order' element={<EmployeeRoute><NewOrder /></EmployeeRoute>} />
+              <Route path='/order/:id' element={<EmployeeRoute><Order /></EmployeeRoute>} />
+              {/* logged user routes */}
+              <Route path='/reservation' element={<LoggedRoute><Reservation /></LoggedRoute>} />
+              {/* logged off routes */}
+              <Route path='/login' element={<LoggedOffRoute><Login /></LoggedOffRoute>} />
+              <Route path='/register' element={<LoggedOffRoute><Register isAdmin={false} /></LoggedOffRoute>} />
+              <Route path='/reset-password' element={<LoggedOffRoute><Reset /></LoggedOffRoute>} />
+              <Route path='/confirm-reset-password' element={<LoggedOffRoute><ResetConfirmation /></LoggedOffRoute>} />
+              {/* everyone routes */}
               <Route path='/' element={<Home />} />
-              <Route path='/login' element={<Login />} />
-              <Route path='/register' element={<Register isAdmin={false} />} />
-              <Route path='/reservation' element={<Reservation />} />
-              <Route path='/reset-password' element={<Reset />} />
-              <Route path='/confirm-reset-password' element={<ResetConfirmation />} />
-              <Route path='/new-product' element={<NewProduct />} />
               <Route path='/menu' element={<Menu />} />
-              <Route path='/order-list' element={<OrderList />} />
-              <Route path='/new-order' element={<NewOrder />} />
-              <Route path='/order/:id' element={<Order />} />
-              <Route path='/dashboard' element={<Dashboard />}></Route>
-              <Route path='/new-special-offer' element={<NewSpecialOffer />}></Route>
-              <Route path='/new-employee' element={<Register isAdmin={true} />} />
-              <Route path='/new-coupon' element={<NewCoupon />} />
               <Route path='*' element={<NotFound />} />
-              {/* </Route> */}
             </Routes>
             <Footer />
           </Router>
