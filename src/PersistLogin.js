@@ -27,17 +27,10 @@ const PersistLogin = () => {
                 isMounted && setIsLoading(false);
             }
         }
-        // console.log("---aT: "+authState.accessToken)
-
         !authState?.accessToken ? verifyRefreshToken() : setIsLoading(false);
 
         return () => isMounted = false;
     }, [])
-
-    // useEffect(() => {
-    //     console.log(`isLoading: ${isLoading}`)
-    //     console.log(`aT: ${JSON.stringify(authState?.accessToken)}`)
-    // }, [isLoading])
 
     if (isLoading) return <CircularProgress sx={{ margin: '0 auto', color: '#DCC080' }} size={200} />
     else return <Outlet />
