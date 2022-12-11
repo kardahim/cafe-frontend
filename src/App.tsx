@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { AuthProvider } from './context/AuthProvider';
 import PersistLogin from './PersistLogin'
 
-// import components
+// import independent components
 import Navbar from './components/navbar/Navbar'
 import Footer from './components/footer/Footer';
 import NotFound from './components/notFound/NotFound';
@@ -24,6 +24,8 @@ import NewOrder from './pages/order/NewOrder';
 import Order from './pages/order/Order';
 import Dashboard from './pages/dashboard/Dashboard';
 import NewSpecialOffer from './pages/new_special_offert/NewSpecialOffer';
+import NewCoupon from './pages/new_coupon/NewCoupon';
+import Profile from './pages/profile/Profile';
 
 import { useEffect, useState } from 'react';
 import { AuthContext } from './context/AuthContext';
@@ -31,7 +33,6 @@ import useRefreshToken from './hooks/useRefreshToken';
 
 // axios
 import axios from '../src/api/axios';
-import NewCoupon from './pages/new_coupon/NewCoupon';
 import { CircularProgress } from '@mui/material';
 axios.defaults.withCredentials = true;
 
@@ -46,7 +47,8 @@ function App() {
     firstname: '',
     lastname: '',
     email: '',
-    roleId: 0
+    roleId: 0,
+    phone: ''
   });
   const refresh = useRefreshToken(setAuthState);
 

@@ -1,0 +1,25 @@
+@import '../../assets/scss/variables.scss';
+
+$space-between-items: 25px;
+$error-color: #d32f2f;
+
+.my_data {
+    display: flex;
+    flex-direction: column;
+
+    .my_data__content__input {
+        margin-bottom: $space-between-items;
+    }
+
+    .my_data__content__button {
+        color: $floral-white;
+        background-color: $burlywood;
+        margin-bottom: $space-between-items;
+        height: 50px;
+
+        &:hover {
+            box-shadow: 0px 2px 4px -1px rgb(0 0 0 / 20%), 0px 4px 5px 0px rgb(0 0 0 / 14%), 0px 1px 10px 0px rgb(0 0 0 / 12%);
+            background: $burlywood;
+        }
+    }
+}

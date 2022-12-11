@@ -5,5 +5,6 @@ export interface AuthInterface {
     firstname: string,
     lastname: string,
     email: string,
-    roleId: number
+    roleId: number,
+    phone: string
 }
