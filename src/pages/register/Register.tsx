@@ -37,7 +37,6 @@ function Register(props: RegisterInterface) {
         },
         validationSchema: RegisterValidationSchema,
         onSubmit: (values) => {
-            // FIXME: errors handler
             if (!props.isAdmin) {
                 axios.post("/users/register", values).then((response) => {
                     navigate(`/login`)
