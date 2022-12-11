@@ -1,0 +1,36 @@
+@import '../../assets/scss/variables.scss';
+
+$space-between-items: 25px;
+
+.order_history {
+
+    .order_history__row {
+        display: flex;
+        flex-direction: column;
+
+        .order_history__date {
+            font-size: 1.5rem;
+            color: $aztec-gold;
+            text-shadow: 1px 1px $dutch-white;
+        }
+
+        .history__product {
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+
+            .product__name {
+                text-transform: capitalize;
+            }
+
+            .product__size {
+                width: 50px;
+            }
+
+            .product__price {
+                width: 50px;
+                text-align: right;
+            }
+        }
+    }
+}
