@@ -45,6 +45,8 @@ function MyData() {
         }
     });
 
+    // TODO: add reset password function
+
     return (
         <div className='my_data'>
             <form onSubmit={formik.handleSubmit}>
