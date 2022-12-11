@@ -114,6 +114,7 @@ function App() {
               <Route path='/order/:id' element={<EmployeeRoute><Order /></EmployeeRoute>} />
               {/* logged user routes */}
               <Route path='/reservation' element={<LoggedRoute><Reservation /></LoggedRoute>} />
+              <Route path='/profile' element={<LoggedRoute><Profile /></LoggedRoute>} />
               {/* logged off routes */}
               <Route path='/login' element={<LoggedOffRoute><Login /></LoggedOffRoute>} />
               <Route path='/register' element={<LoggedOffRoute><Register isAdmin={false} /></LoggedOffRoute>} />
