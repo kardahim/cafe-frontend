@@ -256,7 +256,6 @@ function Order() {
     const [coupon, setCoupon] = React.useState<any>(null)
     const [couponProduct, setCouponProduct] = React.useState<any>(null)
 
-    // TODO make function
     const applyCoupon = () => {
         const getUserCouponData = () => {
             try {
@@ -305,7 +304,7 @@ function Order() {
                 console.error(err);
             }
         }
-        if(coupon!==null){
+        if (coupon !== null) {
             postOrderDetails();
             setTimeout(() => {
                 (!refresh ? setRefresh(true) : setRefresh(false))
@@ -464,24 +463,24 @@ function Order() {
                                         <div className='product__name'>{product.Product.name}
                                             <span style={{ textTransform: 'none' }}> x{product.quantity}</span>
                                             {product.isCoupon ?
-                                            <span style={{ textTransform: 'none' }}> - {"Kupon"}</span>
-                                            :
-                                            <></>
+                                                <span style={{ textTransform: 'none' }}> - {"Kupon"}</span>
+                                                :
+                                                <></>
                                             }
                                         </div>
                                         {key === showOptions && order.OrderStatusId === 1 ?
                                             <div>
-                                                { !product.isCoupon ?
-                                                <>
-                                                    <Button className='product__button' onClick={() => increaseQuantity(product.id, product.quantity)}>
-                                                        <Add />
-                                                    </Button>
-                                                    <Button className='product__button' onClick={() => decreaseQuantity(product.id, product.quantity)}>
-                                                        <Remove />
-                                                    </Button>
-                                                </> 
-                                                :
-                                                <></>
+                                                {!product.isCoupon ?
+                                                    <>
+                                                        <Button className='product__button' onClick={() => increaseQuantity(product.id, product.quantity)}>
+                                                            <Add />
+                                                        </Button>
+                                                        <Button className='product__button' onClick={() => decreaseQuantity(product.id, product.quantity)}>
+                                                            <Remove />
+                                                        </Button>
+                                                    </>
+                                                    :
+                                                    <></>
                                                 }
                                                 <Button className='product__button' onClick={() => deleteProduct(product.id)}>
                                                     <Delete />
