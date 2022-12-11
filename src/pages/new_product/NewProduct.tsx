@@ -76,6 +76,8 @@ function NewProduct() {
                 try {
                     await axiosPrivate.post('/categories', values).then((response) => {
                         console.log(response.data)
+                    }).catch((response)=>{
+                        // console.log(response.response.data.error)
                     })
                 } catch (err) {
                     console.error(err);

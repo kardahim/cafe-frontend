@@ -46,6 +46,10 @@ function ResetConfirmation() {
                     alert(response.data.message);
                     navigate(`/login`);
                 }
+            }).catch((response)=> {
+                if(response?.response?.data?.error) {
+                    alert(response.response.data.error)
+                }
             });
         }
     });

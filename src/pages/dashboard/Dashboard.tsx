@@ -35,6 +35,7 @@ function Dashboard() {
     // data
     const [categories, setCategories] = useState<any[]>([])
     const [products, setProducts] = useState<any[]>([])
+    const [productsWithoutActiveCoupons, setProductsWithoutActiveCoupons] = useState<any[]>([])
     const [statuses, setStatuses] = useState<any[]>([])
     const [specialOffers, setSpecialOffers] = useState<any[]>([])
     const [users, setUsers] = useState<any[]>([])
@@ -58,6 +59,12 @@ function Dashboard() {
                 setProducts(response.data)
             }
             else setProducts([])
+        })
+        axios.get('/products/withoutcoupons').then((response) => {
+            if (response.status !== 204) {
+                setProductsWithoutActiveCoupons(response.data)
+            }
+            else setProductsWithoutActiveCoupons([])
         })
         axios.get('/productstatuses').then((response) => {
             if (response.status !== 204) {
