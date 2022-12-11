@@ -50,6 +50,7 @@ function App() {
     roleId: 0,
     phone: ''
   });
+  // FIXME: sometimes not work, authState is not a function
   const refresh = useRefreshToken(setAuthState);
 
   useEffect(() => {

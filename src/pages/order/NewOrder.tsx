@@ -68,7 +68,6 @@ function NewOrder() {
                                 const newTableData = {
                                     TableStatusId: 2
                                 }
-                                // FIXME: use axiosprivate
                                 axiosPrivate.put(`/tables/update/${values.tableId}`, newTableData)
                                 navigate(`/order/${response.data.id}`)
                             }
