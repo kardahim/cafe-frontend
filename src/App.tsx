@@ -69,7 +69,7 @@ function App() {
     }
     !authState?.accessToken ? verifyRefreshToken() : setIsLoading(false);
     return () => { isMounted = false };
-  }, [])
+  }, [authState])
 
   const AdminRoute = ({ children }: { children: JSX.Element }) => {
     const roleId = authState.roleId
@@ -95,7 +95,6 @@ function App() {
     if (!isLogged) return children
     else return <Navigate to='/' />
   }
-
   return (
     <div className="App">
       {!isLoading ?
