@@ -14,7 +14,7 @@ import {
 
 
 const pages = [
-    { alt: 'Link1', href: '/link1' },
+    { alt: 'O nas', href: '/about' },
     { alt: 'Link2', href: '/link2' },
 ];
 

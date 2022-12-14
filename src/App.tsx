@@ -34,6 +34,7 @@ import useRefreshToken from './hooks/useRefreshToken';
 // axios
 import axios from '../src/api/axios';
 import { CircularProgress } from '@mui/material';
+import AboutUs from './pages/aboutUs/AboutUs';
 axios.defaults.withCredentials = true;
 
 
@@ -123,6 +124,7 @@ function App() {
               {/* everyone routes */}
               <Route path='/' element={<Home />} />
               <Route path='/menu' element={<Menu />} />
+              <Route path='/about' element={<AboutUs />} />
               <Route path='*' element={<NotFound />} />
             </Routes>
             <Footer />
