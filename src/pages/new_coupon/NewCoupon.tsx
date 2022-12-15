@@ -6,6 +6,8 @@ import {
     MenuItem,
     Box
 } from "@mui/material";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import './NewCoupon.scss'
 import { useFormik } from "formik"
 import axios from '../../api/axios.js';
@@ -21,6 +23,17 @@ function NewCoupon() {
     const [refresh, setRefresh] = useState(false)
     const navigate = useNavigate();
 
+    // snackbar
+    const [open, setOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("")
+    const [isAlertSuccess, setIsAlertSuccess] = useState(true);
+    const showAlert = () => { setOpen(true); };
+
+    const closeAlert = function (_event: any, reason: string) {
+        if (reason === 'clickaway') return;
+        setOpen(false);
+    };
+    
     const formik = useFormik({
         initialValues: {
             ProductId: '',
@@ -37,15 +50,28 @@ function NewCoupon() {
             }
             const postCoupon = async () => {
                 await axiosPrivate.post('/coupons', data).then((response) => {
-                    console.log(response.data)
-                }).then((response) => {
-
-                }).catch(({ response }) => {
-                    console.log(response.data?.error)
-                    if (response.data?.error.includes("Istnieje już kupon na produkt"))
-                        alert(response.data.error)
-                    if (response.data?.error === 'Wartość kuponu jest niepoprawna')
-                        formik.setFieldError('value', response.data.error)
+                    if(response?.data?.message) {
+                        setIsAlertSuccess(true);
+                        setAlertMessage(response.data.message);
+                        showAlert();
+                    }    
+                })
+                .catch(({ response }) => {
+                    // console.log(response)
+                    if(response?.data?.error) {
+                        setIsAlertSuccess(false)
+                        setAlertMessage(response.data.error)
+                        showAlert()
+                    }
+                    // console.log(response.data?.error)
+                    // if (response.data?.error.includes("Istnieje już kupon na produkt")) {
+                    //     setIsAlertSuccess(false)
+                    //     setAlertMessage(response.data.error)
+                    //     showAlert()
+                    // }
+                    //     // alert(response.data.error)
+                    // if (response.data?.error === 'Wartość kuponu jest niepoprawna')
+                    //     formik.setFieldError('value', response.data.error)
                 })
                 
             }
@@ -53,6 +79,7 @@ function NewCoupon() {
             postCoupon();
             setTimeout(() => {
                 (refresh ? setRefresh(false) : setRefresh(true))
+                
             }, 50)
         }
     });
@@ -64,13 +91,20 @@ function NewCoupon() {
                 formik.values.ProductId = response.data[0].id
             }
             else {
-                navigate('/dashboard')
+                setTimeout(() => {
+                    navigate('/dashboard')
+                }, 5000)
             }
         })
     }, [refresh])
 
     return (
         <Container maxWidth="sm" className='new_coupon'>
+        <Snackbar open={open} autoHideDuration={6000} onClose={closeAlert}>
+            <Alert severity={isAlertSuccess ? 'success' : 'error'} sx={{ width: '100%' }}>
+                {alertMessage}
+            </Alert>
+        </Snackbar>
             <Paper elevation={4} className='new_coupon__card'>
                 <Box className='new_coupon__card__header'>
                     Generowanie kuponu
