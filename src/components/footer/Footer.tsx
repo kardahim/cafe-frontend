@@ -15,7 +15,7 @@ import {
 
 const pages = [
     { alt: 'O nas', href: '/about' },
-    { alt: 'Link2', href: '/link2' },
+    { alt: 'Regulamin', href: '/statute' },
 ];
 
 function Footer() {
