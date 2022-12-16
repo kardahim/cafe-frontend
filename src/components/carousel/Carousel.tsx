@@ -42,7 +42,7 @@ function item(item: any, key: any) {
                 <Typography variant='body1' component='div' className='carousel__item__body__paragraph'>
                     {item.description}
                 </Typography>
-                <Link href='#' underline='hover' className='carousel__item__body__link'>
+                <Link href='/menu' underline='hover' className='carousel__item__body__link'>
                     Sprawdź ofertę
                     <ArrowRight />
                 </Link>
