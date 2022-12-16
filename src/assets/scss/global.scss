@@ -1,12 +1,13 @@
 @import './variables.scss';
 
 // this is example body image from pexels
-$background-image: '../images/body.jpg';
+$background-image: '../images/background.jpg';
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    opacity: 1;
 }
 
 body {
@@ -20,9 +21,11 @@ body {
     justify-content: space-between;
 
     // background
-    // background: url($background-image) no-repeat;
-    // background-size: cover;
+    background: url($background-image);
+    background-color: rgba(255, 250, 255, 0.3);
+    background-blend-mode: lighten;
+    background-size: cover;
 
     // color
-    background-color: $floral-white;
+    // background-color: $floral-white;
 }

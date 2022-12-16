@@ -28,7 +28,7 @@ function CarouselComponent(props: CarouselInterface) {
 // If you change the resolution and carousels is changing slide, a graphic bug is crated (sometimes indicators are missing)
 function item(item: any, key: any) {
     return (
-        <Paper elevation={3} sx={{ display: { md: 'flex' } }} className='carousel__item' key={key}>
+        <Paper elevation={4} sx={{ display: { md: 'flex' } }} className='carousel__item' key={key}>
             <CardMedia className='carousel__item__image'
                 component='img'
                 height='300'
