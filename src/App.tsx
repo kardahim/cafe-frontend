@@ -1,10 +1,6 @@
 import './assets/scss/global.scss'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-// import auth
-import { AuthProvider } from './context/AuthProvider';
-import PersistLogin from './PersistLogin'
-
 // import independent components
 import Navbar from './components/navbar/Navbar'
 import Footer from './components/footer/Footer';
@@ -26,6 +22,8 @@ import Dashboard from './pages/dashboard/Dashboard';
 import NewSpecialOffer from './pages/new_special_offert/NewSpecialOffer';
 import NewCoupon from './pages/new_coupon/NewCoupon';
 import Profile from './pages/profile/Profile';
+import AboutUs from './pages/aboutUs/AboutUs';
+import Statute from './pages/statute/Statute';
 
 import { useEffect, useState } from 'react';
 import { AuthContext } from './context/AuthContext';
@@ -34,7 +32,6 @@ import useRefreshToken from './hooks/useRefreshToken';
 // axios
 import axios from '../src/api/axios';
 import { CircularProgress } from '@mui/material';
-import AboutUs from './pages/aboutUs/AboutUs';
 axios.defaults.withCredentials = true;
 
 
@@ -96,6 +93,7 @@ function App() {
     if (!isLogged) return children
     else return <Navigate to='/' />
   }
+
   return (
     <div className="App">
       {!isLoading ?
@@ -125,6 +123,7 @@ function App() {
               <Route path='/' element={<Home />} />
               <Route path='/menu' element={<Menu />} />
               <Route path='/about' element={<AboutUs />} />
+              <Route path='/statute' element={<Statute />} />
               <Route path='*' element={<NotFound />} />
             </Routes>
             <Footer />
