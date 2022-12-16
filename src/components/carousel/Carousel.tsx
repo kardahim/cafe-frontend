@@ -11,6 +11,7 @@ import {
     CardMedia,
     Typography,
     Link,
+    Box
 } from '@mui/material'
 import { ArrowRight } from '@mui/icons-material'
 
@@ -20,15 +21,17 @@ import { CarouselInterface } from '../../interfaces/CarouselInterface'
 function CarouselComponent(props: CarouselInterface) {
     return (
         // also carousel with carousel--padding
-        <Carousel className='carousel carousel--padding' animation='slide' duration={1000}>
-            {props.items.map((value, key) => item(value, key))}
-        </Carousel>
+        <Paper className='carousel carousel--padding' elevation={4}>
+            <Carousel animation='slide' duration={1000}>
+                {props.items.map((value, key) => item(value, key))}
+            </Carousel>
+        </Paper>
     )
 }
 // If you change the resolution and carousels is changing slide, a graphic bug is crated (sometimes indicators are missing)
 function item(item: any, key: any) {
     return (
-        <Paper elevation={4} sx={{ display: { md: 'flex' } }} className='carousel__item' key={key}>
+        <Box sx={{ display: { md: 'flex' } }} className='carousel__item' key={key}>
             <CardMedia className='carousel__item__image'
                 component='img'
                 height='300'
@@ -47,7 +50,7 @@ function item(item: any, key: any) {
                     <ArrowRight />
                 </Link>
             </CardContent>
-        </Paper>
+        </Box>
     )
 }
 
