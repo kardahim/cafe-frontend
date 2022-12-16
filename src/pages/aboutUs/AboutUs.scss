@@ -28,12 +28,13 @@ $space-between-items: 25px;
     .about_us__details {
         display: flex;
 
-        @include tablet() {
+        @include about_us_cards() {
             flex-direction: column;
         }
 
         .about_us__details__hours {
             padding: 30px;
+            border-radius: 8px;
             width: 100%;
 
             .hours__header {
@@ -65,9 +66,10 @@ $space-between-items: 25px;
         .about_us__details__socials {
             width: 100%;
             padding: 30px;
+            border-radius: 8px;
             margin: 0 $space-between-items;
 
-            @include tablet() {
+            @include about_us_cards() {
                 margin: $space-between-items 0;
             }
 
@@ -110,6 +112,7 @@ $space-between-items: 25px;
 
             .contact__card {
                 padding: 30px;
+                border-radius: 8px;
                 height: 100%;
 
                 .contact__card__header {

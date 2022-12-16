@@ -5,17 +5,8 @@
     }
 }
 
-// content
-// @mixin navbar-link {
-//     // flex
-//     display: flex;
-//     align-items: center;
-
-//     // dimensions
-//     height: 100%;
-//     padding: 0 1rem;
-
-//     cursor: pointer;
-//     text-decoration: none;
-
-// }
+@mixin about_us_cards {
+    @media (max-width:1270px) {
+        @content;
+    }
+}
