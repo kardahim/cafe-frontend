@@ -10,6 +10,8 @@ import {
     DialogContent,
     DialogTitle
 } from "@mui/material";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import './NewProduct.scss'
 import { useFormik } from "formik"
 import { NewProductValidationSchema, NewCategoryValidationSchema } from "../../validations/NewProductValidationSchema";
@@ -26,6 +28,16 @@ function NewProduct() {
     const [categories, setCategories] = useState<any[]>([])
     const [statuses, setStatuses] = useState<any[]>([])
     const [refresh, setRefresh] = useState(false)
+
+    // snackbar
+    const [open, setOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("")
+    const [isAlertSuccess, setIsAlertSuccess] = useState(true);
+    const showAlert = () => { setOpen(true); };
+    const closeAlert = function (_event: any, reason: string) {
+        if (reason === 'clickaway') return;
+        setOpen(false);
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -50,13 +62,22 @@ function NewProduct() {
             console.log(data)
 
             const postProduct = async () => {
-                try {
-                    await axiosPrivate.post('/products', data).then((response) => {
-                        console.log(response.data)
-                    })
-                } catch (err) {
-                    console.error(err);
-                }
+                await axiosPrivate.post('/products', data).then((response) => {
+                    if(response?.data?.message) {
+                        setIsAlertSuccess(true);
+                        setAlertMessage(response.data.message);
+                        showAlert();
+                    }
+                    // values.name = ''
+                })
+                .catch(({ response }) => {
+                    // console.log(response)
+                    if(response?.data?.error) {
+                        setIsAlertSuccess(false)
+                        setAlertMessage(response.data.error)
+                        showAlert()
+                    }
+                })
             }
             postProduct();
             setTimeout(() => {
@@ -73,15 +94,21 @@ function NewProduct() {
         validationSchema: NewCategoryValidationSchema,
         onSubmit: (values) => {
             const postCategory = async () => {
-                try {
-                    await axiosPrivate.post('/categories', values).then((response) => {
-                        console.log(response.data)
-                    }).catch((response)=>{
-                        // console.log(response.response.data.error)
-                    })
-                } catch (err) {
-                    console.error(err);
-                }
+                await axiosPrivate.post('/categories', values).then((response) => {
+                    if(response?.data?.message) {
+                        setIsAlertSuccess(true);
+                        setAlertMessage(response.data.message);
+                        showAlert();
+                    }
+                })
+                .catch(({ response }) => {
+                    // console.log(response)
+                    if(response?.data?.error) {
+                        setIsAlertSuccess(false)
+                        setAlertMessage(response.data.error)
+                        showAlert()
+                    }
+                })
             }
             postCategory();
             setTimeout(() => {
@@ -106,19 +133,24 @@ function NewProduct() {
     }, [refresh])
 
 
-    const [open, setOpen] = useState(false);
+    const [openCat, setOpenCat] = useState(false);
 
     const handleClickOpen = () => {
-        setOpen(true);
+        setOpenCat(true);
     };
 
     const handleClose = () => {
-        setOpen(false);
+        setOpenCat(false);
     };
 
     return (
         <Container maxWidth="sm" className='new_product'>
-            <Dialog open={open} onClose={handleClose}
+            <Snackbar open={open} autoHideDuration={6000} onClose={closeAlert}>
+                <Alert severity={isAlertSuccess ? 'success' : 'error'} sx={{ width: '100%' }}>
+                    {alertMessage}
+                </Alert>
+            </Snackbar>
+            <Dialog open={openCat} onClose={handleClose}
                 onSubmit={(e) => { handleClose() }}
             >
                 <DialogTitle>Dodawanie nowej kategorii</DialogTitle>
