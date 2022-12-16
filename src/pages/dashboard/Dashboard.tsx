@@ -5,6 +5,8 @@ import {
     Tabs,
     Tab
 } from "@mui/material";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 import './Dashboard.scss'
 import { useEffect, useState } from 'react';
 import TabContent from "../../components/tabs/tabContent/TabContent";
@@ -46,6 +48,16 @@ function Dashboard() {
     const tabsHandleChange = (event: React.SyntheticEvent, newValue: number) => {
         setTabId(newValue);
     }
+
+    // snackbar
+    const [open, setOpen] = useState(false);
+    const [alertMessage, setAlertMessage] = useState("")
+    const [isAlertSuccess, setIsAlertSuccess] = useState(true);
+    const showAlert = () => { setOpen(true); };
+    const closeAlert = function (_event: any, reason: string) {
+        if (reason === 'clickaway') return;
+        setOpen(false);
+    };
 
     useEffect(() => {
         axios.get('/categories').then((response) => {
@@ -114,13 +126,20 @@ function Dashboard() {
             ProductStatusId: product.ProductStatusId
         }
         const putProduct = async () => {
-            try {
-                await axiosPrivate.put(`/products/update/${product.id}`, data).then((response) => {
-                    console.log(response.data)
-                })
-            } catch (err) {
-                console.log(err)
-            }
+            await axiosPrivate.put(`/products/update/${product.id}`, data).then((response) => {
+                if(response?.data?.message) {
+                    setIsAlertSuccess(true);
+                    setAlertMessage(response.data.message);
+                    showAlert();
+                }
+            })
+            .catch(({ response }) => {
+                if(response?.data?.error) {
+                    setIsAlertSuccess(false)
+                    setAlertMessage(response.data.error)
+                    showAlert()
+                }
+            })
         }
         putProduct();
 
@@ -136,13 +155,20 @@ function Dashboard() {
             name: category.name,
         }
         const putCategory = async () => {
-            try {
-                await axiosPrivate.put(`/categories/update/${category.id}`, data).then((response) => {
-                    console.log(response.data)
-                })
-            } catch (err) {
-                console.log(err)
-            }
+            await axiosPrivate.put(`/categories/update/${category.id}`, data).then((response) => {
+                if(response?.data?.message) {
+                    setIsAlertSuccess(true);
+                    setAlertMessage(response.data.message);
+                    showAlert();
+                }
+            })
+            .catch(({ response }) => {
+                if(response?.data?.error) {
+                    setIsAlertSuccess(false)
+                    setAlertMessage(response.data.error)
+                    showAlert()
+                }
+            })
         }
         putCategory()
 
@@ -161,7 +187,18 @@ function Dashboard() {
             ProductId: specialOffer.productId
         }
         axios.put(`/specialoffers/update/${specialOffer.id}`, data).then((response) => {
-            console.log(response.data)
+            if(response?.data?.message) {
+                setIsAlertSuccess(true);
+                setAlertMessage(response.data.message);
+                showAlert();
+            }
+        })
+        .catch(({ response }) => {
+            if(response?.data?.error) {
+                setIsAlertSuccess(false)
+                setAlertMessage(response.data.error)
+                showAlert()
+            }
         })
 
         setTimeout(() => {
@@ -176,13 +213,20 @@ function Dashboard() {
             RoleId: user.RoleId
         }
         const putUser = async () => {
-            try {
-                await axiosPrivate.put(`/users/${user.id}`, data).then((response) => {
-                    console.log(response.data)
-                })
-            } catch (err) {
-                console.log(err)
-            }
+            await axiosPrivate.put(`/users/${user.id}`, data).then((response) => {
+                if(response?.data?.message) {
+                    setIsAlertSuccess(true);
+                    setAlertMessage(response.data.message);
+                    showAlert();
+                }
+            })
+            .catch(({ response }) => {
+                if(response?.data?.error) {
+                    setIsAlertSuccess(false)
+                    setAlertMessage(response.data.error)
+                    showAlert()
+                }
+            })
         }
         putUser();
 
@@ -201,13 +245,20 @@ function Dashboard() {
             value: coupon.value
         }
         const putCoupon = async () => {
-            try {
-                await axiosPrivate.put(`/coupons/${coupon.id}`, data).then((response) => {
-                    console.log(response.data)
-                })
-            } catch (err) {
-                console.log(err)
-            }
+            await axiosPrivate.put(`/coupons/${coupon.id}`, data).then((response) => {
+                if(response?.data?.message) {
+                    setIsAlertSuccess(true);
+                    setAlertMessage(response.data.message);
+                    showAlert();
+                }
+            })
+            .catch(({ response }) => {
+                if(response?.data?.error) {
+                    setIsAlertSuccess(false)
+                    setAlertMessage(response.data.error)
+                    showAlert()
+                }
+            })
         }
         putCoupon();
 
@@ -220,6 +271,11 @@ function Dashboard() {
 
     return (
         <Container maxWidth="xl" className='dashboard'>
+            <Snackbar open={open} autoHideDuration={6000} onClose={closeAlert}>
+                <Alert severity={isAlertSuccess ? 'success' : 'error'} sx={{ width: '100%' }}>
+                    {alertMessage}
+                </Alert>
+            </Snackbar>
             <Paper elevation={4} className='dashboard__card'>
                 <Box className='dashboard__card__header'>
                     Dashboard
