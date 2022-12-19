@@ -22,12 +22,18 @@ function LoyaltyCard() {
                     component='h1'>
                     Dołącz do &lt;Loyalty Name &gt;
                 </Typography>
+                {/* text by chatGPT */}
                 <Typography className='loyalty-card__article__text'
                     variant='body2'
                     component='p'>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero minus aspernatur quas atque voluptates voluptatem similique dolore perferendis temporibus reprehenderit, perspiciatis, modi culpa ut eaque repellendus cupiditate itaque obcaecati. Culpa?
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero minus aspernatur quas atque voluptates voluptatem similique dolore perferendis temporibus reprehenderit, perspiciatis, modi culpa ut eaque repellendus cupiditate itaque obcaecati. Culpa?
+                    Cieszymy się, że możemy zaoferować Ci możliwość dołączenia do naszego programu lojalnościowego. Jako członek będziesz otrzymywać ekskluzywne rabaty, promocje i nagrody za kontynuację współpracy z nami.
+                    <br /><br />
+                    Niektóre z korzyści płynących z dołączenia do naszego programu lojalnościowego obejmują:
+                    Oferty i rabaty na podstawie Twojej historii zakupów. Nagrody za każdy zakup dokonany u nas.
+                    <br /><br />
+                    Aby dołączyć do naszego programu lojalnościowego, po prostu podaj nam swoje dane kontaktowe i zacznij zdobywać nagrody już dziś. Z niecierpliwością czekamy na powitanie Cię w naszym programie lojalnościowym i podziękowanie za lojalność wobec naszej firmy.
                 </Typography>
+                {/* google play */}
                 <Link href='#' underline='hover' className='loyalty-card__article__link'>
                     Zobacz, co zyskujesz
                     <ArrowRight />
