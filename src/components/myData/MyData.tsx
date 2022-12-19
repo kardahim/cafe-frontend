@@ -45,6 +45,11 @@ function MyData() {
         }
     });
 
+    const editCancel = () => {
+        formik.resetForm();
+        setCanEdit(false)
+    }
+
     // TODO: add reset password function
 
     return (
@@ -114,13 +119,20 @@ function MyData() {
                     />
                 }
                 {canEdit ?
-                    <Button className='my_data__content__button'
-                        variant='contained'
-                        fullWidth
-                        type='submit'
-                    >
-                        Zatwierdź
-                    </Button>
+                    <>
+                        <Button className='my_data__content__button'
+                            variant='contained'
+                            fullWidth
+                            type='submit'>
+                            Zatwierdź
+                        </Button>
+                        <Button className='my_data__content__button'
+                            variant='contained'
+                            fullWidth
+                            onClick={editCancel}>
+                            Anuluj
+                        </Button>
+                    </>
                     :
                     <div style={{ display: 'flex' }}>
                         <Button className='my_data__content__button'
