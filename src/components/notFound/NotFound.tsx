@@ -19,7 +19,7 @@ function NotFound() {
             </div>
             <div>
                 <h1 className='not_found__header'>
-                    Oops! Strona nie znaleziona.
+                    Oops! Strona nieznaleziona.
                 </h1>
                 <Button className='not_found__button' onClick={() => navigate('/')}>
                     Powrót
