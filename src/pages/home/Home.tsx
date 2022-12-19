@@ -10,22 +10,21 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
-// for test only
 const items = [
     {
         imageName: 'placeholder.png',
-        title: "title 1",
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo minus repudiandae, vitae veritatis tempora a recusandae ea corrupti cupiditate! Labore molestiae placeat quis aperiam maxime dignissimos mollitia repellendus iste est.'
+        title: "Arabica",
+        description: 'Kawa arabica to rodzaj kawy, który jest powszechnie znany ze swojej wysokiej jakości i charakterystycznego smaku. W naszej kawiarni używamy mieszanki doskonałych kaw brazyliskich i kolumbijskich z dodatkiem robusy indyjskiej. Kawa mocna, o dużej zawartości kofeiny.'
     },
     {
         imageName: 'placeholder.png',
-        title: "title 2",
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo minus repudiandae, vitae veritatis tempora a recusandae ea corrupti cupiditate! Labore molestiae placeat quis aperiam maxime dignissimos mollitia repellendus iste est.'
+        title: "Lattee",
+        description: 'Jest to kawa składająca się z równych proporcji mleka i kawy. W naszej kawiarni możesz wybrać dowolne mleko do swojego ulubionego napoju. Espresso w latte zapewnia mocny, wyrazisty smak, podczas gdy spienione mleko dodaje bogatej, kremowej konsystencji i lekko słodkiego smaku.'
     },
     {
         imageName: 'placeholder.png',
-        title: "title 3",
-        description: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo minus repudiandae, vitae veritatis tempora a recusandae ea corrupti cupiditate! Labore molestiae placeat quis aperiam maxime dignissimos mollitia repellendus iste est.'
+        title: "Herbata zielona",
+        description: 'Zielona herbata to najstarsza herbata świata, a według wielu także najzdrowsza. Dla Chińczyków picie tego cennego naparu jest rytuałem, który dociera swoimi korzeniami w głąb ich samych, pozwalając im na osiągnięcie harmonii i wyciszenia. W naszej kawiarni używamy tylko liści rośliny Camellia sinensis.'
     }
 ]
 
