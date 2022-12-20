@@ -29,7 +29,7 @@ function MonthSalesChart(props: { orders: any[], year: number }) {
     const data = {
         labels: months.map(month => dayjs().month(month - 1).format('MMMM')),
         datasets: [{
-            label: 'Zysk',
+            label: 'Przychód',
             data: months.map(month => {
                 let total = 0
 
