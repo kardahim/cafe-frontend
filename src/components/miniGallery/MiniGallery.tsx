@@ -16,16 +16,16 @@ const images = [
         title: 'Frappe Ice Coffee'
     },
     {
-        img: 'placeholder.png',
-        title: 'placeholder 2'
+        img: 'coffee2.png',
+        title: 'American Coffee'
     },
     {
-        img: 'placeholder.png',
-        title: 'placeholder 3'
+        img: 'coffee3.png',
+        title: 'Espresso'
     },
     {
-        img: 'coffee1.png',
-        title: 'placeholder 4'
+        img: 'coffee4.png',
+        title: 'Latte'
     }
 ]
 
