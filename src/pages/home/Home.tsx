@@ -20,13 +20,13 @@ const items = [
     {
         imageName: 'carousel_item_2.png',
         title: "Poranna kawa",
-        description: 'Czy jesteś zmęczony tą samą starą rutyną? Czy potrzebujesz małego podrywu, aby dobrze rozpocząć dzień? Wpadajcie do nas na poranną kawę! Nasza przytulna kawiarnia to idealne miejsce, aby usiąść, zrelaksować się i wypić pyszną filiżankę świeżo parzonej kawy. Niezależnie od tego, czy wolisz klasyczną filiżankę Joe, czy specjalną latte, mamy coś dla każdego. Po co więc czekać? Wpadnij do nas na poranną kawę i rozpocznij dzień prawą nogą. Nie możemy się doczekać, żeby Cię tam zobaczyć!'
+        description: 'Czy jesteś zmęczony tą samą starą rutyną? Czy potrzebujesz małego podrywu, aby dobrze rozpocząć dzień? Wpadajcie do nas na poranną kawę! Nasza przytulna kawiarnia to idealne miejsce, aby usiąść, zrelaksować się i wypić pyszną filiżankę świeżo parzonej kawy.'
     },
-    // {
-    //     imageName: 'ad2.png',
-    //     title: "Herbata zielona",
-    //     description: 'Zielona herbata to najstarsza herbata świata, a według wielu także najzdrowsza. Dla Chińczyków picie tego cennego naparu jest rytuałem, który dociera swoimi korzeniami w głąb ich samych, pozwalając im na osiągnięcie harmonii i wyciszenia. W naszej kawiarni używamy tylko liści rośliny Camellia sinensis.'
-    // }
+    {
+        imageName: 'carousel_item_3.png',
+        title: "Nasze ziarna",
+        description: 'Nasze ziarna są starannie pozyskiwane z najlepszych regionów uprawy kawy na całym świecie, dzięki czemu każdy łyk jest pełen bogatego, mocnego smaku. Z wielką starannością wybieramy tylko najlepsze ziarna do naszych napojów, zapewniając, że każda serwowana przez nas filiżanka kawy jest najwyższej jakości.'
+    }
 ]
 
 function Home() {
