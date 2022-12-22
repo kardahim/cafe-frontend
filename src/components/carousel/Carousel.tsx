@@ -21,8 +21,14 @@ import { CarouselInterface } from '../../interfaces/CarouselInterface'
 function CarouselComponent(props: CarouselInterface) {
     return (
         // also carousel with carousel--padding
-        <Paper className='carousel carousel--padding' elevation={4}>
-            <Carousel animation='slide' duration={1000}>
+        <Paper className='carousel carousel--padding' elevation={4} sx={{ height: { sm: 'auto', md: '500px' } }}>
+            <Carousel animation='slide' duration={1000}
+                indicatorIconButtonProps={{
+                    style: {
+                        bottom: '60px',
+                        zIndex: 1,
+                    }
+                }}>
                 {props.items.map((value, key) => item(value, key))}
             </Carousel>
         </Paper>
@@ -31,14 +37,16 @@ function CarouselComponent(props: CarouselInterface) {
 // If you change the resolution and carousels is changing slide, a graphic bug is crated (sometimes indicators are missing)
 function item(item: any, key: any) {
     return (
-        <Box sx={{ display: { md: 'flex' } }} className='carousel__item' key={key}>
+        <Box
+            sx={{ display: { md: 'flex' }, flexDirection: { sm: 'column', md: 'row' } }}
+            className='carousel__item' key={key}>
             <CardMedia className='carousel__item__image'
                 component='img'
-                height='300'
+                height='500'
                 image={require(`../../assets/images/${item.imageName}`)}
                 alt={item.imageName}
-                sx={{ objectFit: 'contain', flex: '40' }} />
-            <CardContent sx={{ flex: '60' }} className='carousel__item__body'>
+                sx={{ objectFit: { sm: 'cover', md: 'contain' }, width: { sm: '100%', md: 'auto' } }} />
+            <CardContent className='carousel__item__body'>
                 <Typography gutterBottom variant='h4' component='div' className='carousel__item__body__header'>
                     {item.title}
                 </Typography>

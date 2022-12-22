@@ -3,15 +3,20 @@
 .carousel {
     width: auto;
     margin: 0;
-    padding: 30px;
+    // min-height: 500px;
 
     .carousel__item {
+
+        .carousel__item__image {
+            object-position: left;
+            // width: auto;
+        }
+
         .carousel__item__body {
             .carousel__item__body__link {
                 color: black;
                 display: flex;
                 align-items: center;
-
                 margin: 20px 0;
             }
         }
