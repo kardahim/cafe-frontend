@@ -12,8 +12,8 @@ import {
 // test only
 const images = [
     {
-        img: 'placeholder.png',
-        title: 'placeholder 1'
+        img: 'coffee1.png',
+        title: 'Frappe Ice Coffee'
     },
     {
         img: 'placeholder.png',
@@ -24,7 +24,7 @@ const images = [
         title: 'placeholder 3'
     },
     {
-        img: 'placeholder.png',
+        img: 'coffee1.png',
         title: 'placeholder 4'
     }
 ]
@@ -39,7 +39,6 @@ function MiniGallery() {
                 // variant='masonry'
                 cols={2}
                 gap={8}
-                sx={{ height: 600 }}
             >
                 {images.map((item) => (
                     <ImageListItem key={item.title} className='gallery__item'>
@@ -51,7 +50,7 @@ function MiniGallery() {
                     </ImageListItem>
                 ))}
             </ImageList>
-            <Button className='mini-gallery__button' fullWidth onClick={() => navigate('/gallery')}>Zobacz więcej</Button>
+            {/* <Button className='mini-gallery__button' fullWidth onClick={() => navigate('/menu')}>Zobacz więcej</Button> */}
         </div>
     )
 }
