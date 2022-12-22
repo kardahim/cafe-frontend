@@ -21,7 +21,7 @@ import MenuItem from '@mui/material/MenuItem';
 import PersonIcon from '@mui/icons-material/Person';
 
 // assets
-import logo from '../../assets/images/placeholder.png'
+import logo from '../../assets/images/logo.png'
 import Reservation from '../../pages/reservation/Reservation';
 import ReservationDrawer from '../reservationDrawer/ReservationDrawer';
 
@@ -105,7 +105,7 @@ function Navbar() {
                             color: 'inherit',
                             textDecoration: 'none',
                         }}>
-                        LOGO
+                        Coffe Time
                     </Typography>
 
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -163,7 +163,7 @@ function Navbar() {
                             color: 'inherit',
                             textDecoration: 'none',
                         }}>
-                        LOGO
+                        Coffe Time
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                         {pages.map((page) => {
