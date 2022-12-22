@@ -1,10 +1,19 @@
+@import '../../assets/scss/mixins.scss';
+
 .loyalty-card {
     background: white;
     display: flex;
-    min-height: 300px;
-    padding: 30px;
+    flex-direction: row;
+    height: 500px;
+
+    @include loyalty_card() {
+        height: auto;
+        flex-direction: column;
+    }
 
     .loyalty-card__article {
+
+        padding: 30px;
 
         .loyalty-card__article__text {
             margin: 20px 0;
@@ -22,8 +31,13 @@
         height: 100%;
 
         img {
-            height: 300px;
+            height: 100%;
             object-fit: contain;
+
+            @include loyalty_card() {
+                object-fit: cover;
+                width: 100%;
+            }
         }
     }
 }

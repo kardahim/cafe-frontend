@@ -2,7 +2,7 @@ import React from 'react'
 import './LoyaltyCard.scss'
 
 // import assets
-import image from '../../assets/images/placeholder.png'
+import image from '../../assets/images/join_us.png'
 
 // mui
 import {
@@ -15,12 +15,12 @@ import { ArrowRight } from '@mui/icons-material'
 
 function LoyaltyCard() {
     return (
-        <Paper className='loyalty-card loyalty-card--padding' elevation={4} sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
+        <Paper className='loyalty-card loyalty-card--padding' elevation={4}>
             <div className='loyalty-card__article'>
                 <Typography className='loyalty-card__article__title'
                     variant='h5'
                     component='h1'>
-                    Dołącz do &lt;Loyalty Name &gt;
+                    Dołącz do nas
                 </Typography>
                 {/* text by chatGPT */}
                 <Typography className='loyalty-card__article__text'
