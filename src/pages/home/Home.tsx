@@ -13,20 +13,20 @@ import { AuthContext } from '../../context/AuthContext';
 // ChatGPT
 const items = [
     {
-        imageName: 'ad1.png',
+        imageName: 'carousel_item_1.png',
         title: "Kawa i ciasteczko",
         description: 'Przyjdź po kofeinę do naszej kawiarni! Przez ograniczony czas, kupując kawę, otrzymasz darmowe ciastko. Niezależnie od tego, czy zaczynasz dzień, czy potrzebujesz pokrzepienia w popołudniu, zapewniamy Ci ochronę. Wpadnij dzisiaj i zafunduj sobie filiżankę kawy i darmowe ciastko. Nie możemy się doczekać, żeby Cię zobaczyć!'
     },
     {
-        imageName: 'ad1.png',
-        title: "Lattee",
-        description: 'Jest to kawa składająca się z równych proporcji mleka i kawy. W naszej kawiarni możesz wybrać dowolne mleko do swojego ulubionego napoju. Espresso w latte zapewnia mocny, wyrazisty smak, podczas gdy spienione mleko dodaje bogatej, kremowej konsystencji i lekko słodkiego smaku.'
+        imageName: 'carousel_item_2.png',
+        title: "Poranna kawa",
+        description: 'Czy jesteś zmęczony tą samą starą rutyną? Czy potrzebujesz małego podrywu, aby dobrze rozpocząć dzień? Wpadajcie do nas na poranną kawę! Nasza przytulna kawiarnia to idealne miejsce, aby usiąść, zrelaksować się i wypić pyszną filiżankę świeżo parzonej kawy. Niezależnie od tego, czy wolisz klasyczną filiżankę Joe, czy specjalną latte, mamy coś dla każdego. Po co więc czekać? Wpadnij do nas na poranną kawę i rozpocznij dzień prawą nogą. Nie możemy się doczekać, żeby Cię tam zobaczyć!'
     },
-    {
-        imageName: 'ad1.png',
-        title: "Herbata zielona",
-        description: 'Zielona herbata to najstarsza herbata świata, a według wielu także najzdrowsza. Dla Chińczyków picie tego cennego naparu jest rytuałem, który dociera swoimi korzeniami w głąb ich samych, pozwalając im na osiągnięcie harmonii i wyciszenia. W naszej kawiarni używamy tylko liści rośliny Camellia sinensis.'
-    }
+    // {
+    //     imageName: 'ad2.png',
+    //     title: "Herbata zielona",
+    //     description: 'Zielona herbata to najstarsza herbata świata, a według wielu także najzdrowsza. Dla Chińczyków picie tego cennego naparu jest rytuałem, który dociera swoimi korzeniami w głąb ich samych, pozwalając im na osiągnięcie harmonii i wyciszenia. W naszej kawiarni używamy tylko liści rośliny Camellia sinensis.'
+    // }
 ]
 
 function Home() {
