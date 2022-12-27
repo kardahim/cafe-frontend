@@ -4,28 +4,18 @@ $box-shadow: rgba(0, 0, 0, 0.24) 0 3px 8px;
 
 .mini-gallery {
     margin: $navbar-footer-margin 0;
-    box-shadow: $box-shadow;
 
-    .gallery__item {
-        min-height: 100%;
-        background-color: white;
+    .gallery {
+        // max-height: calc(350px * 2 + 30px);
 
-        // you can change the opacity or
-        box-shadow: $box-shadow;
-
-        img {
-            object-fit: cover;
-            height: 100%;
-        }
-    }
-
-    // I can change this button for a link
-    .mini-gallery__button {
-        background-color: white;
-        color: black;
-
-        &:hover {
+        .gallery__item {
             background-color: white;
+            box-shadow: $box-shadow;
+
+            img {
+                object-fit: cover;
+                height: 100%;
+            }
         }
     }
 }

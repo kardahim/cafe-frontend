@@ -6,10 +6,8 @@ import './MiniGallery.scss'
 import {
     ImageList,
     ImageListItem,
-    Button
 } from '@mui/material'
 
-// test only
 const images = [
     {
         img: 'coffee1.png',
@@ -33,13 +31,10 @@ function MiniGallery() {
     const navigate = useNavigate();
 
     return (
-        // this component also has attribute padding
         <div className='mini-gallery mini-gallery--padding'>
             <ImageList className='gallery'
-                // variant='masonry'
                 cols={2}
-                gap={8}
-            >
+                gap={30}>
                 {images.map((item) => (
                     <ImageListItem key={item.title} className='gallery__item'>
                         <img
@@ -50,7 +45,6 @@ function MiniGallery() {
                     </ImageListItem>
                 ))}
             </ImageList>
-            {/* <Button className='mini-gallery__button' fullWidth onClick={() => navigate('/menu')}>Zobacz więcej</Button> */}
         </div>
     )
 }
