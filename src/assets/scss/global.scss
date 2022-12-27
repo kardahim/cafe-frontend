@@ -1,6 +1,4 @@
 @import './variables.scss';
-
-// this is example body image from pexels
 $background-image: '../images/background.jpg';
 
 * {
@@ -8,6 +6,8 @@ $background-image: '../images/background.jpg';
     padding: 0;
     box-sizing: border-box;
     opacity: 1;
+    font-family: 'Roboto', sans-serif;
+
 }
 
 body {
