@@ -18,13 +18,13 @@ function LoyaltyCard() {
         <Paper className='loyalty-card loyalty-card--padding' elevation={4}>
             <div className='loyalty-card__article'>
                 <Typography className='loyalty-card__article__title'
-                    variant='h5'
+                    variant='h4'
                     component='h1'>
                     Dołącz do nas
                 </Typography>
                 {/* text by chatGPT */}
                 <Typography className='loyalty-card__article__text'
-                    variant='body2'
+                    variant='body1'
                     component='p'>
                     Cieszymy się, że możemy zaoferować Ci możliwość dołączenia do naszego programu lojalnościowego. Jako członek będziesz otrzymywać ekskluzywne rabaty, promocje i nagrody za kontynuację współpracy z nami.
                     <br /><br />

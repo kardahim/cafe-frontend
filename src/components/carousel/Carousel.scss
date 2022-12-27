@@ -1,14 +1,33 @@
 @import '../../assets/scss/variables.scss';
+@import '../../assets/scss/mixins.scss';
 
 .carousel {
     width: auto;
     margin: 0;
 
+    height: 500px;
+
+    @include loyalty_card() {
+        height: auto;
+    }
+
     .carousel__item {
+        display: flex;
+        flex-direction: row;
+
+        @include loyalty_card() {
+            flex-direction: column;
+        }
 
         .carousel__item__image {
             object-position: left;
-            // width: auto;
+            object-fit: contain;
+            width: auto;
+
+            @include loyalty_card() {
+                object-fit: cover;
+                width: 100%;
+            }
         }
 
         .carousel__item__body {

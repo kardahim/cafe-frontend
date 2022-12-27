@@ -21,7 +21,7 @@ import { CarouselInterface } from '../../interfaces/CarouselInterface'
 function CarouselComponent(props: CarouselInterface) {
     return (
         // also carousel with carousel--padding
-        <Paper className='carousel carousel--padding' elevation={4} sx={{ height: { sm: 'auto', md: '350px' } }}>
+        <Paper className='carousel carousel--padding' elevation={4}>
             <Carousel animation='slide' duration={1000}
                 indicatorIconButtonProps={{
                     style: {
@@ -37,15 +37,12 @@ function CarouselComponent(props: CarouselInterface) {
 // If you change the resolution and carousels is changing slide, a graphic bug is crated (sometimes indicators are missing)
 function item(item: any, key: any) {
     return (
-        <Box
-            sx={{ display: { md: 'flex' }, flexDirection: { sm: 'column', md: 'row' } }}
-            className='carousel__item' key={key}>
+        <Box className='carousel__item' key={key}>
             <CardMedia className='carousel__item__image'
                 component='img'
-                height='350'
+                height='500'
                 image={require(`../../assets/images/${item.imageName}`)}
-                alt={item.imageName}
-                sx={{ objectFit: { sm: 'cover', md: 'contain' }, width: { sm: '100%', md: 'auto' } }} />
+                alt={item.imageName} />
             <CardContent className='carousel__item__body'>
                 <Typography gutterBottom variant='h4' component='div' className='carousel__item__body__header'>
                     {item.title}
