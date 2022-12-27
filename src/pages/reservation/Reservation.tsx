@@ -237,12 +237,6 @@ function Reservation() {
                                 })}
                             </Stack>
                         </div>
-                        <div className='reservation__map'>
-                            <Box className='map__header'>
-                                mapa sali
-                            </Box>
-                            <img src={map} alt='map' />
-                        </div>
                     </Paper >
                     :
                     <Paper elevation={2} className='reservation'>
@@ -266,12 +260,6 @@ function Reservation() {
                                         )
                                 })}
                             </Stack>
-                        </div>
-                        <div className='reservation__map'>
-                            <Box className='map__header'>
-                                mapa sali
-                            </Box>
-                            <img src={map} alt='map' />
                         </div>
                     </Paper >
             }
