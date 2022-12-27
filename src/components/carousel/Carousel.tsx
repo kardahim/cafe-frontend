@@ -21,7 +21,7 @@ import { CarouselInterface } from '../../interfaces/CarouselInterface'
 function CarouselComponent(props: CarouselInterface) {
     return (
         // also carousel with carousel--padding
-        <Paper className='carousel carousel--padding' elevation={4} sx={{ height: { sm: 'auto', md: '500px' } }}>
+        <Paper className='carousel carousel--padding' elevation={4} sx={{ height: { sm: 'auto', md: '350px' } }}>
             <Carousel animation='slide' duration={1000}
                 indicatorIconButtonProps={{
                     style: {
@@ -42,7 +42,7 @@ function item(item: any, key: any) {
             className='carousel__item' key={key}>
             <CardMedia className='carousel__item__image'
                 component='img'
-                height='500'
+                height='350'
                 image={require(`../../assets/images/${item.imageName}`)}
                 alt={item.imageName}
                 sx={{ objectFit: { sm: 'cover', md: 'contain' }, width: { sm: '100%', md: 'auto' } }} />
