@@ -44,7 +44,7 @@ function NewSpecialOffer() {
                 ProductId: values.ProductId
             }
             if (!startDateError && !endDateError)
-                axios.post('/specialoffers', data).then((response) => console.log(response));
+                axiosPrivate.post('/specialoffers', data).then((response) => console.log(response));
 
             setTimeout(() => {
                 (refresh ? setRefresh(false) : setRefresh(true))
