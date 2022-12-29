@@ -78,7 +78,7 @@ function Dashboard() {
             }
             else setSpecialOffers([])
         })
-        axiosPrivate.get('/users').then((response) => {
+        axios.get('/users').then((response) => {
             if (response.status !== 204) {
                 setUsers(response.data)
             }
