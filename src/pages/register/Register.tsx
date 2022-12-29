@@ -37,7 +37,6 @@ function Register(props: RegisterInterface) {
         },
         validationSchema: RegisterValidationSchema,
         onSubmit: (values) => {
-            // FIXME: errors handler
             if (!props.isAdmin) {
                 axios.post("/users/register", values).then((response) => {
                     navigate(`/login`)
@@ -179,10 +178,10 @@ function Register(props: RegisterInterface) {
                             {!props.isAdmin ? 'Zarejestruj się' : 'Dodaj pracownika'}
                         </Button>
                     </form>
-                    {!props.isAdmin ? 
+                    {!props.isAdmin ?
                         <Link href="/login" className='register__content__link'
-                        underline='hover'>
-                        Masz już konto?
+                            underline='hover'>
+                            Masz już konto?
                         </Link>
                         :
                         <></>
