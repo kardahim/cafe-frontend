@@ -6,10 +6,10 @@ import {
     GridPreProcessEditCellProps,
     plPL
 } from '@mui/x-data-grid';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
 import './SpecialOffersTab.scss'
-import { useNavigate } from 'react-router-dom';
+import { CustomToolbar } from '../../toolbar/CustomToolbar';
 
 
 function SpecialOffersTab(props: SpecialOffersTabInterface) {
@@ -84,12 +84,12 @@ function SpecialOffersTab(props: SpecialOffersTabInterface) {
             },
         },
     ];
-    const navigate = useNavigate()
 
     return (
         <Box className='special_offers_tab'>
-            <Button className='special_offers_tab__button' onClick={() => navigate('/new-special-offer')}>Dodaj promocję</Button>
             <DataGrid
+                components={{ Toolbar: CustomToolbar }}
+                componentsProps={{ toolbar: { destination: '/new-special-offer', buttonText: 'Dodaj promocję' } }}
                 className='special_offers_tab__table'
                 autoHeight
                 rows={props.specialOffers}

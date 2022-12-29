@@ -5,11 +5,11 @@ import {
     GridPreProcessEditCellProps,
     plPL
 } from '@mui/x-data-grid';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import dayjs, { Dayjs } from 'dayjs';
 import './CouponsTab.scss'
-import { useNavigate } from 'react-router-dom';
 import { CouponsTabInterface } from '../../../interfaces/CouponsTabInterface';
+import { CustomToolbar } from '../../toolbar/CustomToolbar';
 
 
 function CouponsTab(props: CouponsTabInterface) {
@@ -87,12 +87,12 @@ function CouponsTab(props: CouponsTabInterface) {
             headerAlign: 'center'
         }
     ];
-    const navigate = useNavigate()
 
     return (
         <Box className='coupons_tab'>
-            <Button className='coupons_tab__button' onClick={() => navigate('/new-coupon')}>Dodaj Kupon</Button>
             <DataGrid
+                components={{ Toolbar: CustomToolbar }}
+                componentsProps={{ toolbar: { destination: '/new-coupon', buttonText: 'Dodaj Kupon' } }}
                 className='coupons_tab__table'
                 autoHeight
                 rows={props.coupons}
