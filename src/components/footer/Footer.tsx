@@ -39,13 +39,13 @@ function Footer() {
                         &copy; 2023 {'XYZ'} Wszystkie prawa zastrzeżone
                     </Box>
                     <Box className='footer__content__socials'>
-                        <Link href='#' underline="none">
+                        <Link href='https://play.google.com/store/apps' underline="none">
                             <i className="fa-brands fa-google-play"></i>
                         </Link>
-                        <Link href='#' underline="none">
+                        <Link href='https://www.facebook.com/' underline="none">
                             <i className="fa-brands fa-facebook-square"></i>
                         </Link>
-                        <Link href='#' underline="none">
+                        <Link href='https://www.instagram.com/' underline="none">
                             <i className="fa-brands fa-instagram-square"></i>
                         </Link>
                     </Box>
