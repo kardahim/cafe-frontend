@@ -44,7 +44,7 @@ function item(item: any, key: any) {
                 image={require(`../../assets/images/${item.imageName}`)}
                 alt={item.imageName} />
             <CardContent className='carousel__item__body'>
-                <Typography gutterBottom variant='h4' component='div' className='carousel__item__body__header'>
+                <Typography gutterBottom variant='h4' component='h1' className='carousel__item__body__header'>
                     {item.title}
                 </Typography>
                 <Typography variant='body1' component='div' className='carousel__item__body__paragraph'>
