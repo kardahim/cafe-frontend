@@ -4,7 +4,6 @@ import './Footer.scss'
 
 // material UI
 import {
-    AppBar,
     Container,
     Toolbar,
     Box,
@@ -22,7 +21,7 @@ function Footer() {
     const navigate = useNavigate();
 
     return (
-        <AppBar position="static" className='footer'>
+        <footer className='footer'>
             <Container maxWidth="xl">
                 <Toolbar disableGutters className='footer__content'>
                     <Box className='footer__content__links'>
@@ -51,7 +50,7 @@ function Footer() {
                     </Box>
                 </Toolbar>
             </Container>
-        </AppBar>
+        </footer>
     )
 }
 
