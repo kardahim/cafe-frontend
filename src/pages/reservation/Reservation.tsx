@@ -105,7 +105,12 @@ function Reservation() {
             }
 
             if (!dateError && !timeError && !phoneError) {
-                axiosPrivate.post('/reservations', data).then((response) => console.log(response.data))
+                axiosPrivate.post('/reservations', data)
+                    .then((response) => console.log(response.data))
+                    .catch(({ response }) => {
+                        if (response.data?.error === 'Produkt o podanej nazwie już istnieje.')
+                            setPhoneError(true)
+                    })
             }
             setTimeout(() => {
                 (!refresh ? setRefresh(true) : setRefresh(false))

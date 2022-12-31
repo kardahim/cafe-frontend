@@ -47,16 +47,15 @@ function NewProduct() {
                 CategoryId: values.CategoryId,
                 ProductStatusId: values.ProductStatusId
             }
-            console.log(data)
 
             const postProduct = async () => {
-                try {
-                    await axiosPrivate.post('/products', data).then((response) => {
-                        console.log(response.data)
-                    })
-                } catch (err) {
-                    console.error(err);
-                }
+                await axiosPrivate.post('/products', data).then((response) => {
+                    console.log(response.data)
+                    formik.resetForm()
+                }).catch(({ response }) => {
+                    if (response.data?.error === 'Produkt o podanej nazwie już istnieje.')
+                        formik.setFieldError('name', response.data.error)
+                })
             }
             postProduct();
             setTimeout(() => {
@@ -73,15 +72,13 @@ function NewProduct() {
         validationSchema: NewCategoryValidationSchema,
         onSubmit: (values) => {
             const postCategory = async () => {
-                try {
-                    await axiosPrivate.post('/categories', values).then((response) => {
-                        console.log(response.data)
-                    }).catch((response)=>{
-                        // console.log(response.response.data.error)
-                    })
-                } catch (err) {
-                    console.error(err);
-                }
+                await axiosPrivate.post('/categories', values).then((response) => {
+                    console.log(response.data)
+                    smallFormik.resetForm()
+                }).catch((response) => {
+                    if (response.data?.error === 'Kategoria o podanej nazwie już istnieje.')
+                        formik.setFieldError('name', response.data.error)
+                })
             }
             postCategory();
             setTimeout(() => {
