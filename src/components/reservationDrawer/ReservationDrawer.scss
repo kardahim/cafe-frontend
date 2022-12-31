@@ -7,6 +7,7 @@ $button-width: 200px;
 
     .reservation_drawer__content {
         height: auto;
+        min-height: 100%;
         width: $drawer-width;
 
         .content__header {
