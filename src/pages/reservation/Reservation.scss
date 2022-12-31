@@ -4,6 +4,7 @@ $space-between-items: 25px;
 .reservation {
     margin: 0;
     padding: $space-between-items 0;
+    border-radius: 8px;
 
     .reservation__header {
         text-align: center;
