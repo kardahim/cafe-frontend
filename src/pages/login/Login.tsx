@@ -44,9 +44,10 @@ function Login() {
             ).then((response) => {
                 window.location.href = "/"
             }).catch(({ response }) => {
-                if (response.data?.error === 'Użytkownik nie istnieje')
+                console.log(response.data?.error)
+                if (response.data?.error === 'Użytkownik nie istnieje.')
                     formik.setFieldError('email', response.data.error)
-                if (response.data?.error === 'Hasło jest niepoprawne')
+                if (response.data?.error === 'Hasło jest niepoprawne.')
                     formik.setFieldError('password', response.data.error)
             })
         }

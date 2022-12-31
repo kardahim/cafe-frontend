@@ -41,9 +41,9 @@ function Register(props: RegisterInterface) {
                 axios.post("/users/register", values).then((response) => {
                     navigate(`/login`)
                 }).catch(({ response }) => {
-                    if (response.data?.error === 'Użytkownik z podanym adresem email już istnieje')
+                    if (response.data?.error === 'Użytkownik z podanym adresem email już istnieje.')
                         formik.setFieldError('email', response.data.error)
-                    if (response.data?.error === 'Użytkownik z podanym numerem telefonu już istnieje')
+                    if (response.data?.error === 'Użytkownik z podanym numerem telefonu już istnieje.')
                         formik.setFieldError('phoneNumber', response.data.error)
                 })
             }
