@@ -4,8 +4,9 @@ $drawer-width: 400px;
 $button-width: 200px;
 
 .reservation_drawer {
+
     .reservation_drawer__content {
-        height: 100%;
+        height: auto;
         width: $drawer-width;
 
         .content__header {
