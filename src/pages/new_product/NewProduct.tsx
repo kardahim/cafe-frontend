@@ -34,7 +34,6 @@ function NewProduct() {
             size: 100,
             unit: 'g',
             price: 20,
-            allergen: '',
             ProductStatusId: 1
         },
         validationSchema: NewProductValidationSchema,
@@ -43,7 +42,6 @@ function NewProduct() {
                 name: values.name,
                 size: values.size + values.unit,
                 price: values.price,
-                allergen: values.allergen,
                 CategoryId: values.CategoryId,
                 ProductStatusId: values.ProductStatusId
             }
@@ -229,16 +227,6 @@ function NewProduct() {
                             onChange={formik.handleChange}
                             error={formik.touched.price && Boolean(formik.errors.price)}
                             helperText={formik.touched.price && formik.errors.price}
-                        />
-                        <TextField className='new_product__content__input'
-                            variant='outlined'
-                            fullWidth
-                            label='Allergeny'
-                            name='allergen'
-                            value={formik.values.allergen}
-                            onChange={formik.handleChange}
-                            error={formik.touched.allergen && Boolean(formik.errors.allergen)}
-                            helperText={formik.touched.allergen && formik.errors.allergen}
                         />
                         <Button className='new_product__content__button'
                             variant='contained'

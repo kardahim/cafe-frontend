@@ -21,9 +21,6 @@ export const NewProductValidationSchema = Yup.object({
         .typeError("Wymagana jest liczba")
         .required("Cena jest wymagana")
         .min(0, "Cena nie może być ujemna"),
-    // it should be multi select
-    allergen: Yup
-        .string(),
     ProductStatusId: Yup
         .number()
         .required("Status jest wymagany")
