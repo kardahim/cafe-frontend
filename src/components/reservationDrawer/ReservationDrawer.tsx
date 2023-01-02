@@ -17,6 +17,7 @@ function ReservationDrawer(props: ReservationDrawerInterface) {
 
     const [refresh, setRefresh] = React.useState(false)
 
+    // TODO refresh when delete all
     const toggleDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
         if (event.type === 'keydown' && ((event as React.KeyboardEvent).key === 'Tab' || (event as React.KeyboardEvent).key === 'Shift')) {
             return;
