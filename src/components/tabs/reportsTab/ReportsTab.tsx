@@ -21,6 +21,14 @@ function ReportsTab(props: ReportsTabInterface) {
 
     const columns: GridColDef[] = [
         {
+            field: 'id',
+            headerName: 'Nr',
+            flex: 0,
+            type: 'number',
+            align: 'center',
+            headerAlign: 'center',
+        },
+        {
             field: 'updatedAt',
             headerName: 'Data',
             flex: 1,
