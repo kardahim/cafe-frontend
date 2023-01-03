@@ -59,16 +59,6 @@ function ProductsTab(props: ProductsTabInterface) {
             },
         },
         {
-            field: 'allergen',
-            headerName: 'Allergen',
-            flex: 1,
-            type: 'string',
-            align: 'center',
-            headerAlign: 'center',
-            editable: true,
-            renderCell: params => (params.row.allergen === '' ? 'brak' : params.row.allergen)
-        },
-        {
             field: 'CategoryId',
             headerName: 'Kategoria',
             flex: 1,

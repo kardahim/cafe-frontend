@@ -109,7 +109,6 @@ function Dashboard() {
             name: product.name,
             price: product.price,
             size: product.size,
-            allergen: product.allergen,
             CategoryId: product.CategoryId,
             ProductStatusId: product.ProductStatusId
         }
