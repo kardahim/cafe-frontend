@@ -30,7 +30,6 @@ function Menu() {
                     name: product.name,
                     size: product.size,
                     price: product.price,
-                    allergen: product.allergen,
                     CategoryId: product.CategoryId,
                     ProductStatusId: product.ProductStatusId,
                     specialOffer: product.SpecialOffers.find((offer: any) =>
