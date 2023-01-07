@@ -136,7 +136,7 @@ function Navbar() {
                                 display: { xs: 'block', md: 'none' },
                             }}>
                             {pages.map((page) => {
-                                if (page.roleId === context?.authState.roleId || (page.roleId === 1 && context?.authState.isLogged === false))
+                                if (page.roleId === context?.authState.roleId)
                                     return (
                                         <MenuItem key={page.alt} onClick={() => { handleCloseNavMenu(); page.Fun() }}>
                                             <Typography textAlign="center">{page.alt}</Typography>
