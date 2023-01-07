@@ -9,7 +9,6 @@ import dayjs, { Dayjs } from 'dayjs';
 import TextField from '@mui/material/TextField';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import PersonIcon from '@mui/icons-material/Person';
-import map from '../../assets/images/placeholder.png'
 import 'dayjs/locale/pl';
 import axios from '../../api/axios';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
@@ -157,17 +156,20 @@ function Reservation() {
 
     const [findReservation, setFindReservation] = React.useState(false)
     useEffect(() => {
-        activeReservations.find(reservation => {
-            console.log(context?.authState.id)
-            if (reservation.ClientId === context?.authState.id && context?.authState.roleId === 1) {
-                setFindReservation(true)
-                // console.log(reservation)
-            }
-            else {
-                setFindReservation(false)
-                console.log(reservation)
-            }
+        const test = activeReservations.find(reservation => {
+            return (reservation.ClientId === context?.authState.id && context?.authState.roleId === 1)
+            // if (reservation.ClientId === context?.authState.id && context?.authState.roleId === 1) {
+            //     setFindReservation(true)
+            //     // console.log(reservation)
+            // }
+            // 
+            // else {
+            //     setFindReservation(false)
+            //     console.log(reservation)
+            // }
         })
+        if (test !== undefined) setFindReservation(true)
+        else setFindReservation(false)
     }, [refresh, activeReservations])
 
     return (
