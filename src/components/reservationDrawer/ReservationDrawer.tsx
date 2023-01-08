@@ -31,26 +31,31 @@ function ReservationDrawer(props: ReservationDrawerInterface) {
     // get all active reservations change past data to inactive reservations
     useEffect(() => {
         if (context?.authState.isLogged) {
-            axiosPrivate.get('reservations/reservationstatus/1').then((response) => {
-                if (response.status !== 204) {
-                    setActiveReservation(response.data.filter((reservation: any) => {
-                        if (dayjs(reservation.date).add(1, 'day').isAfter(dayjs(), 'day')) {
-                            return (dayjs(reservation.date).add(1, 'day').isAfter(dayjs(), 'day'))
-                        }
-                        else {
-                            const data = {
-                                ReservationStatusId: 2
+            axiosPrivate.get('reservations/reservationstatus/1')
+                .then((response) => {
+                    if (response.status !== 204) {
+                        setActiveReservation(response.data.filter((reservation: any) => {
+                            if (dayjs(reservation.date).add(1, 'day').isAfter(dayjs(), 'day')) {
+                                return (dayjs(reservation.date).add(1, 'day').isAfter(dayjs(), 'day'))
                             }
-                            axiosPrivate.put(`reservations/${reservation.id}`, data)
+                            else {
+                                const data = {
+                                    ReservationStatusId: 2
+                                }
+                                axiosPrivate.put(`reservations/${reservation.id}`, data)
+                            }
                         }
+                        ))
                     }
-                    ))
-                }
-                else {
+                    else {
+                        setActiveReservation([])
+                    }
+                })
+                .catch(({ response }) => {
                     setActiveReservation([])
-                }
-            })
-        } else {
+                })
+        }
+        else {
             setTimeout(() => {
                 (!refresh ? setRefresh(true) : setRefresh(false))
             }, 50)
