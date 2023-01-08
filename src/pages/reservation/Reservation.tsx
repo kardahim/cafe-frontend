@@ -82,15 +82,18 @@ function Reservation() {
     }
 
     const [phoneError, setPhoneError] = React.useState(false)
+    const [phoneErrorMessage, setPhoneErrorMessage] = React.useState('')
     const phoneHandler = (phone: string) => {
         setPhoneNumber(phone)
 
         const reg = /^[1-9][0-9]{8}$/
         if (!reg.exec(phone)) {
             setPhoneError(true)
+            setPhoneErrorMessage('Niepoprawny numer telefonu.')
         }
         else {
             setPhoneError(false)
+            setPhoneErrorMessage('')
         }
     }
 
@@ -106,10 +109,12 @@ function Reservation() {
             if (!dateError && !timeError && !phoneError) {
                 axiosPrivate.post('/reservations', data)
                     .then((response) => console.log(response.data))
-                    .catch(({ response }) => {
-                        if (response.data?.error === 'Produkt o podanej nazwie już istnieje.')
-                            setPhoneError(true)
-                    })
+                // .catch(({ response }) => {
+                //     if (response.data?.error === 'Produkt o podanej nazwie już istnieje.') {
+                //         setPhoneError(true)
+                //     alert('error')
+                //     }
+                // })
             }
             setTimeout(() => {
                 (!refresh ? setRefresh(true) : setRefresh(false))
@@ -117,7 +122,7 @@ function Reservation() {
         }
         else if (context?.authState.roleId === 2 || context?.authState.roleId === 3) {
             axiosPrivate.get(`/users/phone/${phoneNumber}`).then((response) => {
-                if (response.data == null) setPhoneError(true)
+                if (response.data == null) { setPhoneError(true); setPhoneErrorMessage('Klient jest niezarejestrowany.') }
                 else {
                     const data = {
                         date: value?.second(0).toDate(),
@@ -129,7 +134,18 @@ function Reservation() {
 
                     if (!dateError && !timeError && !phoneError) {
                         axiosPrivate.post('/reservations', data).then((response) => console.log(response.data))
+                            .catch(({ response }) => {
+                                if (response.data?.message === `Klient o Id ${data.ClientId} ma już aktywną Rezerwację.`) {
+                                    setPhoneError(true)
+                                    setPhoneErrorMessage('Klient ma już aktywną rezerwację.')
+                                }
+                            })
                     }
+                }
+            }).catch(({ response }) => {
+                if (response.data?.message === `Nie znaleziono Użytkownika o numerze telefonu ${phoneNumber}.`) {
+                    setPhoneError(true)
+                    setPhoneErrorMessage('Klient jest niezarejestrowany.')
                 }
             })
             setTimeout(() => {
@@ -158,15 +174,6 @@ function Reservation() {
     useEffect(() => {
         const test = activeReservations.find(reservation => {
             return (reservation.ClientId === context?.authState.id && context?.authState.roleId === 1)
-            // if (reservation.ClientId === context?.authState.id && context?.authState.roleId === 1) {
-            //     setFindReservation(true)
-            //     // console.log(reservation)
-            // }
-            // 
-            // else {
-            //     setFindReservation(false)
-            //     console.log(reservation)
-            // }
         })
         if (test !== undefined) setFindReservation(true)
         else setFindReservation(false)
@@ -187,7 +194,7 @@ function Reservation() {
                                     sx={{ padding: '0 100px' }}
                                     direction={{ xs: 'column', sm: 'row' }}
                                     justifyContent="center"
-                                    alignItems="center">
+                                    alignItems="flex-start">
                                     {/* add onChange */}
                                     <div style={{ width: '100%' }}>
                                         <DesktopDatePicker
@@ -195,7 +202,7 @@ function Reservation() {
                                             inputFormat='DD.MM.YYYY'
                                             value={value}
                                             onChange={handleChange}
-                                            renderInput={(params) => <TextField {...params} fullWidth />}
+                                            renderInput={(params) => <TextField {...params} fullWidth sx={{ height: '80px' }} />}
                                             disablePast
                                             onError={dateErrorHandler} />
                                     </div>
@@ -204,7 +211,7 @@ function Reservation() {
                                             label="Godzina"
                                             value={value}
                                             onChange={handleChange}
-                                            renderInput={(params) => <TextField {...params} fullWidth />}
+                                            renderInput={(params) => <TextField {...params} fullWidth sx={{ height: '80px' }} />}
                                             ampm={false}
                                             minTime={minTime}
                                             maxTime={dayjs().hour(18).minute(0)}
@@ -213,6 +220,7 @@ function Reservation() {
                                     {(context?.authState.roleId === 2 || context?.authState.roleId === 3) ?
                                         <div style={{ width: '100%' }}>
                                             <TextField
+                                                sx={{ height: '80px', marginTop: '0' }}
                                                 fullWidth
                                                 margin="dense"
                                                 name="name"
@@ -220,6 +228,7 @@ function Reservation() {
                                                 variant="outlined"
                                                 value={phoneNumber}
                                                 error={phoneError}
+                                                helperText={phoneError && phoneErrorMessage}
                                                 onChange={(e) => phoneHandler(e.target.value)} />
                                         </div>
                                         : ''}
