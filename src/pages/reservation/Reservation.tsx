@@ -239,6 +239,7 @@ function Reservation() {
                             <Stack spacing={2}>
                                 {/* divider */}
                                 {tables.map((table, key) => {
+                                    // FIXME: not work
                                     if (activeReservations.find(reservation => (reservation.TableId !== table.id || !value?.isSame(dayjs(reservation.date), 'day'))))
                                         return (
                                             <div key={key} className='reservation__table-list__item'>
