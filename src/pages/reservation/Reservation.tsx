@@ -57,7 +57,7 @@ function Reservation() {
                 setActiveReservation(response.data)
             }
         })
-    }, [refresh])
+    }, [refresh, value])
 
 
     // errors handlers
@@ -177,7 +177,7 @@ function Reservation() {
         })
         if (test !== undefined) setFindReservation(true)
         else setFindReservation(false)
-    }, [refresh, activeReservations])
+    }, [refresh, activeReservations, value])
 
     return (
         <Container maxWidth="lg">
