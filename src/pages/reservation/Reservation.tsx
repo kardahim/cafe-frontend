@@ -237,11 +237,9 @@ function Reservation() {
                         </div>
                         <div className='reservation__table-list'>
                             <Stack spacing={2}>
-                                {/* divider */}
-                                {tables.map((table, key) => {
-                                    // FIXME: not work
-                                    if (activeReservations.find(reservation => (reservation.TableId !== table.id || !value?.isSame(dayjs(reservation.date), 'day'))))
-                                        return (
+                                {
+                                    tables.filter(table => !activeReservations.some(x => x.TableId === table.id && value?.isSame(x.date, 'date')))
+                                        .map((table, key) =>
                                             <div key={key} className='reservation__table-list__item'>
                                                 <div>Stolik nr. {table.number}<PersonIcon sx={{ margin: '0 0  0 20px' }} />x{table.numberOfSeats}</div>
                                                 <Button className='reservation__button'
@@ -251,7 +249,7 @@ function Reservation() {
                                                 </Button>
                                             </div>
                                         )
-                                })}
+                                }
                             </Stack>
                         </div>
                     </Paper >
