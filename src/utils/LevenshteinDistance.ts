@@ -1,4 +1,4 @@
-// Levenshtein Distance - dirask [29.10.22]
+// Levenshtein Distance - on the basis of dirask solution [29.10.22]
 // https://dirask.com/posts/JavaScript-calculate-Levenshtein-distance-between-strings-pJ3krj
 const calculateLevenshteinDistance = (input: string, target: string) => {
     const inputLimit = input.length + 1;

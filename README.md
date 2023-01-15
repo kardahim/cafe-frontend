@@ -1,3 +1,10 @@
+# Installation
+
+1. Download repository.
+2. Execute *npm install*.
+3. Create *.env.production* and *.env.development* files based on *.env.example*
+4. Execute *npm start* to start development server. Execute *npm run build* to create *build* folder.
+
 # Assets
 
 ## Color schema
@@ -12,6 +19,6 @@ This color combination was created by user Manish from [schemacolor.com](https:/
 
 Icons such as *facebook icon* come from [fontawesome](https://fontawesome.com/search?q=bars&s=solid%2Cbrands) or [material icons](https://mui.com/material-ui/material-icons/).
 
-## Background Image
+## Images
 
-<a href="https://www.freepik.com/free-vector/coffee-beans-sketch-set_13683062.htm#query=coffee&position=2&from_view=keyword">Image by pch.vector</a> on Freepik
+All images are from [freepik](https://www.freepik.com/vectors/coffee).
