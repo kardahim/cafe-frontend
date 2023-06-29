@@ -1,3 +1,19 @@
+# Project information
+The promotion and management system for a café - frontend app.
+
+## Topic
+Project created as part of the Engineering Thesis - 'The promotion and management system for a café', realized in the following team:
+
+- Damian Bogusz - implementation of the server application; implementation of authorization, authentication and session mechanics in the web application
+https://github.com/damianboguszpl
+- Paweł Ciszewski - design and implementation of the web application; co-design of the REST-API endpoints in the server application
+https://github.com/kardahim
+- Marcin Ferenc - design and implementation of the mobile application
+https://github.com/FerencMarcin
+
+## System description
+The created system consists of a server based on the Express development framework, a MySQL database, a website based on the React library and a mobile application which uses the Flutter framework. The central point of the system is the server. Preparing a REST API on it has allowed client applications to manage theresources of the shared database. The website's main features are management of the cafe's offers, coupons and special offers, orders, seat reservations and user accounts. Access for users to various features is determined by the permissions level. Employees, managers (administrators), customers and non-logged-in guests have a different range of available service features. The mobile application has been prepared exclusively for customers and is an extension of the features offered by web browsers. Moreover, it includes elements of a loyalty system, in which one can earn points by purchasing at the cafe. Gained points can be later exchanged for coupons. As a result of the project, a system following the project assumptions has been created. The system has been tested and is ready for implementation and compatible use.
+
 # Installation
 
 1. Download repository.
